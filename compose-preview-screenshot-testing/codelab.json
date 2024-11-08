@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2024-11-08T13:18:57Z",
+  "updated": "2024-11-08T14:12:52Z",
   "id": "https://codelabs.kartikarora.me/compose-preview-screenshot-testing",
   "duration": 0,
   "title": "Compose Preview Screenshot Testing",
@@ -22,7 +22,7 @@
     "compose",
     "testing"
   ],
-  "feedback": "https://github.com/kartikarora/codelab-compose-preview-screenshot-testing",
+  "feedback": "mailto:hello@kartikarora.me",
   "ga": "G-5GZC83CFKC",
   "url": "https://codelabs.kartikarora.me/compose-preview-screenshot-testing"
 }
