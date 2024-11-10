@@ -1,0 +1,29 @@
+{
+  "name": "Codelabs by Kartik Arora",
+  "short_name": "Codelabs",
+  "theme_color": "#303F9F",
+  "background_color": "#303F9F",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/images/favicons/icon16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicons/icon32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicons/icon180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicons/icon192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+  ]
+}

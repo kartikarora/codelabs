@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2024-11-09T19:40:57Z",
+  "id": "compose-preview-screenshot-testing",
+  "duration": 0,
+  "title": "Compose Preview Screenshot Testing",
+  "authors": "Kartik Arora",
+  "summary": "In this codelab, you'll learn how to set up Compose Preview Screenshot Testing, create and capture screenshots of composables, and incorporate screenshot tests into your development workflow. By the end of this guide, you'll be equipped with the skills to ensure your app's UI remains visually consistent, reducing regressions and enhancing user experience without relying solely on manual testing.",
+  "source": "1yoymR3VnaH2q7NukDOWFbe1blKEVDWtX3emsl5m6F-E",
+  "theme": "android",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "android"
+  ],
+  "tags": [
+    "android",
+    "compose",
+    "testing"
+  ],
+  "feedback": "https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/issues/new",
+  "ga": "G-5GZC83CFKC",
+  "url": "compose-preview-screenshot-testing"
+}

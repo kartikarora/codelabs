@@ -225,3 +225,12 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 
+.tmp
+.content
+gulp-cache
+node_modules/
+
+/build/
+/dist/
+
+package-lock.json

@@ -1,0 +1,361 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Compose Preview Screenshot Testing</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="G-5GZC83CFKC"
+                  id="compose-preview-screenshot-testing"
+                  title="Compose Preview Screenshot Testing"
+                  environment="web"
+                  feedback-link="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/issues/new">
+    
+      <google-codelab-step label="Welcome to the world of Screenshot Testing" duration="0">
+        <p class="image-container"><img style="width: 566.00px" src="img/507a60c1e6e488bf.jpeg"></p>
+<p><strong>Last Updated: </strong>Nov 8, 2024</p>
+<h2 is-upgraded><strong>How can you ensure visual consistency in your Jetpack Compose app without manual testing?</strong></h2>
+<p>In modern Android development, ensuring the visual correctness of user interfaces is critical. Screenshot testing allows developers to automatically capture, compare, and verify the appearance of their app&#39;s UI. With the introduction of <strong>Compose Preview Screenshot Testing</strong> in Jetpack Compose, testing UI elements has become even more efficient and accessible. This tool allows you to take advantage of Compose&#39;s preview functionality to create pixel-perfect screenshots directly in your development environment.</p>
+<p>In this codelab, you&#39;ll learn how to set up Compose Preview Screenshot Testing, create and capture screenshots of composables, and incorporate screenshot tests into your development workflow. By the end of this guide, you&#39;ll be equipped with the skills to ensure your app&#39;s UI remains visually consistent, reducing regressions and enhancing user experience without relying solely on manual testing.</p>
+<h2 is-upgraded><strong>What you&#39;ll build</strong></h2>
+<h3 is-upgraded><strong>In this codelab, you will:</strong></h3>
+<ol type="1" start="1">
+<li><strong>Set Up the Environment</strong>:</li>
+</ol>
+<ul>
+<li>Install the required tools for screenshot testing in Android Studio.</li>
+<li>Clone the<a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing" target="_blank"> JetLagged sample project</a> from GitHub into their local environment to use as the starting point for the codelab.</li>
+</ul>
+<ol type="1" start="2">
+<li><strong>Explore the JetLagged Project</strong>:</li>
+</ol>
+<ul>
+<li>Understand the key composable UIs within the JetLagged app that will be targeted for screenshot testing.</li>
+</ul>
+<ol type="1" start="3">
+<li><strong>Setup Jetpack Compose Screenshot Testing library</strong></li>
+</ol>
+<ul>
+<li>Setup the required dependencies and plugins to enable screenshot testing</li>
+</ul>
+<ol type="1" start="4">
+<li><strong>Write Screenshot Tests</strong>:</li>
+</ol>
+<ul>
+<li>Implement screenshot tests for specific UI elements in the JetLagged project.</li>
+</ul>
+<ol type="1" start="5">
+<li><strong>Generate reference images</strong></li>
+</ol>
+<ul>
+<li>Understand the <strong>gradle</strong> command to generate reference images, particularly useful when UI changes and references need to be updated</li>
+</ul>
+<ol type="1" start="6">
+<li><strong>Run and Analyze Tests</strong>:</li>
+</ol>
+<ul>
+<li>Execute the screenshot tests and review the generated reports to detect any visual regressions or changes in the UI.</li>
+</ul>
+<p>By the end of this codelab, participants will have practical experience writing and running screenshot tests for a real-world Jetpack Compose app, using a JetLagged project to ensure their app&#39;s UI remains consistent across updates and configurations.</p>
+<aside class="warning"><p><strong>Experimental:</strong> Compose Preview Screenshot Testing is still in development. Its features and APIs are subject to change substantially during the alpha phase. Report any feedback and issues through the <a href="https://issuetracker.google.com/issues/new?component=192708&template=840533" target="_blank">issue tracker</a>.</p>
+</aside>
+<h2 class="checklist" is-upgraded><strong>What you&#39;ll learn</strong></h2>
+<ul class="checklist">
+<li>How to setup Compose Preview Screenshot Testing library</li>
+<li>How to write screenshot tests for Compose Preview Screenshot Testing</li>
+<li>How to setup reference images and run validations</li>
+<li>How to run validation with your CI workflows</li>
+</ul>
+<h2 is-upgraded><strong>What you&#39;ll need</strong></h2>
+<ul>
+<li>Android Studio Ladybug | 2024.2.1 Patch 2 or newer</li>
+</ul>
+<p class="image-container"><img style="width: 604.08px" src="img/b674145bbde41233.png"><br></p>
+<ul>
+<li>Knowledge of Kotlin, Android SDK and Jetpack Compose </li>
+</ul>
+<h2 is-upgraded><strong>Helpful Readings</strong></h2>
+<p>Before starting this Codelab, here are some articles to get you up to speed with Jetpack Compose Previews. This knowledge is useful for creating and manipulating previews for screenshot testing using Compose Preview Screenshot Testing</p>
+<ul>
+<li><a href="https://proandroiddev.com/designing-effective-uis-for-enhancing-compose-previews-daa8565e109f" target="_blank">Designing Effective Compose UIs For Enhancing Previews - Jaewoong Eum</a></li>
+<li><a href="https://proandroiddev.com/using-previewparameters-and-providing-composables-to-jetpack-compose-previews-5b1f5a8fe192" target="_blank">Using PreviewParameters and providing Composables to Jetpack Compose Previews - Katie Barnett</a></li>
+<li><a href="https://medium.com/@domen.lanisnik/5-tips-for-better-compose-previews-0fd51c9aa048" target="_blank">5 Tips for Better Compose Previews - Domen Lanišnik</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Getting set up" duration="0">
+        <h2 is-upgraded><strong>Setup Android Studio</strong></h2>
+<p>You will be using Android Studio for this CodeLab. You can download the latest stable version for your computer. Once downloaded, please go through the setup wizard to ensure that the Java, SDK and Tools are correctly set up.</p>
+<p><a href="https://developer.android.com/studio" target="_blank"><paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon>Download Android Studio</paper-button></a></p>
+<h2 is-upgraded><strong>Get the code</strong></h2>
+<p>I&#39;ve put everything you need for this project into a Git repo. To get started, you&#39;ll need to grab the code and open it in Android Studio.</p>
+<h3 is-upgraded><strong>Clone the repository:</strong></h3>
+<p>Using Android Studio or your favorite git client to use git.</p>
+<p><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing" target="_blank"><paper-button class="colored" raised>Open Repository</paper-button></a></p>
+<h3 is-upgraded><strong>Alternative: Download code without git features</strong></h3>
+<p>If you want to just get the code instead, download the zip file below</p>
+<p><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/archive/refs/heads/main.zip" target="_blank"><paper-button class="colored" raised><iron-icon icon="file-download"></iron-icon>Download ZIP <br></paper-button></a></p>
+<p>Open the project in Android Studio and let it sync. Once synced, your window should look like this.</p>
+<p class="image-container"><img style="width: 724.59px" src="img/6764a4e4c9c496dc.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore the Project" duration="0">
+        <p>Take some time to explore the project. In particular, have a look at various composables and previews. <br><br>Run the app on an emulator or a physical device and understand various UI elements.<br><br>Feel free to create new previews or setup data for any screenshot tests that you might want to create later.</p>
+<p>The app contains 7 days with of sleep data at <code>app/src/main/kotlin/me/kartikarora/jetlagged/data/FakeSleepData.kt</code></p>
+<p>If you run into issues with Previews not rendering in Android Studio, in particular with an <code>NoSuchElementException</code>, there&#39;s an issue with Compose Preview tooling. </p>
+<p>This can be fixed by generating a lot of fake data for this repository. By default, 7 days worth of data is provided, however you can generate 90 days worth of data.</p>
+<p>In the terminal, run <code>kotlinc -script scripts/generateRandomSleepData.main.kts.</code></p>
+<p>This script updates the <code>FakeSleepData.kt</code> class with randomly generated 90 days worth of data.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup dependencies" duration="0">
+        <h2 is-upgraded><strong>About time yeah?</strong></h2>
+<h2 is-upgraded><br><strong>Update version catalog</strong></h2>
+<p>In this project, we are using version catalog to manage our dependencies. If you have never used this before, have a read of my article <a href="https://proandroiddev.com/state-of-dependency-management-in-android-studio-a6ce647315f2" target="_blank">State of Dependency Management in Android Studio</a>. This should get you up to speed with version catalogs in Android Studio.</p>
+<p>In the project, you will find the catalog defined in <code>libs.versions.toml</code> file in the <code>gradle</code> directory</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/blob/codelab/gradle/libs.versions.toml" target="_blank">gradle/libs.versions.toml</a></h3>
+<pre><code>[versions]
+...
+screenshot = &#34;0.0.1-alpha07&#34;
+
+[plugins]
+...
+screenshot = { id = &#34;com.android.compose.screenshot&#34;, version.ref = &#34;screenshot&#34;}</code></pre>
+<p><code>...</code> represents the existing entries which we are not modifying</p>
+<p>Now hit the sync button for Android Studio to fetch the new dependency</p>
+<h2 is-upgraded><strong>Apply the plugin</strong></h2>
+<p>Next, we need to tell our app module about this new plugin. Open the build.gradle.kts file for the app module and add the following</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/blob/codelab/app/build.gradle.kts" target="_blank">app/build.gradle.kts</a></h3>
+<pre><code>plugins {
+    ...
+    alias(libs.plugins.screenshot)
+}
+
+android {
+    ...
+    experimentalProperties[&#34;android.experimental.enableScreenshotTest&#34;] = true
+}
+
+dependencies {
+    ...
+    screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+}
+</code></pre>
+<h2 is-upgraded><strong>Enable the experimental flag</strong></h2>
+<p>As a final step, we want to tell gradle that we are explicitly enabling this experimental feature. This is done via the gradle.properties file.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/blob/codelab/gradle.properties" target="_blank">gradle.properties</a></h3>
+<pre><code>...
+# Enable screenshot tests
+android.experimental.enableScreenshotTest=true</code></pre>
+<p>Sync the project one more time. If there are no complaints from Android Studio, we are good to proceed to the next step.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup previews for testing" duration="0">
+        <p>We will be setting up our previews for screenshot testing, and then create some reference images. These reference images will be the &#34;truth&#34;. Every validation of UI will use these reference images as baseline.</p>
+<p>To designate the composable previews you want to use for screenshot tests, place the previews in a test class. The test class file must be located in the <code>screenshotTest</code> source set i.e. <code>app/src/screenshotTest/kotlin/me/kartikarora/jetlagged/PreviewsForTest.kt </code></p>
+<p>You can add more composables and/or previews, including multi-previews, in this file or other files created in the same sourceset.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/blob/codelab/app/src/screenshotTest/kotlin/me/kartikarora/jetlagged/PreviewsForTest.kt" target="_blank">app/src/screenshotTest/kotlin/me/kartikarora/jetlagged/PreviewsForTest.kt</a></h3>
+<pre><code>class PreviewsForTest {
+    @Composable
+    @CombinedPreview
+    fun JetLaggedHomeScreenPreview(@PreviewParameter(JetLaggedHomeScreenPreviewProvider::class) uiState: JetLaggedScreenState) {
+        JetLaggedHomeScreen(
+            sleepGraphData = uiState.sleepGraphData,
+            wellnessData = uiState.wellnessData,
+            heartRateData = uiState.heartRateData
+        )
+    }
+
+    @Composable
+    @CombinedPreview
+    fun JetLaggedHSleepScreenPreview(@PreviewParameter(JetLaggedHomeScreenPreviewProvider::class) uiState: JetLaggedScreenState) {
+        JetLaggedSleepScreen(sleepGraphData = uiState.sleepGraphData)
+    }
+
+    @Composable
+    @CombinedPreview
+    fun JetLaggedHeaderPreview(@PreviewParameter(HeaderPreviewDataProvider::class) header: String) {
+        JetLaggedHeader(headerText = header)
+    }
+
+    @Composable
+    @CombinedPreview
+    fun JetLaggedHeaderTabsPreview() {
+        JetLaggedHeaderTabs(onTabSelected = {}, selectedTab = SleepTab.Month)
+    }
+
+    // Heart Rate
+    @Composable
+    @CombinedPreview
+    fun HeartRateCardPreview() {
+        HeartRateCard()
+    }
+
+    @Composable
+    @CombinedPreview
+    fun HeartRateGraphPreview() {
+        HeartRateGraph(heartRateGraphData)
+    }
+
+    // Sleep
+    @CombinedPreview
+    @Composable
+    fun SleepBarPreview() {
+        SleepBar(sleepData = sleepData.sleepDayData.first())
+    }
+
+    @CombinedPreview
+    @Composable
+    fun SleepGraphCardPreview(
+    ) {
+        SleepGraphCard(sleepState = sleepData)
+    }
+
+    @CombinedPreview
+    @Composable
+    fun SleepGraphCardWithHeaderPreview(
+    ) {
+        SleepGraphCard(sleepState = sleepData, cardHeading = &#34;JetLagged&#34;)
+    }
+
+    // UI
+    @CombinedPreview
+    @Composable
+    fun FadingCirclePreview() {
+        FadingCircleBackground(bubbleSize = 48.dp, color = Color.Magenta)
+    }
+}
+
+class HeaderPreviewDataProvider : PreviewParameterProvider&lt;String&gt; {
+    override val values: Sequence&lt;String&gt; = sequenceOf(&#34;JetLagged&#34;, &#34;Sleep&#34;, &#34;Home&#34;)
+}</code></pre>
+<p>Feel free to add more previews and play around with previews until you are happy with the results.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Generate reference images" duration="0">
+        <p>Now that the previews are ready, let&#39;s set up our reference images. To do so, open terminal in Android Studio and run the following gradle task<br><br>Linux &amp; MacOS : <code>./gradlew :app:updateDebugScreenshotTest</code></p>
+<p>Windows: <code>gradlew :app:updateDebugScreenshotTest</code></p>
+<p>Once the task completes, you will be able to find the reference images at <code>app/src/debug/screenshotTest/reference/app/src/debug/screenshotTest/reference</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Validate and generate test reports" duration="0">
+        <p>With the reference images now in place, you should be able to run the tests using the gradle tasks</p>
+<p>Linux and macOS: <code>./gradlew :app:validateDebugScreenshotTest</code></p>
+<p>Windows: <code>gradlew :app:validateDebugScreenshotTest</code><br></p>
+<p>The validation task creates an HTML report at <code>app/build/reports/screenshotTest/preview/debug/index.html</code></p>
+<p>Play around with the previews or the UIs and run the validation task again. This time the tests will fail and the test report will show an image diff highlighting the differences</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Update reference images" duration="0">
+        <p>It is only natural that the UI will change and you would need to update the reference images when this happens. Otherwise your UI test will be correct, but because references are outdated, the tests will fail every time.</p>
+<p>To update your references, all you have to do is run the update task again</p>
+<p>Linux &amp; MacOS : <code>./gradlew :app:updateDebugScreenshotTest</code></p>
+<p>Windows: <code>gradlew :app:updateDebugScreenshotTest</code></p>
+<p>This will create new reference images at <code>app/src/debug/screenshotTest/reference/app/src/debug/screenshotTest/reference</code></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup with CI" duration="0">
+        <p>In this CodeLab, we&#39;ll focus on running the validation step on every push. We&#39;ll be using Github Actions as our CI server.</p>
+<p>We&#39;ll be writing some YAML for this and declare a workflow where a few things happen on every push.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/blob/codelab/.github/workflows/validate_previews.yml" target="_blank">.github/workflows/validate_previews.yml</a></h3>
+<pre><code>name: Validate Previews
+
+on:
+  push:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: gradle/actions/wrapper-validation@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: &#39;zulu&#39;
+          java-version: 21.0.4
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Validate UI using screenshot tests
+        run: ./gradlew app:validateScreenshotTest
+
+      - name: Upload test result
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: &#39;screenshot-test-result&#39;
+          path: &#39;app/build/reports/screenshotTest/preview/debug&#39;
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            app/build/test-results/**/*.xml</code></pre>
+<p>What this workflow does is </p>
+<ul>
+<li>Checkout the repository</li>
+<li>Validate gradle wrapper</li>
+<li>Setup JDK 21</li>
+<li>Make gradle wrapper executable</li>
+<li>Run the validation task</li>
+<li>Upload test results to Github Artifacts</li>
+<li>Publish test result XML</li>
+</ul>
+<p>You can extend this to run for every pull request as well, however I&#39;ll leave that as a take home task.</p>
+<aside class="warning"><p><strong>Known Issue:</strong> Because of how different OS&#39;s handle anti-aliasing, there could be slight pixel level differences in the reference images generated on your machine vs the testing images generated by the CI runner, causing the tests to fail.<br><br>More details can be found here <a href="https://issuetracker.google.com/issues/348590914" target="_blank">https://issuetracker.google.com/issues/348590914</a> </p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
