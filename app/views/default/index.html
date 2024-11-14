@@ -17,18 +17,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="generator" content="{{view.title}}">
   <meta name="application-name" content="{{view.title}}">
   <link rel="canonical" href="{{canonicalViewUrl(view)}}" />
-  <link rel="preconnect" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
 
+
+  {% if view.gtag %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{view.gtag}}"></script>
   <script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-    ga('create', '{{ga}}', 'auto');
-    ga('send', 'pageview');
-    {% if view.ga %}
-    ga('create', '{{view.ga}}', 'auto', { name: 'view' });
-    ga('view.send', 'pageview');
-    {% endif %}
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{view.gtag}}');
   </script>
-  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  {% endif %}
 
   <title>{{view.title}}</title>
 
@@ -100,7 +102,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     {% raw %}
     <div id="mainToolbar" class="paper-header">
       <div class="site-width layout horizontal">
-        <a href="/">
+        <a href="{{canonicalViewUrl(view)}}">
           CODELABS by Kartik Arora
         </a>
       </div>

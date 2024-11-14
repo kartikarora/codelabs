@@ -2,7 +2,6 @@
   "environment": "web",
   "format": "html",
   "prefix": "https://storage.googleapis.com",
-  "mainga": "UA-49880327-14",
   "updated": "2024-11-09T19:40:57Z",
   "id": "compose-preview-screenshot-testing",
   "duration": 0,
@@ -23,6 +22,6 @@
     "testing"
   ],
   "feedback": "https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/issues/new",
-  "ga": "G-5GZC83CFKC",
+  "gtag": "G-PYW1WE01F1",
   "url": "compose-preview-screenshot-testing"
 }

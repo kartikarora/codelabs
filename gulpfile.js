@@ -41,7 +41,7 @@ const swig = require('swig-templates');
 const url = require('url');
 
 // DEFAULT_GA is the default Google Analytics tracker ID
-const DEFAULT_GA = 'UA-49880327-14';
+const DEFAULT_GTAG = 'G-PYW1WE01F1';
 
 // DEFAULT_VIEW_META_PATH is the default path to view metadata.
 const DEFAULT_VIEW_META_PATH = 'app/views/default/view.json';
@@ -55,7 +55,7 @@ const DEFAULT_CATEGORY = 'Default';
 // BASE_URL is the canonical base URL where the site will reside. This should
 // always include the protocol (http:// or https://) and NOT including a
 // trailing slash.
-const BASE_URL = args.baseUrl || 'https://example.com';
+const BASE_URL = args.baseUrl || 'https://codelabs.kartikarora.me';
 
 // CODELABS_DIR is the directory where the actual codelabs exist on disk.
 // Despite being a constant, this can be overridden with the --codelabs-dir
@@ -365,10 +365,10 @@ gulp.task('codelabs:export', (callback) => {
 
   if (source !== undefined) {
     const sources = Array.isArray(source) ? source : [source];
-    claat.run(CODELABS_DIR, 'export', CODELABS_ENVIRONMENT, CODELABS_FORMAT, DEFAULT_GA, sources, callback);
+    claat.run(CODELABS_DIR, 'export', CODELABS_ENVIRONMENT, CODELABS_FORMAT, DEFAULT_GTAG, sources, callback);
   } else {
     const codelabIds = collectCodelabs().map((c) => { return c.id });
-    claat.run(CODELABS_DIR, 'update', CODELABS_ENVIRONMENT, CODELABS_FORMAT, DEFAULT_GA, codelabIds, callback);
+    claat.run(CODELABS_DIR, 'update', CODELABS_ENVIRONMENT, CODELABS_FORMAT, DEFAULT_GTAG, codelabIds, callback);
   }
 });
 
@@ -549,16 +549,16 @@ const generateView = () => {
     const view = parseViewMetadata(file.path);
 
     // Aanalytics information.
-    const ga = DEFAULT_GA;
+    const gtag = DEFAULT_GTAG;
 
     // Full list of views
     const all = collectMetadata();
 
     // Calculate URL parameters to append.
     let codelabUrlParams = 'index=' + encodeURIComponent('../..' + view.url);
-    if (view.ga || args.indexGa) {
-      let viewGa = args.indexGa ? args.indexGa : view.ga;
-      codelabUrlParams += '&viewga=' + viewGa;
+    if (view.gtag || args.indexGtag) {
+      let viewGtag = args.indexGtag ? args.indexGtag : view.gtag;
+      codelabUrlParams += '&viewGtag=' + viewGtag;
     }
 
     // Get the list of codelabs and categories for this view
@@ -570,7 +570,7 @@ const generateView = () => {
       baseUrl: BASE_URL,
       categories: categories,
       codelabs: codelabs,
-      ga: ga,
+      gtag: gtag,
       showcats: categories.length > 1,
       view: view,
       views: all.views,
