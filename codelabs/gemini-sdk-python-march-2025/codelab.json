@@ -1,0 +1,28 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-03-25T23:12:53Z",
+  "id": "gemini-sdk-python-march-2025",
+  "duration": 0,
+  "title": "Gemini SDK with Python (March 2025)",
+  "authors": "Kartik Arora",
+  "summary": "This codelab provides a hands-on introduction to the Gemini SDK using Python, showcasing its diverse capabilities. Through concise examples, you'll learn to leverage Gemini's power for text generation, multi-modal interactions (combining text and images), code generation, and more. This codelab is designed to give you a broad understanding of the SDK's features and how to integrate them into your Python projects. We'll explore core functionalities, including basic text prompting, image-to-text and text-to-image interactions, and the beginnings of how to use gemini for code generation. By the end, you'll be equipped to start experimenting with the Gemini SDK and explore its potential for your own applications.",
+  "source": "1GPEeeSIqwWGc2vrp_zGLuSrwKQk1-BGzWaoFeT75wpQ",
+  "theme": "gemini",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "gemini",
+    "python",
+    "ai"
+  ],
+  "tags": [
+    "gemini"
+  ],
+  "feedback": "https://github.com/kartikarora/gemini-python-march-2025/issues/new",
+  "ga": "G-5GZC83CFKC",
+  "url": "gemini-sdk-python-march-2025"
+}

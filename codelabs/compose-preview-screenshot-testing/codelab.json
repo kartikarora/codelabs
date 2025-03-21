@@ -2,7 +2,8 @@
   "environment": "web",
   "format": "html",
   "prefix": "https://storage.googleapis.com",
-  "updated": "2024-11-09T19:40:57Z",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-03-24T01:14:38Z",
   "id": "compose-preview-screenshot-testing",
   "duration": 0,
   "title": "Compose Preview Screenshot Testing",
@@ -11,7 +12,7 @@
   "source": "1yoymR3VnaH2q7NukDOWFbe1blKEVDWtX3emsl5m6F-E",
   "theme": "android",
   "status": [
-    "draft"
+    "published"
   ],
   "category": [
     "android"
@@ -22,6 +23,6 @@
     "testing"
   ],
   "feedback": "https://github.com/kartikarora/codelab-compose-preview-screenshot-testing/issues/new",
-  "gtag": "G-PYW1WE01F1",
+  "ga": "G-5GZC83CFKC",
   "url": "compose-preview-screenshot-testing"
 }

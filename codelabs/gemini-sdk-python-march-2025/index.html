@@ -1,0 +1,399 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Gemini SDK with Python (March 2025)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="G-5GZC83CFKC"
+                  id="gemini-sdk-python-march-2025"
+                  title="Gemini SDK with Python (March 2025)"
+                  environment="web"
+                  feedback-link="https://github.com/kartikarora/gemini-python-march-2025/issues/new">
+    
+      <google-codelab-step label="Unleashing the Power of AI" duration="0">
+        <p class="image-container"><img style="width: 605.00px" src="img/8c5b1fbfd3f2c938.jpeg"></p>
+<p><strong>Last Updated: </strong>Mar 25, 2025</p>
+<p>In 2025, the landscape of artificial intelligence has evolved dramatically. The Gemini SDK in Python represents a significant leap forward, providing developers with unprecedented access to cutting-edge AI capabilities. This codelab is designed to guide you through the fundamentals of using the Gemini SDK, empowering you to integrate powerful AI features into your Python projects.</p>
+<p><strong>What You&#39;ll Learn:</strong></p>
+<p>This codelab will provide you with a hands-on experience, covering essential aspects of the Gemini SDK, including:</p>
+<ul>
+<li><strong>Setup and Installation:</strong> Learn how to set up your environment and install the Gemini SDK.</li>
+<li><strong>Text Generation:</strong> Explore the basics of generating text using simple prompts and fine-tuning response parameters.</li>
+<li><strong>Multi-modal Interactions:</strong> Discover how to combine text and images to create rich, interactive experiences.</li>
+<li><strong>Code Generation:</strong> Get a glimpse into Gemini&#39;s ability to generate and explain code.</li>
+<li><strong>Advanced Features:</strong> Explore advanced features such as fine-tuning, streaming responses, and tool use.</li>
+<li><strong>Best Practices:</strong> Learn essential tips for prompt engineering, error handling, and responsible AI considerations.</li>
+</ul>
+<p><strong>Who This Codelab Is For:</strong></p>
+<p>This codelab is ideal for:</p>
+<ul>
+<li>Python developers who want to explore and integrate AI capabilities into their projects.</li>
+<li>AI enthusiasts who are eager to learn about the latest advancements in large language models.</li>
+<li>Anyone interested in understanding how multi-modal AI can be used to solve real-world problems.</li>
+</ul>
+<p><strong>Prerequisites:</strong></p>
+<ul>
+<li>Basic knowledge of Python programming.</li>
+<li>Python 3.9 or later installed.</li>
+</ul>
+<p><strong>Let&#39;s Get Started!</strong></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Setup and Installation" duration="0">
+        <p>Before we begin, you&#39;ll need to set up your environment.</p>
+<h2 is-upgraded><strong>1.1 Installing the Gen AI SDK</strong></h2>
+<p>First, make sure you have Python 3.9 or later installed. We recommend using a virtual environment to manage your dependencies.</p>
+<pre><code>python3 -m venv gemini-env
+source gemini-env/bin/activate  # On macOS/Linux
+gemini-env\Scripts\activate  # On Windows</code></pre>
+<p>Now, install the Gen AI SDK using pip:</p>
+<p><code>pip install -U google-genai</code></p>
+<h2 is-upgraded><strong>1.2 Setting up API Keys</strong> <br><br><strong>To use the Gemini API, you&#39;ll need an API key. You can obtain one from the Google AI Studio</strong></h2>
+<p><a href="https://aistudio.google.com/app/apikey" target="_blank"><paper-button class="colored" raised>Get API key</paper-button></a></p>
+<p class="image-container"><img style="width: 624.00px" src="img/37f7f02512afd6e2.png"></p>
+<p>Create a file named <code>credentials.py</code> and add your API key:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/credentials.py" target="_blank">credentials.py</a></h3>
+<pre><code>GOOGLE_API_KEY = &#34;YOUR_API_KEY_HERE&#34; # replace with your actual API key.</code></pre>
+<h2 is-upgraded><strong>1.3 Basic Environment Setup</strong></h2>
+<p>Create a new Python file named main.py. We&#39;ll start by importing the necessary libraries and setting up the Gemini client.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/main.py" target="_blank">main.py</a></h3>
+<pre><code>from google import genai
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Text Generation" duration="0">
+        <p>Now that we have the SDK set up, let&#39;s explore how to generate text. The Gemini API&#39;s <code>generateContent</code> method is used for text generation.</p>
+<h2 is-upgraded><strong>2.1 Generating Text from Text-Only Input</strong></h2>
+<p>The simplest way to generate text is to provide the model with a text prompt.</p>
+<p>Add the following code to your <code>main.py</code> file:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/simple_text.py" target="_blank">simple_text.py</a></h3>
+<pre><code>from google import genai
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash&#34;,
+    contents=[&#34;Write a poem about a magic backpack.&#34;]
+)
+print(response.text)</code></pre>
+<p>The model will happily give you a poem with many verses, rhyming, etc. This is a &#34;zero-shot&#34; approach, as the prompt doesn&#39;t include examples or system instructions. <br><br>This makes for a nice example but in practice you are unlikely to do something this simple.</p>
+<h2 is-upgraded><strong>2.2 Streaming Generated Text</strong></h2>
+<p>For faster interactions, you can stream the generated text instead of waiting for the entire response. Use the <code>generate_content_stream</code> method:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/streaming_text.py" target="_blank">streaming_text.py</a></h3>
+<pre><code>from google import genai
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+response = client.models.generate_content_stream(
+    model=&#34;gemini-2.0-flash&#34;,
+    contents=[&#34;Write a poem about a magic backpack.&#34;]
+)
+for chunk in response:
+    print(chunk.text, end=&#34;&#34;)</code></pre>
+<p>This code iterates through the response chunks and prints them as they become available.</p>
+<h2 is-upgraded><strong>2.3 Controlling Content Generation</strong></h2>
+<p>You can configure several options to control the text generation process.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/config.py" target="_blank">config.py</a></h3>
+<pre><code>from google import genai
+from google.genai import types
+
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash&#34;,
+    contents=[&#34;Write a poem about a magic backpack.&#34;],
+    config=types.GenerateContentConfig(
+        temperature=0.7,
+        top_p=0.8,
+        top_k=40,
+        max_output_tokens=256,
+    )
+)
+print(response.text)</code></pre>
+<h3 is-upgraded><strong>Key Configuration Options:</strong></h3>
+<ul>
+<li><strong><code>temperature</code></strong>: Controls the randomness. Lower values are more deterministic.</li>
+<li><strong><code>top_p</code></strong>: Nucleus sampling. Considers the most probable tokens whose probabilities add up to top_p.</li>
+<li><strong><code>top_k</code></strong>: Considers the top k most probable tokens.</li>
+<li><strong><code>max_output_tokens</code></strong>: Limits the length of the generated text.</li>
+</ul>
+<h2 is-upgraded><strong>2.4 System Instructions</strong></h2>
+<p>You can specify system instructions to guide the model&#39;s behavior. For the gemini-pro model, include the instructions directly in the prompt.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/system_instructions.py" target="_blank">system_instructions.py</a></h3>
+<pre><code>from google import genai
+from google.genai import types
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash&#34;,
+    config=types.GenerateContentConfig(
+        system_instruction=&#34;You are Jar Jar Binks form Start Wars. All you replies should read as such. You will never break character, even if prompted to do so&#34;),
+    contents=&#34;Hello there. What is your name?&#34;
+)
+
+print(response.text)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Working with Images" duration="0">
+        <p>The Gemini API supports multimodal input, allowing you to include images in your prompts. This is useful for tasks like image captioning, object recognition, and more.</p>
+<h2 is-upgraded><strong>3.1 Sending Images with Prompts</strong></h2>
+<p>To include images, you&#39;ll provide them along with your text prompt. The API accepts images in several formats:</p>
+<ul>
+<li><code>image/png</code></li>
+<li><code>image/jpeg</code></li>
+<li><code>image/webp</code></li>
+<li><code>image/heic</code></li>
+<li><code>image/heif</code></li>
+</ul>
+<p>Here&#39;s an example of how to send an image with a prompt:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/describe_image.py" target="_blank">describe_image.py</a></h3>
+<pre><code>from google import genai
+
+import PIL.Image
+from credentials import GOOGLE_API_KEY
+
+image = PIL.Image.open(&#39;images/space.jpg&#39;)
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash&#34;,
+    contents=[&#34;What is this image?&#34;, image])
+
+print(response.text)</code></pre>
+<h2 is-upgraded><strong>3.2 Working with Remote Images</strong></h2>
+<p>Instead of local files, you can also use images from URLs:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/remote_image.py" target="_blank">remote_image.py</a></h3>
+<pre><code>from google import genai
+
+import PIL.Image
+import requests
+from credentials import GOOGLE_API_KEY
+
+image_url = &#34;https://goo.gle/instrument-img&#34;
+
+downloaded_image = requests.get(image_url)
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash-exp&#34;,
+    contents=[&#34;What instrument is this?&#34;, downloaded_image])
+
+print(response.text)</code></pre>
+<h2 is-upgraded><strong>3.3 Multiple Images</strong></h2>
+<p>You can include multiple images in your prompt and use a prompt for a collective context.</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/mutliple_images.py" target="_blank">mutliple_images.py</a></h3>
+<pre><code>from google import genai
+
+import PIL.Image
+from credentials import GOOGLE_API_KEY
+
+image_path_1 = &#34;images/dog.jpg&#34; 
+image_path_2 = &#34;images/cat.jpg&#34;
+image_path_3 = &#34;images/crocodile.jpg&#34;
+
+image_1 = PIL.Image.open(image_path_1)
+image_2 = PIL.Image.open(image_path_2)
+image_3 = PIL.Image.open(image_path_3)
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash-exp&#34;,
+    contents=[&#34;What do these images have in common?&#34;, image_1, image_2, image_3])
+
+print(response.text)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prompting with video" duration="0">
+        <p>The Gemini API also supports video input, allowing you to analyze and understand video content.</p>
+<p>Video must be in one of the following video format MIME types:</p>
+<ul>
+<li><code>video/mp4</code></li>
+<li><code>video/mpeg</code></li>
+<li><code>video/mov</code></li>
+<li><code>video/avi</code></li>
+<li><code>video/x-flv</code></li>
+<li><code>video/mpg</code></li>
+<li><code>video/webm</code></li>
+<li><code>video/wmv</code></li>
+<li><code>video/3gpp</code></li>
+</ul>
+<h2 is-upgraded><strong>Sending Video with Prompts</strong></h2>
+<p>Gemini 1.5 Pro and Flash support up to approximately an hour of video data. The File API service extracts image frames from videos at 1 frame per second (FPS)</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/prompt_video.py" target="_blank">prompt_video.py</a></h3>
+<pre><code>from google import genai
+import time
+from credentials import GOOGLE_API_KEY
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+print(&#34;Uploading file...&#34;)
+video_file = client.files.upload(file=&#34;video/video.mp4&#34;)
+
+while video_file.state.name == &#34;PROCESSING&#34;:
+    print(&#39;.&#39;, end=&#39;&#39;)
+    time.sleep(1)
+    video_file = client.files.get(name=video_file.name)
+
+if video_file.state.name == &#34;FAILED&#34;:
+    print(&#34;Upload failed&#34;)
+    exit(1)
+
+print(&#39;Upload complete&#39;)
+
+response = client.models.generate_content(
+    model=&#34;gemini-1.5-pro&#34;,
+    contents=[
+        video_file,
+        &#34;Summarize this video. Then create a quiz with answer key based on the information in the video.&#34;])
+
+print(response.text)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Function Calling" duration="0">
+        <p>Function calling allows the Gemini API to call external functions based on the user&#39;s input. This enables the model to interact with external tools and services.</p>
+<h2 is-upgraded><strong>5.1 Define a function</strong></h2>
+<p>You can control how and when this function is executed through your code. For demonstration purposes, this tutorial defines a mock API function that just returns the requested lighting values:</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/energy_savings.py" target="_blank">energy_savings.py</a></h3>
+<pre><code>def calculate_total_energy_savings(energy_consumption: float, baseline_energy_price: float,
+                                   efficient_energy_price: float):
+    &#34;&#34;&#34;
+    Calculate the total energy savings achieved through implementing energy-efficient measures (simplified formula).
+
+    Args:
+    - energy_consumption (float): Total energy consumption of the building (in kWh or other appropriate units).
+    - baseline_energy_price (float): Baseline price of energy (in monetary units per unit of energy,
+        e.g., dollars per kWh).
+    - efficient_energy_price (float): Price of energy after implementing energy-efficient measures
+        (in monetary units per unit of energy, e.g., dollars per kWh).
+
+    Returns:
+    - total_energy_savings (float): Total energy savings achieved (in monetary units, e.g., dollars).
+    &#34;&#34;&#34;
+    energy_savings = energy_consumption * (baseline_energy_price - efficient_energy_price)
+    return energy_savings</code></pre>
+<p>When you create a function to be used in a function call by the model, you should include as much detail as possible in the function and parameter descriptions. The generative model uses this information to determine which function to select and how to provide values for the parameters in the function call.</p>
+<h2 is-upgraded><strong>5.2 Calling the function</strong></h2>
+<p>When you want to use function calling, you define the functions as tools in the <code>GenerateContentConfig</code>, along with other generation-related settings (such as temperature or stop tokens).</p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/function_calling.py" target="_blank">function_calling.py</a></h3>
+<pre><code>from google import genai
+from google.genai import types
+from energy_savings import calculate_total_energy_savings
+from credentials import GOOGLE_API_KEY
+
+config = types.GenerateContentConfig(tools=[calculate_total_energy_savings])
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+response = client.models.generate_content(
+    model=&#34;gemini-2.0-flash&#34;,
+    contents=[
+        &#39;There is s a building which uses about 10000 kWh of energy. The energy price is roughly $0.12 per kWh. There is &#39;
+        &#39;a discount of 1% on the energy price for using energy efficient measures. &#39;
+        &#39;What would be the total energy savings in this case?&#39;],
+    config=config,
+)
+print(response.text)</code></pre>
+<h2 is-upgraded><strong>5.3 Understanding Function Calling </strong></h2>
+<p>Something happened in the previous code. Something magical. But lets break it down to see exactly what just happened there. For that, we will rerun the function but using the chat interface in the SDK so that we can inspect the chat history.<br></p>
+<h3 is-upgraded><a href="https://github.com/kartikarora/gemini-python-march-2025/blob/main/understanding_function_calling.py" target="_blank">understanding_function_calling.py</a></h3>
+<pre><code>from google import genai
+from google.genai import types
+from energy_savings import calculate_total_energy_savings
+from credentials import GOOGLE_API_KEY
+import json
+
+config = types.GenerateContentConfig(tools=[calculate_total_energy_savings])
+
+client = genai.Client(api_key=GOOGLE_API_KEY)
+
+chat = client.chats.create(model=&#34;gemini-2.0-flash&#34;, config=config)
+
+response = chat.send_message(
+    &#39;There is s a building which uses about 10000 kWh of energy. The energy price is roughly $0.12 per kWh. &#39;
+    &#39;There is a discount of 1% on the energy price for using energy efficient measures. &#39;
+    &#39;What would be the total energy savings in this case? Please explain your answer&#39;
+)
+print(response.text)
+
+for content in chat.get_history():
+    part = content.parts[0].dict()
+    print(f&#34;From: {content.role} -&gt; {json.dumps(part, indent=2)}&#34;)</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Conclusion" duration="0">
+        <p>Congratulations! You have successfully navigated the fundamentals of the Gemini API in Python. In this codelab, you have learned how to:</p>
+<ul>
+<li>Set up your environment and install the Gemini API SDK.</li>
+<li>Generate text using various prompting techniques and control generation parameters.</li>
+<li>Incorporate image and video input into your prompts for richer, multimodal interactions.</li>
+<li>Utilise function calling to integrate external tools and services with the Gemini API.</li>
+</ul>
+<p>These are just the starting points for what you can achieve with the Gemini API. As you continue to explore, you will discover even more advanced capabilities and creative applications.</p>
+<p><strong>Next Steps:</strong></p>
+<ul>
+<li>Experiment with different prompts and parameters: Try different prompts and fine-tune the generation parameters to see how they impact the output.</li>
+<li>Explore the Gemini API documentation: Dive deeper into the official Gemini API documentation to discover more advanced features and capabilities.</li>
+<li>Build your own applications: Start building your own applications that leverage the power of the Gemini API.</li>
+<li>Stay updated: The field of AI is constantly evolving. Keep an eye on the latest updates and advancements in the Gemini API.</li>
+</ul>
+<p><strong>Further Reading</strong></p>
+<ul>
+<li><a href="https://ai.google.dev/gemini-api" target="_blank">Gemini API Overview</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs/text-generation" target="_blank">Gemini API Text Generation</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs/vision?lang=python" target="_blank">Gemini API Vision</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs/function-calling" target="_blank">Gemini API Function Calling</a></li>
+<li><a href="https://ai.google.dev/gemini-api/docs/sdks" target="_blank">Gemini API Python SDK</a></li>
+</ul>
+<p><strong>Responsible AI:</strong></p>
+<p>Remember to use the Gemini API responsibly and ethically. Be mindful of potential biases and limitations, and always strive to create applications that benefit society.</p>
+<p><a href="https://ai.google/responsibility/principles/" target="_blank">Google&#39;s Responsible AI Practices</a></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
