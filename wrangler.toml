@@ -1,6 +1,6 @@
 name = "codelabs-page"
 compatibility_date = "2026-03-10"
-assets = { directory = "." }
+assets = { directory = "dist" }
 
 [build]
 command = "node generate-manifest.js"
