@@ -1,0 +1,9 @@
+name = "codelabs-page"
+compatibility_date = "2026-03-10"
+assets = { directory = "." }
+
+[build]
+command = "node generate-manifest.js && npx wrangler deploy"
+
+[observability]
+enabled = true
