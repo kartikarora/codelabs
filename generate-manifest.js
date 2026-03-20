@@ -22,14 +22,19 @@ if (fs.existsSync(codelabsDir)) {
     if (fs.existsSync(jsonPath)) {
       const meta = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
       
-      // Find the first jpeg image in the img directory
+      // Determine the image path
       let image = null;
-      const imgDir = path.join(codelabPath, 'img');
-      if (fs.existsSync(imgDir)) {
-        const images = fs.readdirSync(imgDir);
-        const jpeg = images.find(f => f.toLowerCase().endsWith('.jpeg') || f.toLowerCase().endsWith('.jpg'));
-        if (jpeg) {
-          image = `./codelabs/${dir}/img/${jpeg}`;
+      if (meta.image) {
+        image = `./${dir}/${meta.image}`;
+      } else {
+        // Fallback: Find the first jpeg image in the img directory
+        const imgDir = path.join(codelabPath, 'img');
+        if (fs.existsSync(imgDir)) {
+          const images = fs.readdirSync(imgDir);
+          const jpeg = images.find(f => f.toLowerCase().endsWith('.jpeg') || f.toLowerCase().endsWith('.jpg'));
+          if (jpeg) {
+            image = `./${dir}/img/${jpeg}`;
+          }
         }
       }
 
@@ -42,7 +47,7 @@ if (fs.existsSync(codelabsDir)) {
         duration: meta.duration,
         category: meta.category || [],
         tags: meta.tags || [],
-        url: `./codelabs/${dir}/index.html`,
+        url: `./${dir}/index.html`,
         image: image
       });
     }
@@ -73,8 +78,14 @@ function copyRecursiveSync(src, dest) {
   }
 }
 
-// 6. Copy codelabs directory to dist
+// 6. Copy each codelab directory directly to dist root
 if (fs.existsSync(codelabsDir)) {
-  copyRecursiveSync(codelabsDir, path.join(distDir, 'codelabs'));
-  console.log('Copied codelabs/ to dist');
+  const dirs = fs.readdirSync(codelabsDir);
+  dirs.forEach(dir => {
+    const codelabPath = path.join(codelabsDir, dir);
+    if (fs.statSync(codelabPath).isDirectory()) {
+      copyRecursiveSync(codelabPath, path.join(distDir, dir));
+      console.log(`Copied ${dir}/ to dist/${dir}`);
+    }
+  });
 }

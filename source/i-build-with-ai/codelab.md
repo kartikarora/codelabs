@@ -1,5 +1,5 @@
 ---
-summary: Build with AI - A practical guide using Gemini tools
+summary: Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 id: i-build-with-ai
 categories: AI, Development
 tags: ai, gemini, agents
@@ -8,10 +8,12 @@ authors: Kartik Arora
 Feedback Link: https://kartikarora.me
 ---
 
-# I build with AI and you can too! 🚀
+# I Build with AI and so can you! 🚀
 
 ## Welcome!
 Duration: 2
+
+![Poster](images/poster.png)
 
 Ready to transform how you build software? Today, we're going on an exciting journey into the world of AI-assisted development. You'll learn how to collaborate with AI agents by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!
 
@@ -562,14 +564,14 @@ function assert(condition, message) {
 // Example test suite
 function testLocalStorage() {
   console.group('Testing LocalStorage SKILL');
-
+  
   const testData = { id: 1, task: 'Test' };
   saveTasks([testData]);
   const loaded = loadTasks();
-
+  
   assert(loaded.length === 1, 'Should load one task');
   assert(loaded[0].task === 'Test', 'Task content should match');
-
+  
   console.groupEnd();
 }
 ```

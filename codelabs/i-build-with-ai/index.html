@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
-  <title>I build with AI and you can too! 🚀</title>
+  <title>I Build with AI and so can you! 🚀</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://distribute.kartikarora.me/css/codelab-elements.css">
@@ -21,11 +21,12 @@
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="i-build-with-ai"
-                  title="I build with AI and you can too! 🚀"
+                  title="I Build with AI and so can you! 🚀"
                   environment="Web"
                   feedback-link="">
     <google-codelab-step label="Welcome!" duration="2">
-      <p>Ready to transform how you build software? Today, we&#39;re going on an exciting journey into the world of AI-assisted development. You&#39;ll learn how to collaborate with AI agents by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!</p>
+      <p><img alt="Poster" src="images/poster.png"></p>
+<p>Ready to transform how you build software? Today, we&#39;re going on an exciting journey into the world of AI-assisted development. You&#39;ll learn how to collaborate with AI agents by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!</p>
 <p>By the end of this adventure, you&#39;ll have a fully functional app and a toolkit of AI prompting skills that you can use on any project. Ready to dive in? 🚀</p>
 <h3>What You&#39;ll Build</h3>
 <ul>
@@ -523,14 +524,14 @@ function assert(condition, message) {
 // Example test suite
 function testLocalStorage() {
   console.group(&#39;Testing LocalStorage SKILL&#39;);
-
+  
   const testData = { id: 1, task: &#39;Test&#39; };
   saveTasks([testData]);
   const loaded = loadTasks();
-
+  
   assert(loaded.length === 1, &#39;Should load one task&#39;);
   assert(loaded[0].task === &#39;Test&#39;, &#39;Task content should match&#39;);
-
+  
   console.groupEnd();
 }
 </code></pre>

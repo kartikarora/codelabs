@@ -1,27 +1,19 @@
 {
-    "environment": "web",
-    "format": "html",
-    "prefix": "../../",
-    "mainga": "",
-    "updated": "2026-03-20T02:56:46.249Z",
-    "id": "i-build-with-ai",
-    "duration": 66,
-    "title": "I build with AI and you can too! 🚀",
-    "summary": "Build with AI - A practical guide using Gemini tools",
-    "source": "",
-    "theme": "",
-    "status": [
-        "Published"
-    ],
-    "category": [
-        "AI",
-        "Development"
-    ],
-    "tags": [
-        "ai",
-        "gemini",
-        "agents"
-    ],
-    "feedback": "",
-    "url": "i-build-with-ai"
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../",
+  "mainga": "",
+  "updated": "2026-03-20T06:33:30.299Z",
+  "id": "i-build-with-ai",
+  "duration": 66,
+  "title": "I Build with AI and so can you! 🚀",
+  "summary": "Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.",
+  "source": "/Users/kartikarora/Workspace/Personal/codelabs/source/i-build-with-ai/codelab.md",
+  "theme": "",
+  "status": ["Published"],
+  "category": ["AI", "Development"],
+  "tags": ["ai", "gemini", "agents"],
+  "feedback": "",
+  "image": "images/poster.png",
+  "url": "i-build-with-ai"
 }
