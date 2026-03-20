@@ -1,0 +1,27 @@
+{
+    "environment": "web",
+    "format": "html",
+    "prefix": "../../",
+    "mainga": "",
+    "updated": "2026-03-20T02:56:46.249Z",
+    "id": "i-build-with-ai",
+    "duration": 66,
+    "title": "I build with AI and you can too! 🚀",
+    "summary": "Build with AI - A practical guide using Gemini tools",
+    "source": "",
+    "theme": "",
+    "status": [
+        "Published"
+    ],
+    "category": [
+        "AI",
+        "Development"
+    ],
+    "tags": [
+        "ai",
+        "gemini",
+        "agents"
+    ],
+    "feedback": "",
+    "url": "i-build-with-ai"
+}

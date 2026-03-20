@@ -119,11 +119,14 @@
       .then(res => res.json())
       .then(data => {
         const list = document.getElementById('codelabs-list');
-        
+
         const renderCodelabs = (filter = 'all') => {
-          const filtered = filter === 'all' 
-            ? data 
-            : data.filter(cl => (cl.category || []).includes(filter));
+          const filtered = filter === 'all'
+            ? data
+            : data.filter(cl => (cl.category || []).some(cat => cat.toLowerCase() === filter.toLowerCase()));
+
+          // Sort by updated date descending (newest first)
+          filtered.sort((a, b) => new Date(b.updated) - new Date(a.updated));
 
           if (filtered.length === 0) {
             list.innerHTML = `<p class="text-center text-muted" style="grid-column: 1/-1;">No codelabs found.</p>`;
@@ -146,16 +149,15 @@
               <div class="card-content">
                 <div class="card-header">
                   <h3 class="card-title">${cl.title}</h3>
-                  <span class="card-meta">${cl.duration ? cl.duration + 'm' : 'LAB'}</span>
                 </div>
                 <p class="card-body">${shortSummary}</p>
                 <div class="card-tags">
                   ${(cl.tags || []).slice(0, 3).map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
                 </div>
-                
+
                 <div class="card-footer">
                   <a href="${cl.url}" class="btn btn-primary btn-sm">
-                    Start Codelab <span class="material-symbols-outlined">arrow_forward</span>
+                    <span class="material-symbols-outlined">science</span> Start Codelab
                   </a>
                 </div>
               </div>
