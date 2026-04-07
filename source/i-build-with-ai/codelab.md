@@ -28,64 +28,87 @@ By the end of this adventure, you'll have a fully functional app and a toolkit o
 
 ### Choose Your Favourite Tool
 **Pick the one that fits your style:**
-- **Gemini CLI** (Perfect if you love the terminal)
 - **Antigravity** (A modern, agentic editor built for AI)
+- **Gemini CLI** (Perfect if you love the terminal)
 - **IntelliJ IDEA + Gemini** (The power of a full-featured IDE)
 
 ### What You'll Need
-- A Google account (that's it—no API keys required!)
+- A personal **@gmail.com** account (see Prerequisites)
 - About 45 minutes of focused time
 - A basic understanding of web development
+
+---
+
+## Prerequisites
+Duration: 5
+
+To ensure a smooth experience during this workshop, please review and complete these prerequisites.
+
+### 1. Use a Personal Account
+Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required.
+
+### 2. Pre-Workshop Tool Installation
+To save time during the session, please install **one** of the following tools (your choice) before arriving:
+
+#### Option A: Antigravity (Standalone Editor)
+- Download the editor from [antigravity.google](https://antigravity.google).
+- Launch the app and **Sign in with Google**.
+
+![Antigravity](images/antigravity.png)
+
+#### Option B: Gemini CLI (Terminal)
+- **Prerequisite**: Node.js 20.0.0+.
+- **Installation**:
+  - **macOS/Linux**: `brew install gemini-cli` (Homebrew) or `npm install -g @google/gemini-cli`
+  - **Windows**: `npm install -g @google/gemini-cli`
+- **Authentication**: Run `gemini` in your terminal and select "**Sign in with Google**."
+
+![Gemini CLI](images/gemini_cli.png)
+
+#### Option C: Gemini Code Assist (IDE Plugin)
+- Install the extension in **VS Code** or **IntelliJ**.
+- Open the extension, click the Gemini icon, and **Sign in with Google**.
+
+### 3. Choose Your Objective
+During the workshop, the workflow remains the same regardless of what you build:
+- **Guided**: Follow this official Codelab to build a sample application from scratch.
+- **Independent**: Bring a specific idea, a small feature, or a prototype you want to build using these AI tools.
 
 ---
 
 ## Getting Set Up
 Duration: 3
 
-Let's get your environment ready! Choose the tool you're most comfortable with. Don't worry, there's no right or wrong choice here—each one is a fantastic way to build with AI.
+Now that you've installed your chosen tool, let's get your project workspace ready!
 
-### Option 1: Gemini CLI
-If you're a fan of the command line, this is for you!
+### Option 1: Antigravity
+If you're using the standalone editor.
 
-1. **Install the CLI:**
-```bash
-npm install -g @google/gemini-cli
-```
-Or use Homebrew:
-```bash
-brew install gemini-cli
-```
+1. **Launch Antigravity** and ensure you're signed in.
+2. **Start a new project:** Name it `my-task-manager`.
+3. **Explore:** Antigravity is ready to help you generate files right inside the editor!
 
-2. **Create your project space:**
+### Option 2: Gemini CLI
+If you're using the terminal, set up your project structure.
+
+1. **Create your project space:**
 ```bash
 mkdir -p my-task-manager/.ai/{prd,skills}
 cd my-task-manager
 ```
 
-3. **Say hello to Gemini:**
-```bash
-gemini
-# This will open your browser for a quick sign-in. Too easy!
-```
-
-### Option 2: Antigravity
-For those who want a fresh, AI-native coding experience.
-
-1. **Grab the app** from [antigravity.google](https://antigravity.google)
-2. **Launch it** and **Sign in with Google**
-3. **Start a new project:** Name it `my-task-manager`
-4. **Explore:** Antigravity is ready to help you generate files right inside the editor!
+2. **Verify Authentication:**
+Run `gemini` in your terminal to ensure you're signed in. If not, follow the prompt to "Sign in with Google."
 
 ### Option 3: IntelliJ + Gemini
-Stay in the IDE you know and love.
+If you're using the IDE.
 
-1. **Open [IntelliJ IDEA](https://www.jetbrains.com/idea/download/)**
-2. **Add the magic:** Go to `Settings` → `Plugins` → Search "Gemini Code Assist" → Install
-3. **Give it a quick restart**
-4. **Sign in with Google**
-5. **Create your project:** `File` → `New Project` → `my-task-manager`
+1. **Open IntelliJ IDEA.**
+2. **Create your project:** `File` → `New Project` → `my-task-manager`.
+3. **Open the Gemini panel:** `View` → `Tool Windows` → `Gemini`.
+4. **Sign in** if you haven't already.
 
-🌟 **Great job! You're all set and ready to build.**
+🌟 **Great job! Your workspace is ready. Let's start building.**
 
 ---
 
@@ -111,7 +134,13 @@ REQUIREMENTS:
 Ask me clarifying questions, one at a time.
 ```
 
-### Option 1: Gemini CLI
+### Option 1: Antigravity
+
+1. Use the AI chat panel (Cmd/Ctrl+K or chat icon)
+2. Paste the prompt above
+3. Antigravity will generate and create the file automatically (it will ask for permission)
+
+### Option 2: Gemini CLI
 
 1. **Launch Gemini CLI:**
 ```bash
@@ -120,12 +149,6 @@ gemini
 
 2. **Paste the prompt** (the one above) into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-### Option 2: Antigravity
-
-1. Use the AI chat panel (Cmd/Ctrl+K or chat icon)
-2. Paste the prompt above
-3. Antigravity will generate and create the file automatically (it will ask for permission)
 
 ### Option 3: IntelliJ
 
@@ -170,7 +193,12 @@ STRUCTURE:
 Format as markdown with clear sections.
 ```
 
-### Option 1: Gemini CLI
+### Option 1: Antigravity
+
+1. Use AI chat (Cmd/Ctrl+K)
+2. Paste prompt → Antigravity generates and creates the file
+
+### Option 2: Gemini CLI
 
 1. **Launch Gemini CLI:**
 ```bash
@@ -179,11 +207,6 @@ gemini
 
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-### Option 2: Antigravity
-
-1. Use AI chat (Cmd/Ctrl+K)
-2. Paste prompt → Antigravity generates and creates the file
 
 ### Option 3: IntelliJ
 
@@ -261,7 +284,12 @@ function loadTasks() {
 Format with complete code examples.
 ```
 
-### Option 1: Gemini CLI
+### Option 1: Antigravity
+
+1. Use AI chat → Paste prompt
+2. Antigravity generates and creates the file
+
+### Option 2: Gemini CLI
 
 1. **Launch Gemini CLI:**
 ```bash
@@ -270,11 +298,6 @@ gemini
 
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-### Option 2: Antigravity
-
-1. Use AI chat → Paste prompt
-2. Antigravity generates and creates the file
 
 ### Option 3: IntelliJ
 
@@ -315,7 +338,13 @@ Follow ALL PRD constraints.
 No frameworks. No build tools.
 ```
 
-### Option 1: Gemini CLI
+### Option 1: Antigravity
+
+1. Use AI chat with the build prompt
+2. Reference your PRD, AGENT, SKILL files (Antigravity can read project files)
+3. Agent generates and creates `index.html`
+
+### Option 2: Gemini CLI
 
 1. **Launch Gemini CLI:**
 ```bash
@@ -324,12 +353,6 @@ gemini
 
 2. **Paste the build prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-### Option 2: Antigravity
-
-1. Use AI chat with the build prompt
-2. Reference your PRD, AGENT, SKILL files (Antigravity can read project files)
-3. Agent generates and creates `index.html`
 
 ### Option 3: IntelliJ
 
@@ -367,16 +390,16 @@ Include:
 - Consequences: No Sass/React, but zero dependencies and faster loading
 ```
 
-#### Option 1: Gemini CLI
+#### Option 1: Antigravity
+1. Use Cmd/Ctrl+K to generate the ADR content and create the file
+
+#### Option 2: Gemini CLI
 1. **Launch Gemini CLI:**
 ```bash
 gemini
 ```
 2. **Paste the prompt** to create ADR-001 into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-#### Option 2: Antigravity
-1. Use Cmd/Ctrl+K to generate the ADR content and create the file
 
 #### Option 3: IntelliJ
 1. Use Gemini panel to generate and accept file creation
@@ -391,17 +414,17 @@ Update .ai/AGENT.md to include a new section "Rules from ADRs".
 Link ADR-001: "Pure CSS and Vanilla JS Architecture" and explain that all new features must comply with it.
 ```
 
-#### Option 1: Gemini CLI
+#### Option 1: Antigravity
+1. Open `.ai/AGENT.md` or just use the prompt
+2. Use Cmd/Ctrl+K with the prompt above to update the file
+
+#### Option 2: Gemini CLI
 1. **Launch Gemini CLI:**
 ```bash
 gemini
 ```
 2. **Paste the prompt** to update `AGENT.md` into the interactive shell.
 3. Once generated, the tool will ask for permission to update the file.
-
-#### Option 2: Antigravity
-1. Open `.ai/AGENT.md` or just use the prompt
-2. Use Cmd/Ctrl+K with the prompt above to update the file
 
 #### Option 3: IntelliJ
 1. Use Gemini panel to generate the updated content and accept the changes to `.ai/AGENT.md`
@@ -584,7 +607,12 @@ function testLocalStorage() {
 Format with complete code examples.
 ```
 
-### Option 1: Gemini CLI
+### Option 1: Antigravity
+
+1. Use AI chat → Paste prompt
+2. Antigravity generates and creates the file
+
+### Option 2: Gemini CLI
 
 1. **Launch Gemini CLI:**
 ```bash
@@ -593,11 +621,6 @@ gemini
 
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
-
-### Option 2: Antigravity
-
-1. Use AI chat → Paste prompt
-2. Antigravity generates and creates the file
 
 ### Option 3: IntelliJ
 
