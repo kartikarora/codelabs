@@ -21,8 +21,8 @@ By the end of this adventure, you'll have a fully functional app and a toolkit o
 
 ### What You'll Build
 - ✨ A rock-solid **Product Requirements Document** (PRD.md)
-- 🤖 A personalised **AI Agent configuration** (AGENT.md)
-- 🛠️ A reusable **LocalStorage Skill** (SKILL.md)
+- 🤖 A personalised **AI Agent configuration** (frontend-specialist.md)
+- 🛠️ A reusable **LocalStorage Skill** (localstorage.md)
 - 🧪 **Unit Testing Skill** (Bonus)
 - 📝 A sleek **Task Manager web app** with up-to-date documentation via Context7
 
@@ -93,7 +93,7 @@ If you're using the terminal, set up your project structure.
 
 1. **Create your project space:**
 ```bash
-mkdir -p my-task-manager/.ai/{prd,skills}
+mkdir -p my-task-manager/.gemini/{prd,skills,agents}
 cd my-task-manager
 ```
 
@@ -112,7 +112,7 @@ If you're using the IDE.
 
 ---
 
-## Step 1: Create your PRD
+## Create your PRD
 Duration: 7
 
 Let's start with the most important part: the **Product Requirements Document (PRD)**. This is the heart of your project—it's the source of truth that helps your AI assistant understand exactly what you're dreaming of building!
@@ -123,7 +123,13 @@ Copy this prompt and get ready to see Gemini's magic in action:
 ```
 Act as a Senior Software Architect.
 
-Create a Product Requirements Document (PRD) for a "Task Manager" web app and save it to `.ai/prd/PRD.md`.
+Create a Product Requirements Document (PRD) for a "Task Manager" web app and save it to `.gemini/prd/PRD.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Task Manager Web App
+description: A web application for managing tasks.
+version: 0.1.0
+---
 
 REQUIREMENTS:
 - Single HTML file (no build tools)
@@ -136,7 +142,7 @@ Ask me clarifying questions, one at a time.
 
 ### Option 1: Antigravity
 
-1. Use the AI chat panel (Cmd/Ctrl+K or chat icon)
+1. Use the AI chat panel (Cmd/Ctrl+L or chat icon)
 2. Paste the prompt above
 3. Antigravity will generate and create the file automatically (it will ask for permission)
 
@@ -160,14 +166,22 @@ gemini
 
 ---
 
-## Step 2: Configure your AI Agent
+## Configure your AI Agent
 Duration: 6
 
-Now, let's give your AI assistant a personality and some clear instructions. This `AGENT.md` file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.
+Now, let's give your AI assistant a personality and some clear instructions. This `frontend-specialist.md` file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.
 
 ### The Prompt (Same for All Tools)
 ```
-Create AGENT.md for an AI coding assistant and save it to `.ai/AGENT.md`.
+Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/frontend-specialist.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Frontend Specialist
+description: A senior frontend engineer specialising in vanilla JS.
+skills: [localstorage]
+prompt: "You are a Senior Frontend Engineer specialising in vanilla JS..."
+version: 0.1.0
+---
 
 CONTEXT (from PRD):
 - Vanilla JavaScript only
@@ -195,7 +209,7 @@ Format as markdown with clear sections.
 
 ### Option 1: Antigravity
 
-1. Use AI chat (Cmd/Ctrl+K)
+1. Use AI chat (Cmd/Ctrl+L)
 2. Paste prompt → Antigravity generates and creates the file
 
 ### Option 2: Gemini CLI
@@ -217,14 +231,20 @@ gemini
 
 ---
 
-## Step 3: Add a LocalStorage Skill
+## Add a LocalStorage Skill
 Duration: 7
 
 Skills are like "mini-manuals" that teach your AI exactly how to handle specific tasks. Let's create one for managing data, giving your assistant the expertise it needs to be super reliable!
 
 ### The Prompt (Same for All Tools)
 ```
-Create a SKILL document: "LocalStorage Management" and save it to `.ai/skills/localstorage.md`.
+Create a SKILL document: "LocalStorage Management" and save it to `.gemini/skills/localstorage.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: LocalStorage Management
+description: Manage LocalStorage safely with error handling and fallback.
+version: 0.1.0
+---
 
 STRUCTURE:
 
@@ -275,15 +295,6 @@ function loadTasks() {
 }
 ```
 
-### Testing
-- Test with localStorage disabled
-- Test with invalid JSON
-- Test with quota exceeded
-```
-
-Format with complete code examples.
-```
-
 ### Option 1: Antigravity
 
 1. Use AI chat → Paste prompt
@@ -307,21 +318,21 @@ gemini
 
 ---
 
-## Step 4: Time to Build!
+## Time to Build!
 Duration: 15
 
 Now for the best part! We're going to use all those documents you just created to build your actual app. It's time to see your hard work pay off!
 
-### Step 1: Generate the code
+### Generate the code
 It's time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!
 
 **Prompt (Same for All Tools):**
 ```
 Build a task manager following these documents:
 
-PRD: [paste your PRD.md content]
-AGENT: [paste your AGENT.md content]
-SKILL: [paste your localstorage.md content]
+PRD: @.gemini/prd/PRD.md
+AGENT: @.gemini/agents/frontend-specialist.md
+SKILL: @.gemini/skills/localstorage.md
 
 Create a single `index.html` file with:
 1. HTML structure (semantic tags)
@@ -360,7 +371,7 @@ gemini
 2. Paste prompt with your three documents
 3. Accept creation of `index.html`
 
-### Step 2: Try it out!
+### Try it out!
 
 You've built it—now let's see it in action:
 - ✅ Add tasks
@@ -373,16 +384,22 @@ You've built it—now let's see it in action:
 
 ---
 
-## Step 5: Keep it consistent with ADRs
+## Keep it consistent with ADRs
 Duration: 8
 
 As your project grows, you'll want to remember *why* you made certain decisions. This is where Architectural Decision Records (ADRs) come in handy—they're like a diary for your project's soul!
 
-### Step 1: Create Your First ADR
+### Create Your First ADR
 
 **Prompt for Gemini:**
 ```
-Create ADR-001: "Pure CSS and Vanilla JS Architecture" and save it to `.ai/adrs/ADR-001.md`.
+Create ADR-001: "Pure CSS and Vanilla JS Architecture" and save it to `.gemini/adrs/ADR-001.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: ADR-001
+description: Architectural decision to use pure CSS and Vanilla JS
+version: 0.1.0
+---
 
 Include:
 - Context: Why we chose this (no build tools, simple deployment, educational)
@@ -391,7 +408,8 @@ Include:
 ```
 
 #### Option 1: Antigravity
-1. Use Cmd/Ctrl+K to generate the ADR content and create the file
+1. Use AI chat (Cmd/Ctrl+L)
+2. Paste prompt → Antigravity generates and creates the file
 
 #### Option 2: Gemini CLI
 1. **Launch Gemini CLI:**
@@ -404,36 +422,36 @@ gemini
 #### Option 3: IntelliJ
 1. Use Gemini panel to generate and accept file creation
 
-### Step 2: Update AGENT.md
+### Update frontend-specialist.md
 
-To make your agent follow these decisions, you must link them in `AGENT.md`.
+To make your agent follow these decisions, you must link them in `frontend-specialist.md`.
 
 **Prompt for Gemini:**
 ```
-Update .ai/AGENT.md to include a new section "Rules from ADRs".
+Update .gemini/agents/frontend-specialist.md to include a new section "Rules from ADRs".
 Link ADR-001: "Pure CSS and Vanilla JS Architecture" and explain that all new features must comply with it.
 ```
 
 #### Option 1: Antigravity
-1. Open `.ai/AGENT.md` or just use the prompt
-2. Use Cmd/Ctrl+K with the prompt above to update the file
+1. Use AI chat (Cmd/Ctrl+L)
+2. Paste prompt → Antigravity generates and updates the file
 
 #### Option 2: Gemini CLI
 1. **Launch Gemini CLI:**
 ```bash
 gemini
 ```
-2. **Paste the prompt** to update `AGENT.md` into the interactive shell.
+2. **Paste the prompt** to update `frontend-specialist.md` into the interactive shell.
 3. Once generated, the tool will ask for permission to update the file.
 
 #### Option 3: IntelliJ
-1. Use Gemini panel to generate the updated content and accept the changes to `.ai/AGENT.md`
+1. Use Gemini panel to generate the updated content and accept the changes to `.gemini/agents/frontend-specialist.md`
 
 🔒 **Awesome! Now your AI will always know the "why" behind your code choices.**
 
 ---
 
-## Step 6: Connect to the World with Context7
+## Connect to the World with Context7
 Duration: 8
 
 Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid "AI hallucinations" from outdated training data!
@@ -549,7 +567,13 @@ Ready for one last skill? Let's teach your AI how to write tests for your code, 
 
 **Prompt (Same for All Tools):**
 ```
-Create a SKILL document: "Unit Testing with Vanilla JS" and save it to `.ai/skills/unit-testing.md`.
+Create a SKILL document: "Unit Testing with Vanilla JS" and save it to `.gemini/skills/unit-testing.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Unit Testing with Vanilla JS
+description: Ensure code reliability without external testing frameworks (using simple assertions).
+version: 0.1.0
+---
 
 STRUCTURE:
 

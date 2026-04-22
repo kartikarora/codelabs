@@ -31,8 +31,8 @@
 <h3>What You&#39;ll Build</h3>
 <ul>
 <li>✨ A rock-solid <strong>Product Requirements Document</strong> (PRD.md)</li>
-<li>🤖 A personalised <strong>AI Agent configuration</strong> (AGENT.md)</li>
-<li>🛠️ A reusable <strong>LocalStorage Skill</strong> (SKILL.md)</li>
+<li>🤖 A personalised <strong>AI Agent configuration</strong> (frontend-specialist.md)</li>
+<li>🛠️ A reusable <strong>LocalStorage Skill</strong> (localstorage.md)</li>
 <li>🧪 <strong>Unit Testing Skill</strong> (Bonus)</li>
 <li>📝 A sleek <strong>Task Manager web app</strong> with up-to-date documentation via Context7</li>
 </ul>
@@ -97,7 +97,7 @@
 <ol>
 <li><strong>Create your project space:</strong></li>
 </ol>
-<pre><code class=" language-bash">mkdir -p my-task-manager/.ai/{prd,skills}
+<pre><code class=" language-bash">mkdir -p my-task-manager/.gemini/{prd,skills,agents}
 cd my-task-manager
 </code></pre>
 <ol start="2">
@@ -114,13 +114,19 @@ cd my-task-manager
 <p>🌟 <strong>Great job! Your workspace is ready. Let&#39;s start building.</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 1: Create your PRD" duration="7">
+    <google-codelab-step label="Create your PRD" duration="7">
       <p>Let&#39;s start with the most important part: the <strong>Product Requirements Document (PRD)</strong>. This is the heart of your project—it&#39;s the source of truth that helps your AI assistant understand exactly what you&#39;re dreaming of building!</p>
 <h3>The Prompt (Ready to copy-paste!)</h3>
 <p>Copy this prompt and get ready to see Gemini&#39;s magic in action:</p>
 <pre><code class="">Act as a Senior Software Architect.
 
-Create a Product Requirements Document (PRD) for a &quot;Task Manager&quot; web app and save it to `.ai/prd/PRD.md`.
+Create a Product Requirements Document (PRD) for a &quot;Task Manager&quot; web app and save it to `.gemini/prd/PRD.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Task Manager Web App
+description: A web application for managing tasks.
+version: 0.1.0
+---
 
 REQUIREMENTS:
 - Single HTML file (no build tools)
@@ -155,10 +161,18 @@ Ask me clarifying questions, one at a time.
 <p>✨ <strong>Fantastic! Your PRD is ready. Let&#39;s keep the momentum going!</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 2: Configure your AI Agent" duration="6">
-      <p>Now, let&#39;s give your AI assistant a personality and some clear instructions. This <code>AGENT.md</code> file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.</p>
+    <google-codelab-step label="Configure your AI Agent" duration="6">
+      <p>Now, let&#39;s give your AI assistant a personality and some clear instructions. This <code>frontend-specialist.md</code> file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.</p>
 <h3>The Prompt (Same for All Tools)</h3>
-<pre><code class="">Create AGENT.md for an AI coding assistant and save it to `.ai/AGENT.md`.
+<pre><code class="">Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/frontend-specialist.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Frontend Specialist
+description: A senior frontend engineer specialising in vanilla JS.
+skills: [localstorage]
+prompt: &quot;You are a Senior Frontend Engineer specialising in vanilla JS...&quot;
+version: 0.1.0
+---
 
 CONTEXT (from PRD):
 - Vanilla JavaScript only
@@ -206,10 +220,16 @@ Format as markdown with clear sections.
 <p>🚀 <strong>Agent configured! You&#39;re building a solid foundation.</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 3: Add a LocalStorage Skill" duration="7">
+    <google-codelab-step label="Add a LocalStorage Skill" duration="7">
       <p>Skills are like &quot;mini-manuals&quot; that teach your AI exactly how to handle specific tasks. Let&#39;s create one for managing data, giving your assistant the expertise it needs to be super reliable!</p>
 <h3>The Prompt (Same for All Tools)</h3>
-<pre><code class="">Create a SKILL document: &quot;LocalStorage Management&quot; and save it to `.ai/skills/localstorage.md`.
+<pre><code class="">Create a SKILL document: &quot;LocalStorage Management&quot; and save it to `.gemini/skills/localstorage.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: LocalStorage Management
+description: Manage LocalStorage safely with error handling and fallback.
+version: 0.1.0
+---
 
 STRUCTURE:
 
@@ -259,15 +279,6 @@ function loadTasks() {
   }
 }
 </code></pre>
-<h3>Testing</h3>
-<ul>
-<li>Test with localStorage disabled</li>
-<li>Test with invalid JSON</li>
-<li>Test with quota exceeded</li>
-</ul>
-<pre><code class="">
-Format with complete code examples.
-</code></pre>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat → Paste prompt</li>
@@ -290,16 +301,16 @@ Format with complete code examples.
 <p>🎉 <strong>Spot on! You just built a reusable skill. Ready to see it all come together?</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 4: Time to Build!" duration="15">
+    <google-codelab-step label="Time to Build!" duration="15">
       <p>Now for the best part! We&#39;re going to use all those documents you just created to build your actual app. It&#39;s time to see your hard work pay off!</p>
-<h3>Step 1: Generate the code</h3>
+<h3>Generate the code</h3>
 <p>It&#39;s time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!</p>
 <p><strong>Prompt (Same for All Tools):</strong></p>
 <pre><code class="">Build a task manager following these documents:
 
-PRD: [paste your PRD.md content]
-AGENT: [paste your AGENT.md content]
-SKILL: [paste your localstorage.md content]
+PRD: @.gemini/prd/PRD.md
+AGENT: @.gemini/agents/frontend-specialist.md
+SKILL: @.gemini/skills/localstorage.md
 
 Create a single `index.html` file with:
 1. HTML structure (semantic tags)
@@ -337,7 +348,7 @@ No frameworks. No build tools.
 <li>Paste prompt with your three documents</li>
 <li>Accept creation of <code>index.html</code></li>
 </ol>
-<h3>Step 2: Try it out!</h3>
+<h3>Try it out!</h3>
 <p>You&#39;ve built it—now let&#39;s see it in action:</p>
 <ul>
 <li>✅ Add tasks</li>
@@ -349,11 +360,17 @@ No frameworks. No build tools.
 <p>📱 <strong>Amazing! You&#39;ve just built a functional web app with AI. Take a moment to celebrate!</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 5: Keep it consistent with ADRs" duration="8">
+    <google-codelab-step label="Keep it consistent with ADRs" duration="8">
       <p>As your project grows, you&#39;ll want to remember <em>why</em> you made certain decisions. This is where Architectural Decision Records (ADRs) come in handy—they&#39;re like a diary for your project&#39;s soul!</p>
-<h3>Step 1: Create Your First ADR</h3>
+<h3>Create Your First ADR</h3>
 <p><strong>Prompt for Gemini:</strong></p>
-<pre><code class="">Create ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and save it to `.ai/adrs/ADR-001.md`.
+<pre><code class="">Create ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and save it to `.gemini/adrs/ADR-001.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: ADR-001
+description: Architectural decision to use pure CSS and Vanilla JS
+version: 0.1.0
+---
 
 Include:
 - Context: Why we chose this (no build tools, simple deployment, educational)
@@ -362,7 +379,8 @@ Include:
 </code></pre>
 <h4>Option 1: Antigravity</h4>
 <ol>
-<li>Use Cmd/Ctrl+K to generate the ADR content and create the file</li>
+<li>Use AI chat (Cmd/Ctrl+K)</li>
+<li>Paste prompt → Antigravity generates and creates the file</li>
 </ol>
 <h4>Option 2: Gemini CLI</h4>
 <ol>
@@ -378,16 +396,16 @@ Include:
 <ol>
 <li>Use Gemini panel to generate and accept file creation</li>
 </ol>
-<h3>Step 2: Update AGENT.md</h3>
-<p>To make your agent follow these decisions, you must link them in <code>AGENT.md</code>.</p>
+<h3>Update frontend-specialist.md</h3>
+<p>To make your agent follow these decisions, you must link them in <code>frontend-specialist.md</code>.</p>
 <p><strong>Prompt for Gemini:</strong></p>
-<pre><code class="">Update .ai/AGENT.md to include a new section &quot;Rules from ADRs&quot;.
+<pre><code class="">Update .gemini/agents/frontend-specialist.md to include a new section &quot;Rules from ADRs&quot;.
 Link ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and explain that all new features must comply with it.
 </code></pre>
 <h4>Option 1: Antigravity</h4>
 <ol>
-<li>Open <code>.ai/AGENT.md</code> or just use the prompt</li>
-<li>Use Cmd/Ctrl+K with the prompt above to update the file</li>
+<li>Use AI chat (Cmd/Ctrl+K)</li>
+<li>Paste prompt → Antigravity generates and updates the file</li>
 </ol>
 <h4>Option 2: Gemini CLI</h4>
 <ol>
@@ -396,17 +414,17 @@ Link ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and explain that 
 <pre><code class=" language-bash">gemini
 </code></pre>
 <ol start="2">
-<li><strong>Paste the prompt</strong> to update <code>AGENT.md</code> into the interactive shell.</li>
+<li><strong>Paste the prompt</strong> to update <code>frontend-specialist.md</code> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to update the file.</li>
 </ol>
 <h4>Option 3: IntelliJ</h4>
 <ol>
-<li>Use Gemini panel to generate the updated content and accept the changes to <code>.ai/AGENT.md</code></li>
+<li>Use Gemini panel to generate the updated content and accept the changes to <code>.gemini/agents/frontend-specialist.md</code></li>
 </ol>
 <p>🔒 <strong>Awesome! Now your AI will always know the &quot;why&quot; behind your code choices.</strong></p>
 
     </google-codelab-step>
-    <google-codelab-step label="Step 6: Connect to the World with Context7" duration="8">
+    <google-codelab-step label="Connect to the World with Context7" duration="8">
       <p>Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid &quot;AI hallucinations&quot; from outdated training data!</p>
 <p><a href="https://github.com/upstash/context7" target="_blank">Context7</a> is an open-source MCP server that provides:</p>
 <ul>
@@ -505,7 +523,13 @@ Check context7 for the correct API signature for the current version of Tailwind
     <google-codelab-step label="Bonus: Add a Unit Testing Skill" duration="8">
       <p>Ready for one last skill? Let&#39;s teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.</p>
 <p><strong>Prompt (Same for All Tools):</strong></p>
-<pre><code class="">Create a SKILL document: &quot;Unit Testing with Vanilla JS&quot; and save it to `.ai/skills/unit-testing.md`.
+<pre><code class="">Create a SKILL document: &quot;Unit Testing with Vanilla JS&quot; and save it to `.gemini/skills/unit-testing.md`.
+Please ensure that the markdown file begins with the following frontmatter:
+---
+name: Unit Testing with Vanilla JS
+description: Ensure code reliability without external testing frameworks (using simple assertions).
+version: 0.1.0
+---
 
 STRUCTURE:
 
