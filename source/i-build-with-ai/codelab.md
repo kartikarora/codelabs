@@ -679,10 +679,10 @@ You did it! 🏆 You've gone from zero to a fully functional, AI-powered task ma
 
 ### Tools You Mastered
 
-- **Gemini Code Assist** (IntelliJ)
-- **Gemini CLI** (Terminal)
-- **Google AI Studio** (Web)
-- **Context7** (Up-to-date Docs)
+- **Google Antigravity**
+- **Gemini Code Assist**
+- **Gemini CLI**
+- **Context7**
 
 ### What's Next?
 The sky's the limit! Why not try:
@@ -693,7 +693,7 @@ The sky's the limit! Why not try:
 
 ### Resources
 
-- **Gemini:** [aistudio.google.com](https://aistudio.google.com)
+- **AI Studio:** [aistudio.google.com](https://aistudio.google.com)
 - **Context7:** [github.com/upstash/context7](https://github.com/upstash/context7)
 - **IntelliJ:** [jetbrains.com/idea](https://jetbrains.com/idea)
 
