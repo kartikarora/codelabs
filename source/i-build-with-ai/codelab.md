@@ -691,10 +691,10 @@ The sky's the limit! Why not try:
 3. Sharing your PRD template with a friend
 4. Integrating Context7 into your next big project
 
-### Resources
+### Additional Resources
 
 - **AI Studio:** [aistudio.google.com](https://aistudio.google.com)
+- **Google Skills**: [github.com/google/skills](https://github.com/google/skills)
+- **MCP**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Context7:** [github.com/upstash/context7](https://github.com/upstash/context7)
-- **IntelliJ:** [jetbrains.com/idea](https://jetbrains.com/idea)
-
 ---
