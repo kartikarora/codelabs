@@ -152,7 +152,7 @@
                 </div>
                 <p class="card-body">${shortSummary}</p>
                 <div class="card-tags">
-                  ${(cl.tags || []).slice(0, 3).map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
+                  ${(cl.tags || []).map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
                 </div>
 
                 <div class="card-footer">

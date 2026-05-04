@@ -63,7 +63,8 @@ Choose your preferred package manager:
 ```bash
 # macOS/Linux (Homebrew)
 brew install gemini-cli
-
+```
+```bash
 # OR using npm (All Platforms)
 npm install -g gemini-cli
 ```

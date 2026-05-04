@@ -53,11 +53,11 @@ Choose your preferred package manager:
 ```bash
 # macOS/Linux (Homebrew)
 brew install gemini-cli
-
+```
+```bash
 # OR using npm (All Platforms)
 npm install -g gemini-cli
 ```
-
 2. **Authenticate:**
 Run the CLI in your terminal and select "**Sign in with Google**":
 ```bash
@@ -449,7 +449,6 @@ class NoteViewModelTest {
 ### Testing
 - **Run tests in Android Studio:** Open the test file and click the double green arrows next to the class name.
 - **Or use the CLI:** `./gradlew test` (if you have Java configured).
-```
 
 🧪 **Great work! You've just added a professional layer of testing to your project.**
 
