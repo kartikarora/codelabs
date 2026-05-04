@@ -552,13 +552,11 @@ touch ~/.gemini/settings.json
 <div class="code-container"><pre><code class=" language-json">{
   &quot;mcpServers&quot;: {
     &quot;context7&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [
-        &quot;-y&quot;,
-        &quot;@upstash/context7-mcp&quot;,
-        &quot;--api-key&quot;,
-        &quot;YOUR_CONTEXT7_API_KEY&quot;
-      ]
+      &quot;httpUrl&quot;: &quot;https://mcp.context7.com/mcp&quot;,
+      &quot;headers&quot;: {
+        &quot;CONTEXT7_API_KEY&quot;: &quot;YOUR_API_KEY&quot;,
+        &quot;Accept&quot;: &quot;application/json, text/event-stream&quot;
+      }
     }
   }
 }
@@ -573,10 +571,10 @@ touch ~/.gemini/settings.json
 <p>Context7 provides tools to search library documentation and resolve library identifiers.</p>
 <p><strong>Natural prompts:</strong></p>
 <div class="code-container"><pre><code class="">Use context7 to find the latest documentation for the Chart.js library.
-
-What is the newest way to implement auth in Next.js? Use context7.
-
-Check context7 for the correct API signature for the current version of Tailwind CSS.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class="">What is the newest way to implement auth in Next.js? Use context7.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class="">Check context7 for the correct API signature for the current version of Tailwind CSS.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><strong>Why it matters:</strong>By using Context7, your AI assistant stays informed about the latest tools and libraries, reducing bugs and ensuring you&#39;re using modern, secure patterns. 🎉</p>
 <p><strong>Available MCP tools:</strong></p>
@@ -650,9 +648,7 @@ function testLocalStorage() {
 <li>Run tests in the browser console</li>
 <li>Verify all assertions pass</li>
 </ul>
-<div class="code-container"><pre><code class="">
-Format with complete code examples.
-</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<p>Format with complete code examples.</p>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat → Paste prompt</li>

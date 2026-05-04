@@ -66,7 +66,10 @@ gemini
 
 ![Gemini CLI](images/gemini_cli.png)
 
-### 3. Choose Your Objective
+### 3. Install Android Studio
+Download and install the latest version of **Android Studio** from the official website: [developer.android.com/studio](https://developer.android.com/studio). This will be used to build and run your application.
+
+### 4. Choose Your Objective
 During the workshop, the workflow remains the same regardless of what you build:
 - **Guided**: Follow this Codelab to build a sample application from scratch.
 - **Independent**: Bring a specific idea, a small feature, or a prototype you want to build using these AI tools.
@@ -115,7 +118,7 @@ REQUIREMENTS:
 - Kotlin & Jetpack Compose
 - MVVM Architecture
 - In-memory storage (StateFlow) for simplicity
-- Material 3 Design
+- Material 3 Expressive Design
 
 Ask me clarifying questions, one at a time.
 ```
@@ -128,7 +131,9 @@ gemini
 ```
 
 2. **Paste the prompt** into the interactive shell.
-3. Once generated, the tool will ask for permission to write the file. Press `Y` to accept.
+3. Once generated, the tool will ask for permission to write the file.
+
+![Gemini CLI Permission](images/gemini_cli_permission.png)
 
 ✨ **Fantastic! Your PRD is ready. Let's keep the momentum going!**
 
@@ -151,11 +156,11 @@ prompt: "You are a Senior Android Engineer specialising in Kotlin and Jetpack Co
 version: 0.1.0
 ---
 
-CONTEXT (from PRD):
+CONTEXT:
 - Kotlin & Jetpack Compose
 - MVVM Architecture
 - In-memory data management
-- Material 3 Design
+- Material 3 Expressive Design
 
 STRUCTURE:
 1. ROLE: Persona (senior Android engineer, Kotlin/Compose specialist)
@@ -163,13 +168,14 @@ STRUCTURE:
 3. COMMUNICATION: Style (concise, direct, professional)
 4. TECHNICAL STANDARDS:
    - Modern Android Development (MAD)
-   - Clean Architecture
+   - Google's ViewModel (Architecture Components)
    - Repository Pattern (using in-memory data)
-   - **Version Catalogs (libs.versions.toml) for dependencies**
-   - Accessibility & Localization
+   - Material 3 Expressive Design
+   - Gradle (Kotlin DSL) as the build system
+   - Version Catalogs (libs.versions.toml) for dependencies
 5. PROHIBITED:
    - No legacy View system (XML layouts)
-   - **No hardcoded dependency versions (use TOML)**
+   - No hardcoded dependency versions (use TOML)
    - No God-objects
 
 Format as markdown with clear sections.
@@ -179,7 +185,7 @@ Format as markdown with clear sections.
 
 1. **Paste the prompt** into the `gemini` shell.
 2. Review the generated configuration.
-3. Once generated, the tool will ask for permission to write the file. Press `Y` to accept.
+3. Once generated, the tool may ask for permission to write the file if you have not allowed it for the session.
 
 🚀 **Agent configured! You're building a solid foundation.**
 
@@ -242,7 +248,7 @@ class NoteViewModel : ViewModel() {
 
 1. **Paste the prompt** into the `gemini` shell.
 2. Review the skill documentation.
-3. Once generated, the tool will ask for permission to write the file.
+3. Once generated, the tool will may for permission to write the file.
 
 🎉 **Spot on! You just built a reusable skill. Ready to see it all come together?**
 
@@ -282,7 +288,7 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 
 1. **Paste the build prompt** into the `gemini` shell.
 2. The agent will read your documents and propose file creations/updates.
-3. Review the code and allow the tool to write the files.
+3. Review the code and allow the tool to write the files if needed.
 
 ### Try it out!
 
@@ -324,11 +330,13 @@ Choose the method that fits your workflow:
 Install the Context7 CLI to automatically configure your MCP server.
 
 1. **Install the CLI:**
+
 Choose your preferred package manager:
 ```bash
 # Using npm
 npm install -g ctx7
-
+```
+```
 # OR using Homebrew (macOS)
 brew install ctx7
 ```
@@ -358,13 +366,11 @@ touch ~/.gemini/settings.json
 {
   "mcpServers": {
     "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "YOUR_CONTEXT7_API_KEY"
-      ]
+      "httpUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR_API_KEY",
+        "Accept": "application/json, text/event-stream"
+      }
     }
   }
 }
@@ -372,8 +378,8 @@ touch ~/.gemini/settings.json
 
 4. **Verify:**
 ```bash
-gemini
-# In the CLI, type: /mcp list
+# inside gemini shell
+/mcp list
 ```
 
 ### How to Use Context7 for Android
@@ -381,11 +387,20 @@ gemini
 **Natural prompts:**
 ```
 Use context7 to find the latest documentation for StateFlow and Coroutines.
-
-What is the newest way to handle navigation in Jetpack Compose? Use context7.
-
-Check context7 for the correct API signature for the latest Material 3 components.
 ```
+```
+What is the newest way to handle navigation in Jetpack Compose? Use context7.
+```
+```
+Check context7 for the correct API usage for the latest Material 3 components.
+```
+
+**Why it matters:**
+By using Context7, your AI assistant stays informed about the latest tools and libraries, reducing bugs and ensuring you're using modern, secure patterns. 🎉
+
+**Available MCP tools:**
+- `resolve-library-id` - Find library identifiers
+- `get-library-docs` - Fetch latest documentation
 
 🧠 **Incredible! Your AI assistant now has access to the most current Android documentation in the world.**
 

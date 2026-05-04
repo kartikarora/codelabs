@@ -141,7 +141,9 @@ npm install -g gemini-cli
 <div class="code-container"><pre><code class=" language-bash">gemini
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><img alt="Gemini CLI" src="images/gemini_cli.png"></p>
-<h3>3. Choose Your Objective</h3>
+<h3>3. Install Android Studio</h3>
+<p>Download and install the latest version of <strong>Android Studio</strong> from the official website: <a href="https://developer.android.com/studio" target="_blank">developer.android.com/studio</a>. This will be used to build and run your application.</p>
+<h3>4. Choose Your Objective</h3>
 <p>During the workshop, the workflow remains the same regardless of what you build:</p>
 <ul>
 <li><strong>Guided</strong>: Follow this Codelab to build a sample application from scratch.</li>
@@ -181,7 +183,7 @@ REQUIREMENTS:
 - Kotlin &amp; Jetpack Compose
 - MVVM Architecture
 - In-memory storage (StateFlow) for simplicity
-- Material 3 Design
+- Material 3 Expressive Design
 
 Ask me clarifying questions, one at a time.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
@@ -193,8 +195,9 @@ Ask me clarifying questions, one at a time.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> into the interactive shell.</li>
-<li>Once generated, the tool will ask for permission to write the file. Press <code>Y</code> to accept.</li>
+<li>Once generated, the tool will ask for permission to write the file.</li>
 </ol>
+<p><img alt="Gemini CLI Permission" src="images/gemini_cli_permission.png"></p>
 <p>✨ <strong>Fantastic! Your PRD is ready. Let&#39;s keep the momentum going!</strong></p>
 
     </google-codelab-step>
@@ -211,11 +214,11 @@ prompt: &quot;You are a Senior Android Engineer specialising in Kotlin and Jetpa
 version: 0.1.0
 ---
 
-CONTEXT (from PRD):
+CONTEXT:
 - Kotlin &amp; Jetpack Compose
 - MVVM Architecture
 - In-memory data management
-- Material 3 Design
+- Material 3 Expressive Design
 
 STRUCTURE:
 1. ROLE: Persona (senior Android engineer, Kotlin/Compose specialist)
@@ -223,13 +226,14 @@ STRUCTURE:
 3. COMMUNICATION: Style (concise, direct, professional)
 4. TECHNICAL STANDARDS:
    - Modern Android Development (MAD)
-   - Clean Architecture
+   - Google&#39;s ViewModel (Architecture Components)
    - Repository Pattern (using in-memory data)
-   - **Version Catalogs (libs.versions.toml) for dependencies**
-   - Accessibility &amp; Localization
+   - Material 3 Expressive Design
+   - Gradle (Kotlin DSL) as the build system
+   - Version Catalogs (libs.versions.toml) for dependencies
 5. PROHIBITED:
    - No legacy View system (XML layouts)
-   - **No hardcoded dependency versions (use TOML)**
+   - No hardcoded dependency versions (use TOML)
    - No God-objects
 
 Format as markdown with clear sections.
@@ -238,7 +242,7 @@ Format as markdown with clear sections.
 <ol>
 <li><strong>Paste the prompt</strong> into the <code>gemini</code> shell.</li>
 <li>Review the generated configuration.</li>
-<li>Once generated, the tool will ask for permission to write the file. Press <code>Y</code> to accept.</li>
+<li>Once generated, the tool may ask for permission to write the file if you have not allowed it for the session.</li>
 </ol>
 <p>🚀 <strong>Agent configured! You&#39;re building a solid foundation.</strong></p>
 
@@ -295,7 +299,7 @@ class NoteViewModel : ViewModel() {
 <ol>
 <li><strong>Paste the prompt</strong> into the <code>gemini</code> shell.</li>
 <li>Review the skill documentation.</li>
-<li>Once generated, the tool will ask for permission to write the file.</li>
+<li>Once generated, the tool will may for permission to write the file.</li>
 </ol>
 <p>🎉 <strong>Spot on! You just built a reusable skill. Ready to see it all come together?</strong></p>
 
@@ -328,7 +332,7 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 <ol>
 <li><strong>Paste the build prompt</strong> into the <code>gemini</code> shell.</li>
 <li>The agent will read your documents and propose file creations/updates.</li>
-<li>Review the code and allow the tool to write the files.</li>
+<li>Review the code and allow the tool to write the files if needed.</li>
 </ol>
 <h3>Try it out!</h3>
 <p>To run your app, we&#39;ll use <strong>Android Studio</strong>. It provides a pre-configured environment with everything you need.</p>
@@ -362,12 +366,13 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 <h4>Option A: CLI Setup (Easiest)</h4>
 <p>Install the Context7 CLI to automatically configure your MCP server.</p>
 <ol>
-<li><strong>Install the CLI:</strong>Choose your preferred package manager:</li>
+<li><strong>Install the CLI:</strong></li>
 </ol>
+<p>Choose your preferred package manager:</p>
 <div class="code-container"><pre><code class=" language-bash"># Using npm
 npm install -g ctx7
-
-# OR using Homebrew (macOS)
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class=""># OR using Homebrew (macOS)
 brew install ctx7
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
@@ -392,13 +397,11 @@ touch ~/.gemini/settings.json
 <div class="code-container"><pre><code class=" language-json">{
   &quot;mcpServers&quot;: {
     &quot;context7&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [
-        &quot;-y&quot;,
-        &quot;@upstash/context7-mcp&quot;,
-        &quot;--api-key&quot;,
-        &quot;YOUR_CONTEXT7_API_KEY&quot;
-      ]
+      &quot;httpUrl&quot;: &quot;https://mcp.context7.com/mcp&quot;,
+      &quot;headers&quot;: {
+        &quot;CONTEXT7_API_KEY&quot;: &quot;YOUR_API_KEY&quot;,
+        &quot;Accept&quot;: &quot;application/json, text/event-stream&quot;
+      }
     }
   }
 }
@@ -406,17 +409,23 @@ touch ~/.gemini/settings.json
 <ol start="4">
 <li><strong>Verify:</strong></li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash">gemini
-# In the CLI, type: /mcp list
+<div class="code-container"><pre><code class=" language-bash"># inside gemini shell
+/mcp list
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>How to Use Context7 for Android</h3>
 <p><strong>Natural prompts:</strong></p>
 <div class="code-container"><pre><code class="">Use context7 to find the latest documentation for StateFlow and Coroutines.
-
-What is the newest way to handle navigation in Jetpack Compose? Use context7.
-
-Check context7 for the correct API signature for the latest Material 3 components.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class="">What is the newest way to handle navigation in Jetpack Compose? Use context7.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class="">Check context7 for the correct API usage for the latest Material 3 components.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<p><strong>Why it matters:</strong>By using Context7, your AI assistant stays informed about the latest tools and libraries, reducing bugs and ensuring you&#39;re using modern, secure patterns. 🎉</p>
+<p><strong>Available MCP tools:</strong></p>
+<ul>
+<li><code>resolve-library-id</code> - Find library identifiers</li>
+<li><code>get-library-docs</code> - Fetch latest documentation</li>
+</ul>
 <p>🧠 <strong>Incredible! Your AI assistant now has access to the most current Android documentation in the world.</strong></p>
 
     </google-codelab-step>

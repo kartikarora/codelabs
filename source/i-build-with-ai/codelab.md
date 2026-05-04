@@ -520,13 +520,11 @@ touch ~/.gemini/settings.json
 {
   "mcpServers": {
     "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "YOUR_CONTEXT7_API_KEY"
-      ]
+      "httpUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "YOUR_API_KEY",
+        "Accept": "application/json, text/event-stream"
+      }
     }
   }
 }
@@ -545,9 +543,11 @@ Context7 provides tools to search library documentation and resolve library iden
 **Natural prompts:**
 ```
 Use context7 to find the latest documentation for the Chart.js library.
-
+```
+```
 What is the newest way to implement auth in Next.js? Use context7.
-
+```
+```
 Check context7 for the correct API signature for the current version of Tailwind CSS.
 ```
 
@@ -628,10 +628,8 @@ function testLocalStorage() {
 ### Testing
 - Run tests in the browser console
 - Verify all assertions pass
-```
 
 Format with complete code examples.
-```
 
 ### Option 1: Antigravity
 
