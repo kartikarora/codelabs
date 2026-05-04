@@ -57,11 +57,22 @@ To save time during the session, please install **one** of the following tools (
 ![Antigravity](images/antigravity.png)
 
 #### Option B: Gemini CLI (Terminal)
-- **Prerequisite**: Node.js 20.0.0+.
-- **Installation**:
-  - **macOS/Linux**: `brew install gemini-cli` (Homebrew) or `npm install -g @google/gemini-cli`
-  - **Windows**: `npm install -g @google/gemini-cli`
-- **Authentication**: Run `gemini` in your terminal and select "**Sign in with Google**."
+
+1. **Install the CLI:**
+Choose your preferred package manager:
+```bash
+# macOS/Linux (Homebrew)
+brew install gemini-cli
+
+# OR using npm (All Platforms)
+npm install -g gemini-cli
+```
+
+2. **Authenticate:**
+Run the CLI in your terminal and select "**Sign in with Google**":
+```bash
+gemini
+```
 
 ![Gemini CLI](images/gemini_cli.png)
 
@@ -456,48 +467,54 @@ Duration: 8
 
 Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid "AI hallucinations" from outdated training data!
 
-[Context7](https://github.com/upstash/context7) is an open-source MCP server that provides:
-- **Up-to-date Info**: Current API signatures and patterns from source repositories.
-- **Reduced Hallucinations**: Accurate documentation to prevent fake or broken code.
-- **Version-Specific Docs**: Retrieving the right information for the exact library version you're using.
-- **Wide Support**: Thousands of popular libraries and frameworks.
+**Context7** is an open-source Model Context Protocol (MCP) server developed by Upstash designed to provide AI coding assistants (like Cursor, Claude, and Windsurf) with up-to-date, version-specific documentation.
 
 ### Get Your API Key
 
-1. Go to [console.upstash.com](https://console.upstash.com)
-2. Sign in (free tier available)
-3. Generate your **Context7 API key**
+1. Go to [context7.com/dashboard](https://context7.com/dashboard)
+2. **Create an account** (using your GitHub or Google account).
+3. Sign in and generate your **Context7 API key**.
 
-### Configure MCP (All Tools)
+![Context7 Dashboard](images/context7.png)
 
-Context7 works as an MCP server. Here's the configuration:
+### Configure MCP
 
-```json
-{
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@upstash/context7-mcp",
-        "--api-key",
-        "YOUR_CONTEXT7_API_KEY"
-      ]
-    }
-  }
-}
+Choose the method that fits your workflow:
+
+#### Option A: CLI Setup (Easiest)
+Install the Context7 CLI to automatically configure your MCP server.
+
+1. **Install the CLI:**
+Choose your preferred package manager:
+```bash
+# Using npm
+npm install -g ctx7
+
+# OR using Homebrew (macOS)
+brew install ctx7
 ```
 
-### Option 1: Gemini CLI
+2. **Run the setup:**
+```bash
+ctx7 setup
+```
+Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
 
-1. **Open settings file:**
+---
+
+#### Option B: Manual Configuration (No Global Install)
+If you prefer not to install it globally, you can manually configure the settings.
+
+1. **Get your API Key:** Follow the "Get Your API Key" steps above.
+
+2. **Open settings file:**
 ```bash
 # Create if doesn't exist
 mkdir -p ~/.gemini
 touch ~/.gemini/settings.json
 ```
 
-2. **Edit `~/.gemini/settings.json`:**
+3. **Edit `~/.gemini/settings.json`:**
 ```json
 {
   "mcpServers": {
@@ -514,27 +531,11 @@ touch ~/.gemini/settings.json
 }
 ```
 
-3. **Verify:**
+4. **Verify:**
 ```bash
 gemini
 # In the CLI, type: /mcp list
-# You should see "context7" listed
 ```
-
-### Option 2: Antigravity
-
-1. **Open Antigravity**
-2. **Go to Agent Side Panel**
-3. **Click More (...) → MCP Servers → Manage MCP Servers**
-4. **Select "View raw config"** to open `mcp_config.json`
-5. **Paste the configuration block** and save
-
-### Option 3: IntelliJ + Gemini Code Assist
-
-1. **Gemini Code Assist uses the same file as CLI:** `~/.gemini/settings.json`
-2. **Follow the Gemini CLI instructions above**
-3. **In IntelliJ, ensure "Agent Mode" is toggled ON** in Gemini chat pane
-4. **Restart IntelliJ** if needed
 
 ### How to Use Context7
 

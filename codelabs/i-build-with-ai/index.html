@@ -15,9 +15,83 @@
     .error {
       color: red;
     }
+    .code-container {
+      position: relative;
+    }
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #333;
+    }
+    .copy-button .material-icons {
+      font-size: 16px;
+    }
+    .code-container:hover .copy-button {
+      opacity: 1;
+    }
+    .copy-button:hover {
+      background: #fff;
+    }
   </style>
 </head>
 <body>
+  <script>
+    function copyToClipboard(button) {
+      const container = button.parentElement;
+      const code = container.querySelector('code').innerText;
+      
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+          updateButtonText(button);
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+          fallbackCopy(code, button);
+        });
+      } else {
+        fallbackCopy(code, button);
+      }
+    }
+
+    function fallbackCopy(text, button) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        updateButtonText(button);
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function updateButtonText(button) {
+      const textSpan = button.querySelector('span:last-child');
+      const originalText = textSpan.textContent;
+      textSpan.textContent = 'Copied!';
+      setTimeout(() => {
+        textSpan.textContent = originalText;
+      }, 2000);
+    }
+  </script>
   <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
   <google-codelab codelab-gaid=""
                   id="i-build-with-ai"
@@ -64,11 +138,20 @@
 </ul>
 <p><img alt="Antigravity" src="images/antigravity.png"></p>
 <h4>Option B: Gemini CLI (Terminal)</h4>
-<ul>
-<li><strong>Prerequisite</strong>: Node.js 20.0.0+.</li>
-<li><strong>Installation</strong>:<strong>macOS/Linux</strong>: <code>brew install gemini-cli</code> (Homebrew) or <code>npm install -g @google/gemini-cli</code><strong>Windows</strong>: <code>npm install -g @google/gemini-cli</code></li>
-<li><strong>Authentication</strong>: Run <code>gemini</code> in your terminal and select &quot;<strong>Sign in with Google</strong>.&quot;</li>
-</ul>
+<ol>
+<li><strong>Install the CLI:</strong>Choose your preferred package manager:</li>
+</ol>
+<div class="code-container"><pre><code class=" language-bash"># macOS/Linux (Homebrew)
+brew install gemini-cli
+
+# OR using npm (All Platforms)
+npm install -g gemini-cli
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<ol start="2">
+<li><strong>Authenticate:</strong>Run the CLI in your terminal and select &quot;<strong>Sign in with Google</strong>&quot;:</li>
+</ol>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><img alt="Gemini CLI" src="images/gemini_cli.png"></p>
 <h4>Option C: Gemini Code Assist (IDE Plugin)</h4>
 <ul>
@@ -97,9 +180,9 @@
 <ol>
 <li><strong>Create your project space:</strong></li>
 </ol>
-<pre><code class=" language-bash">mkdir -p my-task-manager/.gemini/{prd,skills,agents}
+<div class="code-container"><pre><code class=" language-bash">mkdir -p my-task-manager/.gemini/{prd,skills,agents}
 cd my-task-manager
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Verify Authentication:</strong>Run <code>gemini</code> in your terminal to ensure you&#39;re signed in. If not, follow the prompt to &quot;Sign in with Google.&quot;</li>
 </ol>
@@ -118,7 +201,7 @@ cd my-task-manager
       <p>Let&#39;s start with the most important part: the <strong>Product Requirements Document (PRD)</strong>. This is the heart of your project—it&#39;s the source of truth that helps your AI assistant understand exactly what you&#39;re dreaming of building!</p>
 <h3>The Prompt (Ready to copy-paste!)</h3>
 <p>Copy this prompt and get ready to see Gemini&#39;s magic in action:</p>
-<pre><code class="">Act as a Senior Software Architect.
+<div class="code-container"><pre><code class="">Act as a Senior Software Architect.
 
 Create a Product Requirements Document (PRD) for a &quot;Task Manager&quot; web app and save it to `.gemini/prd/PRD.md`.
 Please ensure that the markdown file begins with the following frontmatter:
@@ -135,7 +218,7 @@ REQUIREMENTS:
 - Mobile responsive
 
 Ask me clarifying questions, one at a time.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use the AI chat panel (Cmd/Ctrl+L or chat icon)</li>
@@ -146,8 +229,8 @@ Ask me clarifying questions, one at a time.
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> (the one above) into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -164,7 +247,7 @@ Ask me clarifying questions, one at a time.
     <google-codelab-step label="Configure your AI Agent" duration="6">
       <p>Now, let&#39;s give your AI assistant a personality and some clear instructions. This <code>frontend-specialist.md</code> file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.</p>
 <h3>The Prompt (Same for All Tools)</h3>
-<pre><code class="">Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/frontend-specialist.md`.
+<div class="code-container"><pre><code class="">Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/frontend-specialist.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
 name: Frontend Specialist
@@ -196,7 +279,7 @@ STRUCTURE:
    - No build tools
 
 Format as markdown with clear sections.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat (Cmd/Ctrl+L)</li>
@@ -206,8 +289,8 @@ Format as markdown with clear sections.
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -223,7 +306,7 @@ Format as markdown with clear sections.
     <google-codelab-step label="Add a LocalStorage Skill" duration="7">
       <p>Skills are like &quot;mini-manuals&quot; that teach your AI exactly how to handle specific tasks. Let&#39;s create one for managing data, giving your assistant the expertise it needs to be super reliable!</p>
 <h3>The Prompt (Same for All Tools)</h3>
-<pre><code class="">Create a SKILL document: &quot;LocalStorage Management&quot; and save it to `.gemini/skills/localstorage.md`.
+<div class="code-container"><pre><code class="">Create a SKILL document: &quot;LocalStorage Management&quot; and save it to `.gemini/skills/localstorage.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
 name: LocalStorage Management
@@ -278,7 +361,7 @@ function loadTasks() {
     return [];
   }
 }
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat → Paste prompt</li>
@@ -288,8 +371,8 @@ function loadTasks() {
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -306,7 +389,7 @@ function loadTasks() {
 <h3>Generate the code</h3>
 <p>It&#39;s time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!</p>
 <p><strong>Prompt (Same for All Tools):</strong></p>
-<pre><code class="">Build a task manager following these documents:
+<div class="code-container"><pre><code class="">Build a task manager following these documents:
 
 PRD: @.gemini/prd/PRD.md
 AGENT: @.gemini/agents/frontend-specialist.md
@@ -325,7 +408,7 @@ Features:
 
 Follow ALL PRD constraints.
 No frameworks. No build tools.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat with the build prompt</li>
@@ -336,8 +419,8 @@ No frameworks. No build tools.
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the build prompt</strong> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -364,7 +447,7 @@ No frameworks. No build tools.
       <p>As your project grows, you&#39;ll want to remember <em>why</em> you made certain decisions. This is where Architectural Decision Records (ADRs) come in handy—they&#39;re like a diary for your project&#39;s soul!</p>
 <h3>Create Your First ADR</h3>
 <p><strong>Prompt for Gemini:</strong></p>
-<pre><code class="">Create ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and save it to `.gemini/adrs/ADR-001.md`.
+<div class="code-container"><pre><code class="">Create ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and save it to `.gemini/adrs/ADR-001.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
 name: ADR-001
@@ -376,7 +459,7 @@ Include:
 - Context: Why we chose this (no build tools, simple deployment, educational)
 - Decision: We will only use CSS Custom Properties and Vanilla ES6+
 - Consequences: No Sass/React, but zero dependencies and faster loading
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h4>Option 1: Antigravity</h4>
 <ol>
 <li>Use AI chat (Cmd/Ctrl+L)</li>
@@ -386,8 +469,8 @@ Include:
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> to create ADR-001 into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -399,9 +482,9 @@ Include:
 <h3>Update frontend-specialist.md</h3>
 <p>To make your agent follow these decisions, you must link them in <code>frontend-specialist.md</code>.</p>
 <p><strong>Prompt for Gemini:</strong></p>
-<pre><code class="">Update .gemini/agents/frontend-specialist.md to include a new section &quot;Rules from ADRs&quot;.
+<div class="code-container"><pre><code class="">Update .gemini/agents/frontend-specialist.md to include a new section &quot;Rules from ADRs&quot;.
 Link ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and explain that all new features must comply with it.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h4>Option 1: Antigravity</h4>
 <ol>
 <li>Use AI chat (Cmd/Ctrl+L)</li>
@@ -411,8 +494,8 @@ Link ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and explain that 
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> to update <code>frontend-specialist.md</code> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to update the file.</li>
@@ -426,47 +509,47 @@ Link ADR-001: &quot;Pure CSS and Vanilla JS Architecture&quot; and explain that 
     </google-codelab-step>
     <google-codelab-step label="Connect to the World with Context7" duration="8">
       <p>Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid &quot;AI hallucinations&quot; from outdated training data!</p>
-<p><a href="https://github.com/upstash/context7" target="_blank">Context7</a> is an open-source MCP server that provides:</p>
-<ul>
-<li><strong>Up-to-date Info</strong>: Current API signatures and patterns from source repositories.</li>
-<li><strong>Reduced Hallucinations</strong>: Accurate documentation to prevent fake or broken code.</li>
-<li><strong>Version-Specific Docs</strong>: Retrieving the right information for the exact library version you&#39;re using.</li>
-<li><strong>Wide Support</strong>: Thousands of popular libraries and frameworks.</li>
-</ul>
+<p><strong>Context7</strong> is an open-source Model Context Protocol (MCP) server developed by Upstash designed to provide AI coding assistants (like Cursor, Claude, and Windsurf) with up-to-date, version-specific documentation.</p>
 <h3>Get Your API Key</h3>
 <ol>
-<li>Go to <a href="https://console.upstash.com" target="_blank">console.upstash.com</a></li>
-<li>Sign in (free tier available)</li>
-<li>Generate your <strong>Context7 API key</strong></li>
+<li>Go to <a href="https://context7.com/dashboard" target="_blank">context7.com/dashboard</a></li>
+<li><strong>Create an account</strong> (using your GitHub or Google account).</li>
+<li>Sign in and generate your <strong>Context7 API key</strong>.</li>
 </ol>
-<h3>Configure MCP (All Tools)</h3>
-<p>Context7 works as an MCP server. Here&#39;s the configuration:</p>
-<pre><code class=" language-json">{
-  &quot;mcpServers&quot;: {
-    &quot;context7&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [
-        &quot;-y&quot;,
-        &quot;@upstash/context7-mcp&quot;,
-        &quot;--api-key&quot;,
-        &quot;YOUR_CONTEXT7_API_KEY&quot;
-      ]
-    }
-  }
-}
-</code></pre>
-<h3>Option 1: Gemini CLI</h3>
+<p><img alt="Context7 Dashboard" src="images/context7.png"></p>
+<h3>Configure MCP</h3>
+<p>Choose the method that fits your workflow:</p>
+<h4>Option A: CLI Setup (Easiest)</h4>
+<p>Install the Context7 CLI to automatically configure your MCP server.</p>
 <ol>
+<li><strong>Install the CLI:</strong>Choose your preferred package manager:</li>
+</ol>
+<div class="code-container"><pre><code class=" language-bash"># Using npm
+npm install -g ctx7
+
+# OR using Homebrew (macOS)
+brew install ctx7
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<ol start="2">
+<li><strong>Run the setup:</strong></li>
+</ol>
+<div class="code-container"><pre><code class=" language-bash">ctx7 setup
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<p>Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).</p>
+<h4>Option B: Manual Configuration (No Global Install)</h4>
+<p>If you prefer not to install it globally, you can manually configure the settings.</p>
+<ol>
+<li><strong>Get your API Key:</strong> Follow the &quot;Get Your API Key&quot; steps above.</li>
 <li><strong>Open settings file:</strong></li>
 </ol>
-<pre><code class=" language-bash"># Create if doesn&#39;t exist
+<div class="code-container"><pre><code class=" language-bash"># Create if doesn&#39;t exist
 mkdir -p ~/.gemini
 touch ~/.gemini/settings.json
-</code></pre>
-<ol start="2">
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<ol start="3">
 <li><strong>Edit `~/.gemini/settings.json`:</strong></li>
 </ol>
-<pre><code class=" language-json">{
+<div class="code-container"><pre><code class=" language-json">{
   &quot;mcpServers&quot;: {
     &quot;context7&quot;: {
       &quot;command&quot;: &quot;npx&quot;,
@@ -479,38 +562,22 @@ touch ~/.gemini/settings.json
     }
   }
 }
-</code></pre>
-<ol start="3">
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<ol start="4">
 <li><strong>Verify:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
+<div class="code-container"><pre><code class=" language-bash">gemini
 # In the CLI, type: /mcp list
-# You should see &quot;context7&quot; listed
-</code></pre>
-<h3>Option 2: Antigravity</h3>
-<ol>
-<li><strong>Open Antigravity</strong></li>
-<li><strong>Go to Agent Side Panel</strong></li>
-<li><strong>Click More (...) → MCP Servers → Manage MCP Servers</strong></li>
-<li><strong>Select &quot;View raw config&quot;</strong> to open <code>mcp_config.json</code></li>
-<li><strong>Paste the configuration block</strong> and save</li>
-</ol>
-<h3>Option 3: IntelliJ + Gemini Code Assist</h3>
-<ol>
-<li><strong>Gemini Code Assist uses the same file as CLI:</strong> <code>~/.gemini/settings.json</code></li>
-<li><strong>Follow the Gemini CLI instructions above</strong></li>
-<li><strong>In IntelliJ, ensure &quot;Agent Mode&quot; is toggled ON</strong> in Gemini chat pane</li>
-<li><strong>Restart IntelliJ</strong> if needed</li>
-</ol>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>How to Use Context7</h3>
 <p>Context7 provides tools to search library documentation and resolve library identifiers.</p>
 <p><strong>Natural prompts:</strong></p>
-<pre><code class="">Use context7 to find the latest documentation for the Chart.js library.
+<div class="code-container"><pre><code class="">Use context7 to find the latest documentation for the Chart.js library.
 
 What is the newest way to implement auth in Next.js? Use context7.
 
 Check context7 for the correct API signature for the current version of Tailwind CSS.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><strong>Why it matters:</strong>By using Context7, your AI assistant stays informed about the latest tools and libraries, reducing bugs and ensuring you&#39;re using modern, secure patterns. 🎉</p>
 <p><strong>Available MCP tools:</strong></p>
 <ul>
@@ -523,7 +590,7 @@ Check context7 for the correct API signature for the current version of Tailwind
     <google-codelab-step label="Bonus: Add a Unit Testing Skill" duration="8">
       <p>Ready for one last skill? Let&#39;s teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.</p>
 <p><strong>Prompt (Same for All Tools):</strong></p>
-<pre><code class="">Create a SKILL document: &quot;Unit Testing with Vanilla JS&quot; and save it to `.gemini/skills/unit-testing.md`.
+<div class="code-container"><pre><code class="">Create a SKILL document: &quot;Unit Testing with Vanilla JS&quot; and save it to `.gemini/skills/unit-testing.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
 name: Unit Testing with Vanilla JS
@@ -577,15 +644,15 @@ function testLocalStorage() {
   
   console.groupEnd();
 }
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Testing</h3>
 <ul>
 <li>Run tests in the browser console</li>
 <li>Verify all assertions pass</li>
 </ul>
-<pre><code class="">
+<div class="code-container"><pre><code class="">
 Format with complete code examples.
-</code></pre>
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Option 1: Antigravity</h3>
 <ol>
 <li>Use AI chat → Paste prompt</li>
@@ -595,8 +662,8 @@ Format with complete code examples.
 <ol>
 <li><strong>Launch Gemini CLI:</strong></li>
 </ol>
-<pre><code class=" language-bash">gemini
-</code></pre>
+<div class="code-container"><pre><code class=" language-bash">gemini
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> into the interactive shell.</li>
 <li>Once generated, the tool will ask for permission to write the file.</li>
@@ -649,6 +716,7 @@ Format with complete code examples.
 <ul>
 <li><strong>AI Studio:</strong> <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a></li>
 <li><strong>Google Skills</strong>: <a href="https://github.com/google/skills" target="_blank">github.com/google/skills</a></li>
+<li><strong>MCP</strong>: <a href="https://modelcontextprotocol.io" target="_blank">modelcontextprotocol.io</a></li>
 <li><strong>Context7:</strong> <a href="https://github.com/upstash/context7" target="_blank">github.com/upstash/context7</a></li>
 </ul>
 
