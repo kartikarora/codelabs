@@ -362,14 +362,13 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 <li>Sign in and generate your <strong>Context7 API key</strong>.</li>
 </ol>
 <p><img alt="Context7 Dashboard" src="images/context7.png"></p>
-<h3>Configure MCP</h3>
+<h3>Configure the Context7 MCP</h3>
 <p>Choose the method that fits your workflow:</p>
-<h4>Option A: CLI Setup (Easiest)</h4>
+<p><strong>Option A:</strong> CLI Setup (Easiest)</p>
 <p>Install the Context7 CLI to automatically configure your MCP server.</p>
 <ol>
-<li><strong>Install the CLI:</strong></li>
+<li><strong>Install the CLI:</strong> Choose your preferred package manager:</li>
 </ol>
-<p>Choose your preferred package manager:</p>
 <div class="code-container"><pre><code class=" language-bash"># Using npm
 npm install -g ctx7
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
@@ -379,11 +378,10 @@ brew install ctx7
 <ol start="2">
 <li><strong>Run the setup:</strong></li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash">ctx7 setup
+<div class="code-container"><pre><code class=" language-bash"># Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
+ctx7 setup
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
-<p>Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).</p>
-<h4>Option B: Manual Configuration (No Global Install)</h4>
-<p>If you prefer not to install it globally, you can manually configure the settings.</p>
+<p><strong>Option B:</strong> Manual Configuration (No Global Install)If you prefer not to install it globally, you can manually configure the settings.</p>
 <ol>
 <li><strong>Get your API Key:</strong> Follow the &quot;Get Your API Key&quot; steps above.</li>
 <li><strong>Open settings file:</strong></li>
@@ -411,8 +409,12 @@ touch ~/.gemini/settings.json
 <li><strong>Verify:</strong></li>
 </ol>
 <div class="code-container"><pre><code class=" language-bash"># inside gemini shell
+/mcp reload
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<div class="code-container"><pre><code class=""># followed by
 /mcp list
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
+<p>Now that you have Context7 installed, lets use it.</p>
 <h3>How to Use Context7 for Android</h3>
 <p><strong>Natural prompts:</strong></p>
 <div class="code-container"><pre><code class="">Use context7 to find the latest documentation for StateFlow and Coroutines.
@@ -482,8 +484,8 @@ class NoteViewModelTest {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Testing</h3>
 <ul>
+<li>Run the above prompt and watch Gemini write unit tests for you.</li>
 <li><strong>Run tests in Android Studio:</strong> Open the test file and click the double green arrows next to the class name.</li>
-<li><strong>Or use the CLI:</strong> <code>./gradlew test</code> (if you have Java configured).</li>
 </ul>
 <p>🧪 <strong>Great work! You&#39;ve just added a professional layer of testing to your project.</strong></p>
 

@@ -323,16 +323,15 @@ Want to take things to the next level? You can give your AI assistant access to 
 
 ![Context7 Dashboard](images/context7.png)
 
-### Configure MCP
+### Configure the Context7 MCP
 
 Choose the method that fits your workflow:
 
-#### Option A: CLI Setup (Easiest)
+**Option A:** CLI Setup (Easiest)
+
 Install the Context7 CLI to automatically configure your MCP server.
 
-1. **Install the CLI:**
-
-Choose your preferred package manager:
+1. **Install the CLI:** Choose your preferred package manager:
 ```bash
 # Using npm
 npm install -g ctx7
@@ -344,13 +343,13 @@ brew install ctx7
 
 2. **Run the setup:**
 ```bash
+# Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
 ctx7 setup
 ```
-Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
 
 ---
 
-#### Option B: Manual Configuration (No Global Install)
+**Option B:** Manual Configuration (No Global Install)
 If you prefer not to install it globally, you can manually configure the settings.
 
 1. **Get your API Key:** Follow the "Get Your API Key" steps above.
@@ -380,8 +379,16 @@ touch ~/.gemini/settings.json
 4. **Verify:**
 ```bash
 # inside gemini shell
+/mcp reload
+```
+```
+# followed by
 /mcp list
 ```
+
+Now that you have Context7 installed, lets use it.
+
+---
 
 ### How to Use Context7 for Android
 
@@ -463,8 +470,8 @@ class NoteViewModelTest {
 ```
 
 ### Testing
+- Run the above prompt and watch Gemini write unit tests for you.
 - **Run tests in Android Studio:** Open the test file and click the double green arrows next to the class name.
-- **Or use the CLI:** `./gradlew test` (if you have Java configured).
 
 🧪 **Great work! You've just added a professional layer of testing to your project.**
 
