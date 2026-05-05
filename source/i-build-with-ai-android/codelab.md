@@ -171,7 +171,8 @@ STRUCTURE:
    - Google's ViewModel (Architecture Components)
    - Repository Pattern (using in-memory data)
    - Material 3 Expressive Design
-   - Gradle (Kotlin DSL) as the build system
+   - Gradle (Kotlin DSL) as the build system, generate all the files required for building the app in Android Studio
+   - Use gradle wrapper and latest gradle and AGP versions
    - Version Catalogs (libs.versions.toml) for dependencies
 5. PROHIBITED:
    - No legacy View system (XML layouts)
