@@ -110,8 +110,8 @@
 <li>🧪 <strong>Unit Testing Skill</strong> (Bonus)</li>
 <li>📝 A sleek <strong>Note Taker Android app</strong> with up-to-date documentation via Context7</li>
 </ul>
-<h3>Your AI Partner: Gemini CLI</h3>
-<p>In this workshop, we will use the <strong>Gemini CLI</strong>, a powerful terminal-based agent that can read your codebase, manage project files, and help you architect your app from the ground up.</p>
+<h3>Your AI Partner: Antigravity CLI</h3>
+<p>In this workshop, we will use the <strong>Antigravity CLI</strong>, a powerful terminal-based agent that can read your codebase, manage project files, and help you architect your app from the ground up.</p>
 <h3>What You&#39;ll Need</h3>
 <ul>
 <li>A personal <strong>@gmail.com</strong> account (see Prerequisites)</li>
@@ -125,20 +125,20 @@
       <p>To ensure a smooth experience during this workshop, please review and complete these prerequisites.</p>
 <h3>1. Use a Personal Account</h3>
 <p>Please use a personal <strong>@gmail.com</strong> account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a &quot;zero-hiccup&quot; experience with no credit card or API tokens required.</p>
-<h3>2. Install Gemini CLI</h3>
+<h3>2. Install Antigravity CLI</h3>
 <ol>
-<li><strong>Install the CLI:</strong>Choose your preferred package manager:</li>
+<li><strong>Install the CLI:</strong>Run the following command in your terminal:</li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash"># macOS/Linux (Homebrew)
-brew install gemini-cli
+<div class="code-container"><pre><code class=" language-bash"># macOS/Linux
+curl -fsSL https://antigravity.google/cli/install.sh | bash
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
-<div class="code-container"><pre><code class=" language-bash"># OR using npm (All Platforms)
-npm install -g gemini-cli
+<div class="code-container"><pre><code class=" language-cmd"># Windows
+curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Authenticate:</strong>Run the CLI in your terminal and select &quot;<strong>Sign in with Google</strong>&quot;:</li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash">gemini
+<div class="code-container"><pre><code class=" language-bash">agy
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><img alt="Gemini CLI" src="images/gemini_cli.png"></p>
 <h3>3. Install Android Studio</h3>
@@ -152,7 +152,7 @@ npm install -g gemini-cli
 
     </google-codelab-step>
     <google-codelab-step label="Getting Set Up" duration="3">
-      <p>Now that you&#39;ve installed the Gemini CLI, let&#39;s get your project workspace ready!</p>
+      <p>Now that you&#39;ve installed the Antigravity CLI, let&#39;s get your project workspace ready!</p>
 <ol>
 <li><strong>Create your project space:</strong>Open your terminal and run:</li>
 </ol>
@@ -160,7 +160,7 @@ npm install -g gemini-cli
 cd my-note-taker
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
-<li><strong>Verify Authentication:</strong>Run <code>gemini</code> in your terminal to ensure you&#39;re signed in. If not, follow the prompt to &quot;Sign in with Google.&quot;</li>
+<li><strong>Verify Authentication:</strong>Run <code>agy</code> in your terminal to ensure you&#39;re signed in. If not, follow the prompt to &quot;Sign in with Google.&quot;</li>
 </ol>
 <p>🌟 <strong>Great job! Your workspace is ready. Let&#39;s start building.</strong></p>
 
@@ -189,9 +189,9 @@ Ask me clarifying questions, one at a time.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Steps:</h3>
 <ol>
-<li><strong>Launch Gemini CLI:</strong></li>
+<li><strong>Launch Antigravity CLI:</strong></li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash">gemini
+<div class="code-container"><pre><code class=" language-bash">agy
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <ol start="2">
 <li><strong>Paste the prompt</strong> into the interactive shell.</li>
@@ -241,7 +241,7 @@ Format as markdown with clear sections.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Steps:</h3>
 <ol>
-<li><strong>Paste the prompt</strong> into the <code>gemini</code> shell.</li>
+<li><strong>Paste the prompt</strong> into the <code>agy</code> shell.</li>
 <li>Review the generated configuration.</li>
 <li>Once generated, the tool may ask for permission to write the file if you have not allowed it for the session.</li>
 </ol>
@@ -298,7 +298,7 @@ class NoteViewModel : ViewModel() {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Steps:</h3>
 <ol>
-<li><strong>Paste the prompt</strong> into the <code>gemini</code> shell.</li>
+<li><strong>Paste the prompt</strong> into the <code>agy</code> shell.</li>
 <li>Review the skill documentation.</li>
 <li>Once generated, the tool will may for permission to write the file.</li>
 </ol>
@@ -331,7 +331,7 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <h3>Steps:</h3>
 <ol>
-<li><strong>Paste the build prompt</strong> into the <code>gemini</code> shell.</li>
+<li><strong>Paste the build prompt</strong> into the <code>agy</code> shell.</li>
 <li>The agent will read your documents and propose file creations/updates.</li>
 <li>Review the code and allow the tool to write the files if needed.</li>
 </ol>
@@ -378,7 +378,7 @@ brew install ctx7
 <ol start="2">
 <li><strong>Run the setup:</strong></li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash"># Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
+<div class="code-container"><pre><code class=" language-bash"># Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Antigravity CLI, Cursor, etc.).
 ctx7 setup
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <p><strong>Option B:</strong> Manual Configuration (No Global Install)If you prefer not to install it globally, you can manually configure the settings.</p>
@@ -408,7 +408,7 @@ touch ~/.gemini/settings.json
 <ol start="4">
 <li><strong>Verify:</strong></li>
 </ol>
-<div class="code-container"><pre><code class=" language-bash"># inside gemini shell
+<div class="code-container"><pre><code class=" language-bash"># inside agy shell
 /mcp reload
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-icons">content_copy</span><span>Copy</span></button></div>
 <div class="code-container"><pre><code class=""># followed by
@@ -491,7 +491,7 @@ class NoteViewModelTest {
 
     </google-codelab-step>
     <google-codelab-step label="Congratulations! 🏆" duration="2">
-      <p>You did it! 🏆 You&#39;ve gone from zero to a fully functional, AI-powered Android app using the <strong>Gemini CLI</strong>. More importantly, you&#39;ve mastered the art of &quot;guiding&quot; AI with structured documentation.</p>
+      <p>You did it! 🏆 You&#39;ve gone from zero to a fully functional, AI-powered Android app using the <strong>Antigravity CLI</strong>. More importantly, you&#39;ve mastered the art of &quot;guiding&quot; AI with structured documentation.</p>
 <h3>Look at everything you&#39;ve achieved:</h3>
 <ul>
 <li>✨ <strong>Structured AI Docs</strong>: You created a PRD, AGENT, and SKILL files for Android.</li>
@@ -515,7 +515,7 @@ class NoteViewModelTest {
 </ul>
 <h3>Tools You Mastered</h3>
 <ul>
-<li><strong>Gemini CLI</strong></li>
+<li><strong>Antigravity CLI</strong></li>
 <li><strong>Context7</strong></li>
 <li><strong>Android Studio</strong> (for building, running, and testing)</li>
 </ul>

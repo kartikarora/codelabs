@@ -1,5 +1,5 @@
 ---
-summary: Learn to build better Android apps by collaborating with AI using the Gemini CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
+summary: Learn to build better Android apps by collaborating with AI using the Antigravity CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 id: i-build-with-ai-android
 categories: AI, Android, Development
 tags: ai, gemini, agents, android, kotlin, compose
@@ -27,8 +27,8 @@ By the end of this adventure, you'll have a fully functional Android app and a t
 - 🧪 **Unit Testing Skill** (Bonus)
 - 📝 A sleek **Note Taker Android app** with up-to-date documentation via Context7
 
-### Your AI Partner: Gemini CLI
-In this workshop, we will use the **Gemini CLI**, a powerful terminal-based agent that can read your codebase, manage project files, and help you architect your app from the ground up.
+### Your AI Partner: Antigravity CLI
+In this workshop, we will use the **Antigravity CLI**, a powerful terminal-based agent that can read your codebase, manage project files, and help you architect your app from the ground up.
 
 ### What You'll Need
 - A personal **@gmail.com** account (see Prerequisites)
@@ -46,22 +46,22 @@ To ensure a smooth experience during this workshop, please review and complete t
 ### 1. Use a Personal Account
 Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required.
 
-### 2. Install Gemini CLI
+### 2. Install Antigravity CLI
 
 1. **Install the CLI:**
-Choose your preferred package manager:
+Run the following command in your terminal:
 ```bash
-# macOS/Linux (Homebrew)
-brew install gemini-cli
+# macOS/Linux
+curl -fsSL https://antigravity.google/cli/install.sh | bash
 ```
-```bash
-# OR using npm (All Platforms)
-npm install -g gemini-cli
+```cmd
+# Windows
+curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 2. **Authenticate:**
 Run the CLI in your terminal and select "**Sign in with Google**":
 ```bash
-gemini
+agy
 ```
 
 ![Gemini CLI](images/gemini_cli.png)
@@ -79,7 +79,7 @@ During the workshop, the workflow remains the same regardless of what you build:
 ## Getting Set Up
 Duration: 3
 
-Now that you've installed the Gemini CLI, let's get your project workspace ready!
+Now that you've installed the Antigravity CLI, let's get your project workspace ready!
 
 1. **Create your project space:**
 Open your terminal and run:
@@ -89,7 +89,7 @@ cd my-note-taker
 ```
 
 2. **Verify Authentication:**
-Run `gemini` in your terminal to ensure you're signed in. If not, follow the prompt to "Sign in with Google."
+Run `agy` in your terminal to ensure you're signed in. If not, follow the prompt to "Sign in with Google."
 
 🌟 **Great job! Your workspace is ready. Let's start building.**
 
@@ -125,9 +125,9 @@ Ask me clarifying questions, one at a time.
 
 ### Steps:
 
-1. **Launch Gemini CLI:**
+1. **Launch Antigravity CLI:**
 ```bash
-gemini
+agy
 ```
 
 2. **Paste the prompt** into the interactive shell.
@@ -184,7 +184,7 @@ Format as markdown with clear sections.
 
 ### Steps:
 
-1. **Paste the prompt** into the `gemini` shell.
+1. **Paste the prompt** into the `agy` shell.
 2. Review the generated configuration.
 3. Once generated, the tool may ask for permission to write the file if you have not allowed it for the session.
 
@@ -247,7 +247,7 @@ class NoteViewModel : ViewModel() {
 
 ### Steps:
 
-1. **Paste the prompt** into the `gemini` shell.
+1. **Paste the prompt** into the `agy` shell.
 2. Review the skill documentation.
 3. Once generated, the tool will may for permission to write the file.
 
@@ -287,7 +287,7 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 
 ### Steps:
 
-1. **Paste the build prompt** into the `gemini` shell.
+1. **Paste the build prompt** into the `agy` shell.
 2. The agent will read your documents and propose file creations/updates.
 3. Review the code and allow the tool to write the files if needed.
 
@@ -343,7 +343,7 @@ brew install ctx7
 
 2. **Run the setup:**
 ```bash
-# Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Gemini CLI, Cursor, etc.).
+# Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Antigravity CLI, Cursor, etc.).
 ctx7 setup
 ```
 
@@ -378,7 +378,7 @@ touch ~/.gemini/settings.json
 
 4. **Verify:**
 ```bash
-# inside gemini shell
+# inside agy shell
 /mcp reload
 ```
 ```
@@ -480,7 +480,7 @@ class NoteViewModelTest {
 ## Congratulations! 🏆
 Duration: 2
 
-You did it! 🏆 You've gone from zero to a fully functional, AI-powered Android app using the **Gemini CLI**. More importantly, you've mastered the art of "guiding" AI with structured documentation.
+You did it! 🏆 You've gone from zero to a fully functional, AI-powered Android app using the **Antigravity CLI**. More importantly, you've mastered the art of "guiding" AI with structured documentation.
 
 ### Look at everything you've achieved:
 - ✨ **Structured AI Docs**: You created a PRD, AGENT, and SKILL files for Android.
@@ -503,7 +503,7 @@ You did it! 🏆 You've gone from zero to a fully functional, AI-powered Android
 
 ### Tools You Mastered
 
-- **Gemini CLI**
+- **Antigravity CLI**
 - **Context7**
 - **Android Studio** (for building, running, and testing)
 
