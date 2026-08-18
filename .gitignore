@@ -236,3 +236,7 @@ node_modules/
 package-lock.json
 codelabs.json
 .DS_Store
+.agents
+.gemini
+.claude
+.skills
