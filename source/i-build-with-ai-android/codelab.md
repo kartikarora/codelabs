@@ -68,7 +68,9 @@ agy
 ![Antigravity CLI](images/gemini_cli.png)
 
 ### 3. Install Android Studio
-Download and install the latest version of **Android Studio** from the official website: [developer.android.com/studio](https://developer.android.com/studio). This will be used to build and run your application.
+Download and install the latest version of **Android Studio** to build and run your application:
+
+[Download Android Studio](https://developer.android.com/studio){.buttonPrimary icon=download}
 
 ### 4. Choose Your Objective
 During the workshop, the workflow remains the same regardless of what you build:
@@ -308,7 +310,10 @@ Want to take things to the next level? You can give your AI assistant access to 
 
 ### Get Your API Key
 
-1. Go to [context7.com/dashboard](https://context7.com/dashboard)
+1. Go to the Context7 Dashboard:
+
+[Open Context7 Dashboard](https://context7.com/dashboard){.buttonPrimary icon=launch}
+
 2. **Create an account** (using your GitHub or Google account).
 3. Sign in and generate your **Context7 API key**.
 

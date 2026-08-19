@@ -49,8 +49,11 @@ To ensure a smooth experience during this workshop, please review and complete t
 To save time during the session, please install **one** of the following tools (your choice) before arriving:
 
 #### Option A: Antigravity IDE (Standalone Editor)
-- Download the editor from [antigravity.google](https://antigravity.google).
-- Launch the app and **Sign in with Google**.
+Download the standalone editor to get started:
+
+[Download Antigravity IDE](https://antigravity.google){.buttonPrimary icon=download}
+
+Launch the app and **Sign in with Google**.
 
 ![Antigravity](images/antigravity.png)
 
@@ -420,7 +423,10 @@ Want to take things to the next level? You can give your AI assistant access to 
 
 ### Get Your API Key
 
-1. Go to [context7.com/dashboard](https://context7.com/dashboard)
+1. Go to the Context7 Dashboard:
+
+[Open Context7 Dashboard](https://context7.com/dashboard){.buttonPrimary icon=launch}
+
 2. **Create an account** (using your GitHub or Google account).
 3. Sign in and generate your **Context7 API key**.
 
