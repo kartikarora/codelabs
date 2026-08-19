@@ -1,12 +1,12 @@
 ---
-summary: Learn to build better Android apps by collaborating with AI using the Antigravity CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 id: i-build-with-ai-android
+summary: Learn to build better Android apps by collaborating with AI using the Antigravity CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 categories: AI, Android, Development
-tags: ai, gemini, agents, android, kotlin, compose
+environments: Android
 status: Published
 authors: Kartik Arora
-environment: android
-Feedback Link: mailto:hello@kartikarora.me
+feedback_link: mailto:hello@kartikarora.me
+tags: ai, gemini, agents, android, kotlin, compose
 ---
 
 # I Build with AI and so can you! (Android Edition) 🚀
@@ -16,7 +16,7 @@ Duration: 2
 
 ![Poster](images/poster.png)
 
-Ready to transform how you build Android apps? Today, we're going on an exciting journey into the world of AI-assisted development. You'll learn how to collaborate with AI agents using the **Gemini CLI** by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!
+Ready to transform how you build Android apps? Today, we're going on an exciting journey into the world of AI-assisted development. You'll learn how to collaborate with AI agents using the **Antigravity CLI** by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!
 
 By the end of this adventure, you'll have a fully functional Android app and a toolkit of AI prompting skills that you can use on any project. Ready to dive in? 🚀
 
@@ -36,20 +36,19 @@ In this workshop, we will use the **Antigravity CLI**, a powerful terminal-based
 - A basic understanding of Android development (Kotlin & Compose)
 - **Android Studio** installed (to run and test your app easily)
 
----
-
 ## Prerequisites
 Duration: 5
 
 To ensure a smooth experience during this workshop, please review and complete these prerequisites.
 
 ### 1. Use a Personal Account
-Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required.
+> Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required. {.warning}
 
 ### 2. Install Antigravity CLI
 
 1. **Install the CLI:**
 Run the following command in your terminal:
+
 ```bash
 # macOS/Linux
 curl -fsSL https://antigravity.google/cli/install.sh | bash
@@ -58,13 +57,15 @@ curl -fsSL https://antigravity.google/cli/install.sh | bash
 # Windows
 curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
+
 2. **Authenticate:**
 Run the CLI in your terminal and select "**Sign in with Google**":
+
 ```bash
 agy
 ```
 
-![Gemini CLI](images/gemini_cli.png)
+![Antigravity CLI](images/gemini_cli.png)
 
 ### 3. Install Android Studio
 Download and install the latest version of **Android Studio** from the official website: [developer.android.com/studio](https://developer.android.com/studio). This will be used to build and run your application.
@@ -74,8 +75,6 @@ During the workshop, the workflow remains the same regardless of what you build:
 - **Guided**: Follow this Codelab to build a sample application from scratch.
 - **Independent**: Bring a specific idea, a small feature, or a prototype you want to build using these AI tools.
 
----
-
 ## Getting Set Up
 Duration: 3
 
@@ -83,6 +82,7 @@ Now that you've installed the Antigravity CLI, let's get your project workspace 
 
 1. **Create your project space:**
 Open your terminal and run:
+
 ```bash
 mkdir -p my-note-taker/.gemini/{prd,skills,agents}
 cd my-note-taker
@@ -91,9 +91,7 @@ cd my-note-taker
 2. **Verify Authentication:**
 Run `agy` in your terminal to ensure you're signed in. If not, follow the prompt to "Sign in with Google."
 
-🌟 **Great job! Your workspace is ready. Let's start building.**
-
----
+> 🌟 **Great job! Your workspace is ready. Let's start building.** {.special}
 
 ## Create your PRD
 Duration: 7
@@ -103,7 +101,7 @@ Let's start with the most important part: the **Product Requirements Document (P
 ### The Prompt (Ready to copy-paste!)
 Copy this prompt and get ready to see Gemini's magic in action:
 
-```
+```text
 Act as a Senior Android Architect.
 
 Create a Product Requirements Document (PRD) for a "Note Taker" Android app and save it to `.gemini/prd/PRD.md`.
@@ -133,11 +131,9 @@ agy
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-![Gemini CLI Permission](images/gemini_cli_permission.png)
+![Antigravity CLI Permission](images/gemini_cli_permission.png)
 
-✨ **Fantastic! Your PRD is ready. Let's keep the momentum going!**
-
----
+> ✨ **Fantastic! Your PRD is ready. Let's keep the momentum going!** {.special}
 
 ## Configure your AI Agent
 Duration: 6
@@ -145,7 +141,7 @@ Duration: 6
 Now, let's give your AI assistant a personality and some clear instructions. This `android-specialist.md` file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.
 
 ### The Prompt
-```
+```text
 Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/android-specialist.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -188,9 +184,7 @@ Format as markdown with clear sections.
 2. Review the generated configuration.
 3. Once generated, the tool may ask for permission to write the file if you have not allowed it for the session.
 
-🚀 **Agent configured! You're building a solid foundation.**
-
----
+> 🚀 **Agent configured! You're building a solid foundation.** {.special}
 
 ## Add a State Management Skill
 Duration: 7
@@ -198,7 +192,7 @@ Duration: 7
 Skills are like "mini-manuals" that teach your AI exactly how to handle specific tasks. Let's create one for managing data, giving your assistant the expertise it needs to be super reliable!
 
 ### The Prompt
-```
+````text
 Create a SKILL document: "State Management with StateFlow" and save it to `.gemini/skills/state-management.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -244,16 +238,15 @@ class NoteViewModel : ViewModel() {
     }
 }
 ```
+````
 
 ### Steps:
 
 1. **Paste the prompt** into the `agy` shell.
 2. Review the skill documentation.
-3. Once generated, the tool will may for permission to write the file.
+3. Once generated, the tool may ask for permission to write the file.
 
-🎉 **Spot on! You just built a reusable skill. Ready to see it all come together?**
-
----
+> 🎉 **Spot on! You just built a reusable skill. Ready to see it all come together?** {.special}
 
 ## Time to Build!
 Duration: 15
@@ -264,7 +257,7 @@ Now for the best part! We're going to use all those documents you just created t
 It's time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!
 
 **Prompt:**
-```
+```text
 Build a note taker app following these documents:
 
 PRD: @.gemini/prd/PRD.md
@@ -304,9 +297,7 @@ To run your app, we'll use **Android Studio**. It provides a pre-configured envi
 - ✅ Delete notes
 - ✅ See them appear in the list
 
-📱 **Amazing! You've just built a functional Android app with AI—using the CLI for creation and Android Studio for execution!**
-
----
+> 📱 **Amazing! You've just built a functional Android app with AI—using the CLI for creation and Android Studio for execution!** {.special}
 
 ## Connect to the World with Context7
 Duration: 8
@@ -327,7 +318,7 @@ Want to take things to the next level? You can give your AI assistant access to 
 
 Choose the method that fits your workflow:
 
-**Option A:** CLI Setup (Easiest)
+#### Option A: CLI Setup (Easiest)
 
 Install the Context7 CLI to automatically configure your MCP server.
 
@@ -335,21 +326,18 @@ Install the Context7 CLI to automatically configure your MCP server.
 ```bash
 # Using npm
 npm install -g ctx7
-```
-```
+
 # OR using Homebrew (macOS)
 brew install ctx7
 ```
 
 2. **Run the setup:**
 ```bash
-# Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Antigravity CLI, Cursor, etc.).
 ctx7 setup
 ```
+Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Antigravity CLI, Cursor, etc.).
 
----
-
-**Option B:** Manual Configuration (No Global Install)
+#### Option B: Manual Configuration (No Global Install)
 If you prefer not to install it globally, you can manually configure the settings.
 
 1. **Get your API Key:** Follow the "Get Your API Key" steps above.
@@ -362,6 +350,8 @@ touch ~/.gemini/settings.json
 ```
 
 3. **Edit `~/.gemini/settings.json`:**
+
+**~/.gemini/settings.json**
 ```json
 {
   "mcpServers": {
@@ -378,28 +368,20 @@ touch ~/.gemini/settings.json
 
 4. **Verify:**
 ```bash
-# inside agy shell
-/mcp reload
+agy
+# In the CLI, type: /mcp list
 ```
-```
-# followed by
-/mcp list
-```
-
-Now that you have Context7 installed, lets use it.
-
----
 
 ### How to Use Context7 for Android
 
 **Natural prompts:**
-```
+```text
 Use context7 to find the latest documentation for StateFlow and Coroutines.
 ```
-```
+```text
 What is the newest way to handle navigation in Jetpack Compose? Use context7.
 ```
-```
+```text
 Check context7 for the correct API usage for the latest Material 3 components.
 ```
 
@@ -410,9 +392,7 @@ By using Context7, your AI assistant stays informed about the latest tools and l
 - `resolve-library-id` - Find library identifiers
 - `get-library-docs` - Fetch latest documentation
 
-🧠 **Incredible! Your AI assistant now has access to the most current Android documentation in the world.**
-
----
+> 🧠 **Incredible! Your AI assistant now has access to the most current Android documentation in the world.** {.special}
 
 ## Bonus: Add a Unit Testing Skill
 Duration: 8
@@ -420,7 +400,7 @@ Duration: 8
 Ready for one last skill? Let's teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.
 
 **Prompt:**
-```
+````text
 Create a SKILL document: "Unit Testing for Android" and save it to `.gemini/skills/unit-testing.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -468,14 +448,13 @@ class NoteViewModelTest {
     }
 }
 ```
+````
 
 ### Testing
 - Run the above prompt and watch Gemini write unit tests for you.
 - **Run tests in Android Studio:** Open the test file and click the double green arrows next to the class name.
 
-🧪 **Great work! You've just added a professional layer of testing to your project.**
-
----
+> 🧪 **Great work! You've just added a professional layer of testing to your project.** {.special}
 
 ## Congratulations! 🏆
 Duration: 2
@@ -520,4 +499,4 @@ The sky's the limit! Why not try:
 - **Google Skills**: [github.com/google/skills](https://github.com/google/skills)
 - **MCP**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Context7:** [github.com/upstash/context7](https://github.com/upstash/context7)
----
+

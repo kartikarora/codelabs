@@ -1,11 +1,12 @@
 ---
-summary: Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 id: i-build-with-ai
+summary: Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
 categories: AI, Development
-tags: ai, gemini, agents
+environments: Web
 status: Published
 authors: Kartik Arora
-Feedback Link: https://kartikarora.me
+feedback_link: https://kartikarora.me
+tags: ai, gemini, agents
 ---
 
 # I Build with AI and so can you! 🚀
@@ -36,15 +37,13 @@ By the end of this adventure, you'll have a fully functional app and a toolkit o
 - About 45 minutes of focused time
 - A basic understanding of web development
 
----
-
 ## Prerequisites
 Duration: 5
 
 To ensure a smooth experience during this workshop, please review and complete these prerequisites.
 
 ### 1. Use a Personal Account
-Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required.
+> Please use a personal **@gmail.com** account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a "zero-hiccup" experience with no credit card or API tokens required. {.warning}
 
 ### 2. Pre-Workshop Tool Installation
 To save time during the session, please install **one** of the following tools (your choice) before arriving:
@@ -59,6 +58,7 @@ To save time during the session, please install **one** of the following tools (
 
 1. **Install the CLI:**
 Run the following command in your terminal:
+
 ```bash
 # macOS/Linux
 curl -fsSL https://antigravity.google/cli/install.sh | bash
@@ -70,18 +70,17 @@ curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.
 
 2. **Authenticate:**
 Run the CLI in your terminal and select "**Sign in with Google**":
+
 ```bash
 agy
 ```
 
-![Gemini CLI](images/gemini_cli.png)
+![Antigravity CLI](images/gemini_cli.png)
 
 ### 3. Choose Your Objective
 During the workshop, the workflow remains the same regardless of what you build:
 - **Guided**: Follow this official Codelab to build a sample application from scratch.
 - **Independent**: Bring a specific idea, a small feature, or a prototype you want to build using these AI tools.
-
----
 
 ## Getting Set Up
 Duration: 3
@@ -89,14 +88,14 @@ Duration: 3
 Now that you've installed your chosen tool, let's get your project workspace ready!
 
 ### Option 1: Antigravity IDE
-If you're using the standalone editor.
+If you're using the standalone editor:
 
 1. **Launch Antigravity IDE** and ensure you're signed in.
 2. **Start a new project:** Name it `my-task-manager`.
 3. **Explore:** Antigravity IDE is ready to help you generate files right inside the editor!
 
 ### Option 2: Antigravity CLI
-If you're using the terminal, set up your project structure.
+If you're using the terminal, set up your project structure:
 
 1. **Create your project space:**
 ```bash
@@ -107,9 +106,7 @@ cd my-task-manager
 2. **Verify Authentication:**
 Run `agy` in your terminal to ensure you're signed in. If not, follow the prompt to "Sign in with Google."
 
-🌟 **Great job! Your workspace is ready. Let's start building.**
-
----
+> 🌟 **Great job! Your workspace is ready. Let's start building.** {.special}
 
 ## Create your PRD
 Duration: 7
@@ -119,7 +116,7 @@ Let's start with the most important part: the **Product Requirements Document (P
 ### The Prompt (Ready to copy-paste!)
 Copy this prompt and get ready to see Gemini's magic in action:
 
-```
+```text
 Act as a Senior Software Architect.
 
 Create a Product Requirements Document (PRD) for a "Task Manager" web app and save it to `.gemini/prd/PRD.md`.
@@ -155,9 +152,7 @@ agy
 2. **Paste the prompt** (the one above) into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-✨ **Fantastic! Your PRD is ready. Let's keep the momentum going!**
-
----
+> ✨ **Fantastic! Your PRD is ready. Let's keep the momentum going!** {.special}
 
 ## Configure your AI Agent
 Duration: 6
@@ -165,7 +160,7 @@ Duration: 6
 Now, let's give your AI assistant a personality and some clear instructions. This `frontend-specialist.md` file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.
 
 ### The Prompt (Same for All Tools)
-```
+```text
 Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/frontend-specialist.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -215,9 +210,7 @@ agy
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-🚀 **Agent configured! You're building a solid foundation.**
-
----
+> 🚀 **Agent configured! You're building a solid foundation.** {.special}
 
 ## Add a LocalStorage Skill
 Duration: 7
@@ -225,7 +218,7 @@ Duration: 7
 Skills are like "mini-manuals" that teach your AI exactly how to handle specific tasks. Let's create one for managing data, giving your assistant the expertise it needs to be super reliable!
 
 ### The Prompt (Same for All Tools)
-```
+````text
 Create a SKILL document: "LocalStorage Management" and save it to `.gemini/skills/localstorage.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -282,6 +275,7 @@ function loadTasks() {
   }
 }
 ```
+````
 
 ### Option 1: Antigravity IDE
 
@@ -298,9 +292,7 @@ agy
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-🎉 **Spot on! You just built a reusable skill. Ready to see it all come together?**
-
----
+> 🎉 **Spot on! You just built a reusable skill. Ready to see it all come together?** {.special}
 
 ## Time to Build!
 Duration: 15
@@ -311,7 +303,7 @@ Now for the best part! We're going to use all those documents you just created t
 It's time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!
 
 **Prompt (Same for All Tools):**
-```
+```text
 Build a task manager following these documents:
 
 PRD: @.gemini/prd/PRD.md
@@ -358,9 +350,7 @@ You've built it—now let's see it in action:
 - ✅ Refresh page (data persists!)
 - ✅ Mobile view
 
-📱 **Amazing! You've just built a functional web app with AI. Take a moment to celebrate!**
-
----
+> 📱 **Amazing! You've just built a functional web app with AI. Take a moment to celebrate!** {.special}
 
 ## Keep it consistent with ADRs
 Duration: 8
@@ -370,7 +360,7 @@ As your project grows, you'll want to remember *why* you made certain decisions.
 ### Create Your First ADR
 
 **Prompt for Gemini:**
-```
+```text
 Create ADR-001: "Pure CSS and Vanilla JS Architecture" and save it to `.gemini/adrs/ADR-001.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -402,7 +392,7 @@ agy
 To make your agent follow these decisions, you must link them in `frontend-specialist.md`.
 
 **Prompt for Gemini:**
-```
+```text
 Update .gemini/agents/frontend-specialist.md to include a new section "Rules from ADRs".
 Link ADR-001: "Pure CSS and Vanilla JS Architecture" and explain that all new features must comply with it.
 ```
@@ -419,9 +409,7 @@ agy
 2. **Paste the prompt** to update `frontend-specialist.md` into the interactive shell.
 3. Once generated, the tool will ask for permission to update the file.
 
-🔒 **Awesome! Now your AI will always know the "why" behind your code choices.**
-
----
+> 🔒 **Awesome! Now your AI will always know the "why" behind your code choices.** {.special}
 
 ## Connect to the World with Context7
 Duration: 8
@@ -461,8 +449,6 @@ ctx7 setup
 ```
 Follow the prompts to sign in. The CLI will automatically detect and configure your MCP clients (Antigravity CLI, Cursor, etc.).
 
----
-
 #### Option B: Manual Configuration (No Global Install)
 If you prefer not to install it globally, you can manually configure the settings.
 
@@ -476,6 +462,8 @@ touch ~/.gemini/settings.json
 ```
 
 3. **Edit `~/.gemini/settings.json`:**
+
+**~/.gemini/settings.json**
 ```json
 {
   "mcpServers": {
@@ -492,7 +480,7 @@ touch ~/.gemini/settings.json
 
 4. **Verify:**
 ```bash
-antigravity
+agy
 # In the CLI, type: /mcp list
 ```
 
@@ -501,13 +489,13 @@ antigravity
 Context7 provides tools to search library documentation and resolve library identifiers.
 
 **Natural prompts:**
-```
+```text
 Use context7 to find the latest documentation for the Chart.js library.
 ```
-```
+```text
 What is the newest way to implement auth in Next.js? Use context7.
 ```
-```
+```text
 Check context7 for the correct API signature for the current version of Tailwind CSS.
 ```
 
@@ -518,9 +506,7 @@ By using Context7, your AI assistant stays informed about the latest tools and l
 - `resolve-library-id` - Find library identifiers
 - `get-library-docs` - Fetch latest documentation
 
-🧠 **Incredible! Your AI assistant now has access to the most current documentation in the world.**
-
----
+> 🧠 **Incredible! Your AI assistant now has access to the most current documentation in the world.** {.special}
 
 ## Bonus: Add a Unit Testing Skill
 Duration: 8
@@ -528,7 +514,7 @@ Duration: 8
 Ready for one last skill? Let's teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.
 
 **Prompt (Same for All Tools):**
-```
+````text
 Create a SKILL document: "Unit Testing with Vanilla JS" and save it to `.gemini/skills/unit-testing.md`.
 Please ensure that the markdown file begins with the following frontmatter:
 ---
@@ -590,6 +576,7 @@ function testLocalStorage() {
 - Verify all assertions pass
 
 Format with complete code examples.
+````
 
 ### Option 1: Antigravity IDE
 
@@ -606,9 +593,7 @@ agy
 2. **Paste the prompt** into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-🧪 **Great work! You've just added a professional layer of testing to your project.**
-
----
+> 🧪 **Great work! You've just added a professional layer of testing to your project.** {.special}
 
 ## Congratulations! 🏆
 Duration: 2
@@ -652,4 +637,3 @@ The sky's the limit! Why not try:
 - **Google Skills**: [github.com/google/skills](https://github.com/google/skills)
 - **MCP**: [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - **Context7:** [github.com/upstash/context7](https://github.com/upstash/context7)
----
