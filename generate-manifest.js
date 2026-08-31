@@ -130,8 +130,8 @@ if (fs.existsSync(codelabsDir)) {
       <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 4px; background: var(--glow, rgba(0, 153, 255, 0.15)); border: 1px solid var(--accent, #0099ff); color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
         <span>Draft Preview</span>
       </div>
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">Gemini in Android Studio</h3>
-      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">Unpublished technical workshop currently under internal review.</p>
+      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">Hands-On Android App Building</h3>
+      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">Unpublished technical workshop with Gemini in Android Studio.</p>
     </div>
 
     <!-- Metadata Sections -->
