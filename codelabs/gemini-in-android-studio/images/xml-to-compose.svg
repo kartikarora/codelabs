@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="100%" height="100%">
+  <rect width="900" height="400" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Left: Legacy XML Layout -->
+  <g transform="translate(40, 40)">
+    <rect width="360" height="320" rx="12" fill="#1e293b" stroke="#64748b" stroke-width="1.5" />
+    <rect width="360" height="40" rx="12" fill="#334155" />
+    <text x="20" y="26" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#cbd5e1">item_movie_provider.xml</text>
+    
+    <text x="20" y="70" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">&lt;LinearLayout</text>
+    <text x="35" y="90" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">android:orientation="horizontal"</text>
+    <text x="35" y="110" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">android:padding="16dp"&gt;</text>
+    
+    <text x="35" y="145" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">&lt;ImageView</text>
+    <text x="50" y="165" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">android:id="@+id/providerLogo" /&gt;</text>
+
+    <text x="35" y="200" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">&lt;TextView</text>
+    <text x="50" y="220" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">android:id="@+id/providerName"</text>
+    <text x="50" y="240" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">android:text="Netflix 4K" /&gt;</text>
+    <text x="20" y="275" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">&lt;/LinearLayout&gt;</text>
+  </g>
+
+  <!-- Middle Arrow -->
+  <g transform="translate(420, 180)">
+    <circle cx="30" cy="20" r="28" fill="#1e1b4b" stroke="#818cf8" stroke-width="2" />
+    <text x="30" y="26" font-size="18" font-family="'Space Grotesk', sans-serif" text-anchor="middle" fill="#38bdf8">➔</text>
+    <text x="30" y="65" font-size="11" font-family="'Space Grotesk', sans-serif" font-weight="700" text-anchor="middle" fill="#818cf8">Skill Transform</text>
+  </g>
+
+  <!-- Right: Declarative Jetpack Compose Material 3 Component -->
+  <g transform="translate(500, 40)">
+    <rect width="360" height="320" rx="12" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2" />
+    <rect width="360" height="40" rx="12" fill="#312e81" />
+    <text x="20" y="26" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#38bdf8">MovieProviderCard.kt (Material 3)</text>
+    
+    <text x="20" y="70" font-family="'JetBrains Mono', monospace" font-size="11" fill="#c084fc">@Composable</text>
+    <text x="20" y="90" font-family="'JetBrains Mono', monospace" font-size="11" fill="#60a5fa">fun <tspan fill="#f8fafc">MovieProviderCard</tspan>(provider: StreamingProvider) {</text>
+    <text x="35" y="115" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">  MovieCard<tspan fill="#94a3b8">(modifier = Modifier.fillMaxWidth()) {</tspan></text>
+    <text x="50" y="140" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">    Row(verticalAlignment = CenterVertically) {</text>
+    <text x="65" y="165" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">      Text<tspan fill="#94a3b8">(provider.name, style = Typography.titleMedium)</tspan></text>
+    <text x="65" y="190" font-family="'JetBrains Mono', monospace" font-size="11" fill="#38bdf8">      ProviderBadge<tspan fill="#94a3b8">(provider.quality)</tspan></text>
+    <text x="50" y="215" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">    }</text>
+    <text x="35" y="240" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">  }</text>
+    <text x="20" y="265" font-family="'JetBrains Mono', monospace" font-size="11" fill="#60a5fa">}</text>
+  </g>
+</svg>

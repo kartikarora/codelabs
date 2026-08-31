@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="960" height="520">
+  <rect width="960" height="520" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+
+  <!-- Window Titlebar -->
+  <rect width="960" height="38" rx="12" fill="#161b22" />
+  <path d="M0 26 L0 38 L960 38 L960 26 Z" fill="#161b22" />
+  <circle cx="20" cy="19" r="5" fill="#f85149" />
+  <circle cx="36" cy="19" r="5" fill="#d29922" />
+  <circle cx="52" cy="19" r="5" fill="#2ea043" />
+  <text x="480" y="24" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8b949e" text-anchor="middle">WhereToWatchScreen.kt — Split Compose Preview</text>
+  <line x1="0" y1="38" x2="960" y2="38" stroke="#30363d" stroke-width="1" />
+
+  <!-- Split Toolbar -->
+  <g transform="translate(0, 38)">
+    <rect width="960" height="32" fill="#0d1117" />
+    <text x="24" y="21" font-family="'JetBrains Mono', monospace" font-size="11" fill="#58a6ff">WhereToWatchScreen.kt</text>
+    
+    <!-- Split mode selector right aligned -->
+    <rect x="830" y="6" width="110" height="20" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1" />
+    <text x="885" y="20" font-family="'Space Grotesk', sans-serif" font-size="10" fill="#58a6ff" text-anchor="middle">Split Code &amp; Preview</text>
+    <line x1="0" y1="32" x2="960" y2="32" stroke="#30363d" stroke-width="1" />
+  </g>
+
+  <!-- Left Code Pane (450px) -->
+  <g transform="translate(24, 85)">
+    <text x="0" y="20" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d2a8ff">@Composable</text>
+    <text x="0" y="40" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">fun <tspan fill="#e6edf3">WhereToWatchScreen</tspan>(</text>
+    <text x="16" y="60" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8b949e">movieId: String,</text>
+    <text x="16" y="80" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8b949e">viewModel: DetailViewModel</text>
+    <text x="0" y="100" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e6edf3">) {</text>
+    <text x="16" y="120" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">  val <tspan fill="#e6edf3">state</tspan> <tspan fill="#8b949e">by viewModel.uiState.collectAsState()</tspan></text>
+    <text x="16" y="140" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e6edf3">  Column(modifier = Modifier.padding(16.dp)) {</text>
+    <text x="32" y="160" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">    MovieHeaderCard<tspan fill="#8b949e">(state.movie)</tspan></text>
+    <text x="32" y="180" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">    StreamingProviderList<tspan fill="#8b949e">(state.providers)</tspan></text>
+    <text x="32" y="200" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">    PrimaryWatchlistButton<tspan fill="#8b949e">()</tspan></text>
+    <text x="16" y="220" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e6edf3">  }</text>
+    <text x="0" y="240" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e6edf3">}</text>
+
+    <text x="0" y="280" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d2a8ff">@PreviewLightDark</text>
+    <text x="0" y="300" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">@Composable</text>
+    <text x="0" y="320" font-family="'JetBrains Mono', monospace" font-size="11" fill="#79c0ff">private fun <tspan fill="#e6edf3">WhereToWatchPreview</tspan>() { ... }</text>
+  </g>
+
+  <!-- Divider Line -->
+  <line x1="470" y1="70" x2="470" y2="520" stroke="#30363d" stroke-width="1" />
+
+  <!-- Right Compose Preview Pane (490px) -->
+  <g transform="translate(490, 85)">
+    <!-- Transform UI Prompt Bar -->
+    <rect width="445" height="42" rx="8" fill="#161b22" stroke="#58a6ff" stroke-width="1.5" />
+    <text x="14" y="26" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#e6edf3">Set corner radius to 16dp, add 4K HDR badges &amp; style CTA</text>
+    <rect x="375" y="8" width="60" height="26" rx="4" fill="#58a6ff" />
+    <text x="405" y="25" font-family="'Space Grotesk', sans-serif" font-size="10" font-weight="700" fill="#0d1117" text-anchor="middle">Apply</text>
+
+    <!-- Live Preview Canvas -->
+    <g transform="translate(30, 60)">
+      <rect width="385" height="340" rx="20" fill="#0d1117" stroke="#30363d" stroke-width="2" />
+      
+      <!-- Top Title -->
+      <text x="20" y="35" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#e6edf3">Where to Watch</text>
+
+      <!-- Movie Card Preview -->
+      <g transform="translate(20, 50)">
+        <rect width="345" height="70" rx="16" fill="#161b22" stroke="#30363d" stroke-width="1" />
+        <rect x="12" y="10" width="35" height="50" rx="4" fill="#21262d" />
+        <text x="58" y="30" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#e6edf3">Inception (2010)</text>
+        <text x="58" y="48" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Sci-Fi • 2h 28m</text>
+        <!-- 4K Badge -->
+        <rect x="275" y="22" width="55" height="22" rx="6" fill="#21262d" stroke="#58a6ff" stroke-width="1" />
+        <text x="302" y="37" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#58a6ff" text-anchor="middle">4K HDR</text>
+      </g>
+
+      <!-- Provider Row 1 (Netflix) -->
+      <g transform="translate(20, 130)">
+        <rect width="345" height="48" rx="16" fill="#161b22" stroke="#30363d" stroke-width="1" />
+        <circle cx="24" cy="24" r="12" fill="#e50914" />
+        <text x="24" y="29" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">N</text>
+        <text x="46" y="29" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#e6edf3">Netflix</text>
+        <text x="280" y="29" font-family="'JetBrains Mono', monospace" font-size="11" fill="#58a6ff">Included</text>
+      </g>
+
+      <!-- Provider Row 2 (Disney+) -->
+      <g transform="translate(20, 186)">
+        <rect width="345" height="48" rx="16" fill="#161b22" stroke="#30363d" stroke-width="1" />
+        <circle cx="24" cy="24" r="12" fill="#113ccf" />
+        <text x="24" y="29" font-family="'Space Grotesk', sans-serif" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">D+</text>
+        <text x="46" y="29" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#e6edf3">Disney+</text>
+        <text x="280" y="29" font-family="'JetBrains Mono', monospace" font-size="11" fill="#58a6ff">Included</text>
+      </g>
+
+      <!-- CTA Button -->
+      <g transform="translate(20, 250)">
+        <rect width="345" height="44" rx="12" fill="#58a6ff" />
+        <text x="172" y="27" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#0d1117" text-anchor="middle">Add to Watchlist &amp; Alerts</text>
+      </g>
+    </g>
+  </g>
+</svg>

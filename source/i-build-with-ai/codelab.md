@@ -390,9 +390,9 @@ agy
 2. **Paste the prompt** to create ADR-001 into the interactive shell.
 3. Once generated, the tool will ask for permission to write the file.
 
-### Update frontend-specialist.md
+### Update the agent definition
 
-To make your agent follow these decisions, you must link them in `frontend-specialist.md`.
+To make your agent follow these decisions, you must link them in `.gemini/agents/frontend-specialist.md`.
 
 **Prompt for Gemini:**
 ```text

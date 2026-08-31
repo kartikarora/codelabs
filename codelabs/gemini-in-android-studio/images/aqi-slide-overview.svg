@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="100%" height="100%">
+  <rect width="900" height="400" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Cloud Telemetry Sources -->
+  <g transform="translate(50, 60)">
+    <rect width="240" height="120" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+    <text x="20" y="38" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#fbbf24">Firebase Crashlytics</text>
+    <text x="20" y="65" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">• 14,280 Crashes / Day</text>
+    <text x="20" y="85" font-family="'JetBrains Mono', monospace" font-size="11" fill="#f87171">• NullPointerException (84%)</text>
+    <text x="20" y="105" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">• Android 14, 15, 16</text>
+  </g>
+
+  <g transform="translate(50, 210)">
+    <rect width="240" height="120" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
+    <text x="20" y="38" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#60a5fa">Google Play Vitals</text>
+    <text x="20" y="65" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">• ANR Rate: 0.12%</text>
+    <text x="20" y="85" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">• User-perceived crashes</text>
+    <text x="20" y="105" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">• Device Model breakdown</text>
+  </g>
+
+  <!-- Connectors -->
+  <path d="M290 120 L380 180" stroke="#f59e0b" stroke-width="2" />
+  <path d="M290 270 L380 210" stroke="#3b82f6" stroke-width="2" />
+
+  <!-- Inside Android Studio: App Quality Insights Tool Window -->
+  <g transform="translate(380, 50)">
+    <rect width="470" height="290" rx="14" fill="#1e1b4b" stroke="#38bdf8" stroke-width="2.5" />
+    <rect width="470" height="42" rx="14" fill="#0284c7" />
+    <text x="20" y="27" font-family="'Space Grotesk', sans-serif" font-size="15" font-weight="700" fill="#f8fafc">App Quality Insights (Android Studio)</text>
+
+    <!-- Crash item -->
+    <g transform="translate(20, 60)">
+      <rect width="430" height="60" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" />
+      <text x="15" y="24" font-family="'JetBrains Mono', monospace" font-size="12" font-weight="700" fill="#f87171">Fatal Exception: NullPointerException</text>
+      <text x="15" y="44" font-family="'JetBrains Mono', monospace" font-size="10" fill="#94a3b8">MovieDetailViewModel.kt:42 • 1.2k affected users</text>
+    </g>
+
+    <!-- Gemini Diagnostic Panel -->
+    <g transform="translate(20, 135)">
+      <rect width="430" height="130" rx="8" fill="#0f172a" stroke="#818cf8" stroke-width="1.5" />
+      <text x="15" y="24" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="700" fill="#c084fc">Gemini Crash Insights</text>
+      <text x="15" y="48" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#cbd5e1">"Root Cause: Nullable 'streamingProviders' for region AU was accessed</text>
+      <text x="15" y="68" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#cbd5e1">without safe call when provider list was empty."</text>
+      
+      <g transform="translate(15, 85)">
+        <rect width="180" height="32" rx="6" fill="#38bdf8" />
+        <text x="90" y="21" font-family="'Space Grotesk', sans-serif" font-size="12" font-weight="700" text-anchor="middle" fill="#0f172a">Apply 1-Click Diff Fix</text>
+      </g>
+    </g>
+  </g>
+</svg>

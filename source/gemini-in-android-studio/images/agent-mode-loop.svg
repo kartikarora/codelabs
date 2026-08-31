@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="100%" height="100%">
+  <rect width="900" height="350" rx="16" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Step 1: User Prompt & Goal -->
+  <g transform="translate(40, 115)">
+    <rect width="160" height="120" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <circle cx="80" cy="30" r="16" fill="#0d1117" stroke="#38bdf8" stroke-width="1.5" />
+    <text x="80" y="36" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#38bdf8" text-anchor="middle">1</text>
+    <text x="80" y="68" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="#f8fafc">1. Goal Prompt</text>
+    <text x="80" y="92" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle" fill="#94a3b8">"Scaffold Watchlist"</text>
+  </g>
+
+  <!-- Step 2: Multi-File Planning & Edits -->
+  <g transform="translate(250, 115)">
+    <rect width="180" height="120" rx="12" fill="#1e1b4b" stroke="#818cf8" stroke-width="2" />
+    <circle cx="90" cy="30" r="16" fill="#0d1117" stroke="#818cf8" stroke-width="1.5" />
+    <text x="90" y="36" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#818cf8" text-anchor="middle">2</text>
+    <text x="90" y="68" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="#f8fafc">2. Multi-File Edits</text>
+    <text x="90" y="92" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" fill="#c7d2fe">UI + VM + Repo + Nav</text>
+  </g>
+
+  <!-- Step 3: Gradle Build & Self-Heal Loop -->
+  <g transform="translate(480, 115)">
+    <rect width="180" height="120" rx="12" fill="#022c22" stroke="#10b981" stroke-width="2" />
+    <circle cx="90" cy="30" r="16" fill="#0d1117" stroke="#10b981" stroke-width="1.5" />
+    <text x="90" y="36" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#10b981" text-anchor="middle">3</text>
+    <text x="90" y="68" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="#f8fafc">3. Self-Healing Build</text>
+    <text x="90" y="92" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" fill="#a7f3d0">Detects &amp; Fixes Errors</text>
+  </g>
+
+  <!-- Step 4: Developer Diff Review -->
+  <g transform="translate(710, 115)">
+    <rect width="150" height="120" rx="12" fill="#1e293b" stroke="#ec4899" stroke-width="2" />
+    <circle cx="75" cy="30" r="16" fill="#0d1117" stroke="#ec4899" stroke-width="1.5" />
+    <text x="75" y="36" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" fill="#ec4899" text-anchor="middle">4</text>
+    <text x="75" y="68" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="700" text-anchor="middle" fill="#f8fafc">4. Diff Review</text>
+    <text x="75" y="92" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle" fill="#fbcfe8">Developer Approval</text>
+  </g>
+
+  <!-- Arrows -->
+  <path d="M200 175 L250 175" stroke="#38bdf8" stroke-width="2" />
+  <path d="M430 175 L480 175" stroke="#818cf8" stroke-width="2" />
+  <path d="M660 175 L710 175" stroke="#10b981" stroke-width="2" />
+</svg>

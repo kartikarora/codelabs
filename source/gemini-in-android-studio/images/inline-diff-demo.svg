@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" width="960" height="480">
+  <rect width="960" height="480" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+
+  <!-- Editor Window Titlebar -->
+  <rect width="960" height="38" rx="12" fill="#161b22" />
+  <path d="M0 26 L0 38 L960 38 L960 26 Z" fill="#161b22" />
+  <circle cx="20" cy="19" r="5" fill="#f85149" />
+  <circle cx="36" cy="19" r="5" fill="#d29922" />
+  <circle cx="52" cy="19" r="5" fill="#2ea043" />
+  <text x="480" y="24" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8b949e" text-anchor="middle">TrendingMoviesViewModel.kt — ICanHazStream</text>
+  <line x1="0" y1="38" x2="960" y2="38" stroke="#30363d" stroke-width="1" />
+
+  <!-- File Tabs -->
+  <g transform="translate(0, 38)">
+    <rect width="960" height="32" fill="#0d1117" />
+    <!-- Active Tab -->
+    <rect width="240" height="32" fill="#161b22" stroke="#30363d" stroke-width="0.5" />
+    <text x="24" y="21" font-family="'JetBrains Mono', monospace" font-size="11" fill="#58a6ff">TrendingMoviesViewModel.kt</text>
+    <!-- Inactive Tab -->
+    <text x="260" y="21" font-family="'JetBrains Mono', monospace" font-size="11" fill="#8b949e">MovieRepository.kt</text>
+    <line x1="0" y1="32" x2="960" y2="32" stroke="#30363d" stroke-width="1" />
+  </g>
+
+  <!-- Inline Prompt Pill (Cmd+\) -->
+  <g transform="translate(60, 85)">
+    <rect width="840" height="52" rx="10" fill="#161b22" stroke="#58a6ff" stroke-width="1.5" />
+    <circle cx="28" cy="26" r="10" fill="#21262d" />
+    <text x="28" y="30" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="#58a6ff" text-anchor="middle">AI</text>
+    <text x="48" y="31" font-family="'JetBrains Mono', monospace" font-size="12" fill="#e6edf3">Refactor this LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().</text>
+    
+    <!-- Accept / Reject buttons -->
+    <rect x="660" y="11" width="80" height="30" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1" />
+    <text x="700" y="30" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e" text-anchor="middle">Esc (Reject)</text>
+
+    <rect x="748" y="11" width="80" height="30" rx="6" fill="#58a6ff" />
+    <text x="788" y="30" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700" fill="#0d1117" text-anchor="middle">Accept</text>
+  </g>
+
+  <!-- Code Lines & Diff Review -->
+  <g transform="translate(30, 160)">
+    <!-- Line numbers & unchanged code -->
+    <text x="0" y="24" font-family="'JetBrains Mono', monospace" font-size="12" fill="#484f58">15</text>
+    <text x="35" y="24" font-family="'JetBrains Mono', monospace" font-size="12" fill="#d2a8ff">class <tspan fill="#e6edf3">TrendingMoviesViewModel</tspan> @Inject constructor(</text>
+
+    <text x="0" y="52" font-family="'JetBrains Mono', monospace" font-size="12" fill="#484f58">16</text>
+    <text x="35" y="52" font-family="'JetBrains Mono', monospace" font-size="12" fill="#e6edf3">    private val repository: MovieRepository</text>
+
+    <text x="0" y="80" font-family="'JetBrains Mono', monospace" font-size="12" fill="#484f58">17</text>
+    <text x="35" y="80" font-family="'JetBrains Mono', monospace" font-size="12" fill="#e6edf3">) : ViewModel() {</text>
+
+    <!-- Deleted lines block (Red) -->
+    <rect x="30" y="96" width="870" height="56" rx="6" fill="#211215" stroke="#f85149" stroke-width="1" stroke-opacity="0.4" />
+    <text x="0" y="120" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f85149">18</text>
+    <text x="45" y="120" font-family="'JetBrains Mono', monospace" font-size="12" fill="#ff7b72">-   private val _trendingMovies = MutableLiveData&lt;List&lt;Movie&gt;&gt;()</text>
+    <text x="0" y="144" font-family="'JetBrains Mono', monospace" font-size="12" fill="#f85149">19</text>
+    <text x="45" y="144" font-family="'JetBrains Mono', monospace" font-size="12" fill="#ff7b72">-   val trendingMovies: LiveData&lt;List&lt;Movie&gt;&gt; = _trendingMovies</text>
+
+    <!-- Added lines block (Green) -->
+    <rect x="30" y="160" width="870" height="56" rx="6" fill="#0d1f14" stroke="#2ea043" stroke-width="1" stroke-opacity="0.4" />
+    <text x="0" y="184" font-family="'JetBrains Mono', monospace" font-size="12" fill="#2ea043">18</text>
+    <text x="45" y="184" font-family="'JetBrains Mono', monospace" font-size="12" fill="#7ee787">+   private val _trendingMovies = MutableStateFlow&lt;List&lt;Movie&gt;&gt;(emptyList())</text>
+    <text x="0" y="208" font-family="'JetBrains Mono', monospace" font-size="12" fill="#2ea043">19</text>
+    <text x="45" y="208" font-family="'JetBrains Mono', monospace" font-size="12" fill="#7ee787">+   val trendingMovies: StateFlow&lt;List&lt;Movie&gt;&gt; = _trendingMovies.asStateFlow()</text>
+
+    <!-- Trailing unchanged code -->
+    <text x="0" y="244" font-family="'JetBrains Mono', monospace" font-size="12" fill="#484f58">20</text>
+    <text x="35" y="244" font-family="'JetBrains Mono', monospace" font-size="12" fill="#e6edf3">}</text>
+  </g>
+</svg>

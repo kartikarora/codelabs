@@ -1,0 +1,19 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../",
+  "mainga": "",
+  "updated": "2026-08-31T03:25:06.150Z",
+  "id": "gemini-in-android-studio",
+  "duration": 131,
+  "title": "Gemini in Android Studio: The ICanHazStream Workshop",
+  "summary": "Master practical AI workflows in Android Studio with ICanHazStream. Refactor legacy Java and XML code, generate Compose UI from wireframe sketches, build multi-file features with Agent Mode, connect GitHub MCP, run Journeys E2E tests, and script workflows with the Android CLI.",
+  "source": "source/gemini-in-android-studio/codelab.md",
+  "theme": "",
+  "status": ["Published"],
+  "category": ["AI", "Android", "Compose"],
+  "tags": ["ai", "gemini", "android-studio", "agent-mode", "compose", "mcp", "journeys", "android-cli"],
+  "feedback": "mailto:hello@kartikarora.me",
+  "image": "images/poster.svg",
+  "url": "gemini-in-android-studio"
+}
