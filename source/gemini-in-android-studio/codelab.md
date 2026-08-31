@@ -15,7 +15,6 @@ tags: ai, gemini, android-studio, agent-mode, compose, mcp, journeys, android-cl
 Duration: 7
 
 > **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
-
 ![ICanHazStream Workshop Banner](images/poster.svg)
 
 **ICanHazStream** (`me.kartikarora.icanhazstream`) is a multi-module Android app that tracks movie and TV streaming availability across platforms like Netflix, Disney+, Prime Video, Apple TV, Stan, and Binge.
@@ -96,6 +95,7 @@ npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-them
 ## Project guardrails
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Establish engineering conventions in `AGENTS.md` and block sensitive files with `.aiexclude`.
 
 ![Guardrails Architecture](images/guardrails-architecture.svg)
@@ -131,6 +131,7 @@ streaming-secrets.json
 ## Inline prompts & live diffs
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Use in-editor inline prompts (`Cmd+\` / `Ctrl+\`) to refactor code without leaving your file.
 
 ### 1. Open the target ViewModel
@@ -166,6 +167,7 @@ val trendingMovies: StateFlow<List<Movie>> = _trendingMovies.asStateFlow()
 ## Java to Kotlin migration
 Duration: 7
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Convert legacy Java utilities into idiomatic Kotlin functions.
 
 ### 1. Inspect the legacy calculation logic
@@ -217,6 +219,7 @@ fun calculateOptimalWatchCost(
 ## Legacy XML to Compose
 Duration: 10
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Migrate an XML layout and ViewHolder to a declarative `@Composable` using brand design tokens.
 
 ![XML to Compose Migration](images/xml-to-compose.svg)
@@ -305,6 +308,7 @@ fun MovieProviderCard(
 ## Day-to-day assistant tools
 Duration: 5
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Speed up daily tasks with built-in documentation, code explanation, and commit helpers.
 
 ### 1. Generate KDoc comments
@@ -354,6 +358,7 @@ feat(explore): convert movie provider item layout to Compose and add KDoc
 ## Wireframe to Compose
 Duration: 10
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Attach UI wireframe sketches directly into Gemini Chat to generate Compose layouts.
 
 ![Where to Watch Wireframe](images/wireframe-sample.svg)
@@ -381,6 +386,7 @@ Paste the generated composable into `WhereToWatchScreen.kt`.
 ## Interactive Compose Previews
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Iterate on visual styling directly inside the **Compose Preview** panel using natural language.
 
 ### 1. Add preview functions
@@ -415,6 +421,7 @@ Set provider card corner radius to 16dp, add 4K HDR badges next to streaming pla
 ## Connecting GitHub MCP
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Connect Gemini to the **GitHub MCP Server** to ground code generation in repository issues, PRDs, and pull requests.
 
 ![MCP Architecture](images/mcp-architecture.svg)
@@ -449,6 +456,7 @@ Gemini queries `get_issue` and `get_file_contents` over MCP to retrieve the exac
 ## Multi-module Agent Mode
 Duration: 12
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Use **Agent Mode** to plan, write, and link features across multiple modules autonomously.
 
 ![Agent Mode Loop](images/agent-mode-loop.svg)
@@ -473,6 +481,7 @@ Review the structured multi-file diff and click **Apply All Changes**.
 ## Automated build repair
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.
 
 ### 1. Request automated compilation
@@ -492,6 +501,7 @@ Agent Mode:
 ## Unit tests & Turbine
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.
 
 ### 1. Open the test skeleton
@@ -551,6 +561,7 @@ Run tests (`Ctrl+Shift+R` / `Cmd+Shift+R`) to confirm they pass.
 ## Crash debugging in Logcat
 Duration: 7
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Diagnose and patch exceptions directly from Logcat using **Ask Gemini**.
 
 ### 1. Trigger the crash
@@ -585,6 +596,7 @@ Apply the change and re-run to verify the fix.
 ## Studio Journeys E2E tests
 Duration: 10
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.
 
 ![Studio Journeys Flow](images/journeys-flow.svg)
@@ -613,6 +625,7 @@ steps:
 ## Headless Android CLI
 Duration: 8
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Use the **Android CLI** to inspect symbols, render previews, and run lint checks from scripts and terminal agents.
 
 ![Android CLI Bridge](images/android-cli-bridge.svg)
@@ -635,6 +648,7 @@ android build --fix-lint
 ## App Quality Insights
 Duration: 5
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 Review production telemetry from Firebase Crashlytics and Google Play Vitals inside Android Studio with one-click Gemini diagnostics.
 
 ![App Quality Insights Overview](images/aqi-slide-overview.svg)
@@ -646,6 +660,7 @@ Review production telemetry from Firebase Crashlytics and Google Play Vitals ins
 ## Summary & next steps
 Duration: 2
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
 ![ICanHazStream Complete](images/poster.svg)
 
 ### Summary of key workflows

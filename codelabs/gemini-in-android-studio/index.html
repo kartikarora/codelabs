@@ -78,8 +78,7 @@
                   environment="Android"
                   feedback-link="mailto:hello@kartikarora.me">
     <klaat-kodelab-step label="Welcome &amp; starter setup" duration="7">
-      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.</p></aside>
-<p><img alt="ICanHazStream Workshop Banner" src="images/poster.svg"></p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.<img alt="ICanHazStream Workshop Banner" src="images/poster.svg"></p></aside>
 <p><strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>) is a multi-module Android app that tracks movie and TV streaming availability across platforms like Netflix, Disney+, Prime Video, Apple TV, Stan, and Binge.</p>
 <p>In this workshop, you will use <strong>Gemini in Android Studio</strong> to modernise legacy code, generate Compose UI from wireframes, scaffold multi-module features with <strong>Agent Mode</strong>, connect external context via <strong>GitHub MCP</strong>, and automate tests with <strong>Studio Journeys</strong> and the <strong>Android CLI</strong>.</p>
 <h3>Prerequisites</h3>
@@ -140,7 +139,7 @@
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Project guardrails" duration="8">
-      <p>Establish engineering conventions in <code>AGENTS.md</code> and block sensitive files with <code>.aiexclude</code>.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Establish engineering conventions in <code>AGENTS.md</code> and block sensitive files with <code>.aiexclude</code>.</p></aside>
 <p><img alt="Guardrails Architecture" src="images/guardrails-architecture.svg"></p>
 <h3>1. Define project engineering standards</h3>
 <p>Create <strong><code>AGENTS.md</code></strong> in the project root:</p>
@@ -167,7 +166,7 @@ streaming-secrets.json
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Inline prompts &amp; live diffs" duration="8">
-      <p>Use in-editor inline prompts (<code>Cmd+\</code> / <code>Ctrl+\</code>) to refactor code without leaving your file.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Use in-editor inline prompts (<code>Cmd+\</code> / <code>Ctrl+\</code>) to refactor code without leaving your file.</p></aside>
 <h3>1. Open the target ViewModel</h3>
 <p>Open <strong><code>:feature:explore/src/main/kotlin/me/kartikarora/icanhazstream/explore/TrendingMoviesViewModel.kt</code></strong>:</p>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
@@ -194,7 +193,7 @@ val trendingMovies: StateFlow&lt;List&lt;Movie&gt;&gt; = _trendingMovies.asState
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Java to Kotlin migration" duration="7">
-      <p>Convert legacy Java utilities into idiomatic Kotlin functions.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Convert legacy Java utilities into idiomatic Kotlin functions.</p></aside>
 <h3>1. Inspect the legacy calculation logic</h3>
 <p>Open <strong><code>:core:data/src/main/java/me/kartikarora/icanhazstream/data/legacy/WatchCostUtils.java</code></strong>:</p>
 <p><strong>WatchCostUtils.java</strong></p>
@@ -238,7 +237,7 @@ fun calculateOptimalWatchCost(
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Legacy XML to Compose" duration="10">
-      <p>Migrate an XML layout and ViewHolder to a declarative <code>@Composable</code> using brand design tokens.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Migrate an XML layout and ViewHolder to a declarative <code>@Composable</code> using brand design tokens.</p></aside>
 <p><img alt="XML to Compose Migration" src="images/xml-to-compose.svg"></p>
 <h3>1. Inspect the layout and target file</h3>
 <p>Open <strong><code>:feature:explore/src/main/res/layout/item_movie_provider.xml</code></strong> and <strong><code>:feature:explore/src/main/kotlin/me/kartikarora/icanhazstream/explore/MovieProviderCard.kt</code></strong>:</p>
@@ -315,7 +314,7 @@ fun MovieProviderCard(
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Day-to-day assistant tools" duration="5">
-      <p>Speed up daily tasks with built-in documentation, code explanation, and commit helpers.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Speed up daily tasks with built-in documentation, code explanation, and commit helpers.</p></aside>
 <h3>1. Generate KDoc comments</h3>
 <p>Open <strong><code>:core:model/src/main/kotlin/me/kartikarora/icanhazstream/model/Movie.kt</code></strong>. Right-click the class and select <strong>Gemini &gt; Document Class</strong>:</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -354,7 +353,7 @@ data class Movie(
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Wireframe to Compose" duration="10">
-      <p>Attach UI wireframe sketches directly into Gemini Chat to generate Compose layouts.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Attach UI wireframe sketches directly into Gemini Chat to generate Compose layouts.</p></aside>
 <p><img alt="Where to Watch Wireframe" src="images/wireframe-sample.svg"></p>
 <h3>1. Locate the wireframe asset</h3>
 <p>Use <strong><code>assets/wireframe-where-to-watch.png</code></strong> (or the diagram above) and open <strong><code>:feature:detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt</code></strong>.</p>
@@ -373,7 +372,7 @@ Use Material 3 components and design tokens from :core:ui.
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Interactive Compose Previews" duration="8">
-      <p>Iterate on visual styling directly inside the <strong>Compose Preview</strong> panel using natural language.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Iterate on visual styling directly inside the <strong>Compose Preview</strong> panel using natural language.</p></aside>
 <h3>1. Add preview functions</h3>
 <p>At the bottom of <code>WhereToWatchScreen.kt</code>, right-click and choose <strong>Gemini &gt; Generate Compose Preview</strong>:</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -400,7 +399,7 @@ private fun WhereToWatchScreenPreview() {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Connecting GitHub MCP" duration="8">
-      <p>Connect Gemini to the <strong>GitHub MCP Server</strong> to ground code generation in repository issues, PRDs, and pull requests.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Connect Gemini to the <strong>GitHub MCP Server</strong> to ground code generation in repository issues, PRDs, and pull requests.</p></aside>
 <p><img alt="MCP Architecture" src="images/mcp-architecture.svg"></p>
 <h3>1. Configure the MCP server</h3>
 <p>Add the GitHub MCP server to <strong><code>.gemini/mcp.json</code></strong> (or via <strong>Settings &gt; Tools &gt; Gemini &gt; MCP Servers</strong>):</p>
@@ -425,7 +424,7 @@ private fun WhereToWatchScreenPreview() {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Multi-module Agent Mode" duration="12">
-      <p>Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p></aside>
 <p><img alt="Agent Mode Loop" src="images/agent-mode-loop.svg"></p>
 <h3>1. Launch Agent Mode</h3>
 <p>Toggle the Gemini tool window from <strong>Chat</strong> to <strong>Agent Mode</strong> and submit:</p>
@@ -442,7 +441,7 @@ Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Automated build repair" duration="8">
-      <p>Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.</p></aside>
 <h3>1. Request automated compilation</h3>
 <p>In the Agent window, submit:</p>
 <div class="code-container"><pre><code class=" language-text">Check and compile the project by running a Gradle build for :feature:watchlist. If any dependencies or imports are missing in build.gradle.kts or libs.versions.toml, diagnose and fix them.
@@ -458,7 +457,7 @@ Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Unit tests &amp; Turbine" duration="8">
-      <p>Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.</p></aside>
 <h3>1. Open the test skeleton</h3>
 <p>Open <strong><code>:feature:watchlist/src/test/kotlin/me/kartikarora/icanhazstream/watchlist/WatchlistViewModelTest.kt</code></strong>.</p>
 <h3>2. Generate tests with Gemini</h3>
@@ -508,7 +507,7 @@ class WatchlistViewModelTest {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Crash debugging in Logcat" duration="7">
-      <p>Diagnose and patch exceptions directly from Logcat using <strong>Ask Gemini</strong>.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Diagnose and patch exceptions directly from Logcat using <strong>Ask Gemini</strong>.</p></aside>
 <h3>1. Trigger the crash</h3>
 <p>Run the app on the emulator, open Explore, tap <strong>&quot;Untracked Indie Release #9&quot;</strong>, and set region filter to <strong>&quot;Australia (AU)&quot;</strong>.</p>
 <h3>2. Inspect in Logcat</h3>
@@ -533,7 +532,7 @@ if (providers.isEmpty()) {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Studio Journeys E2E tests" duration="10">
-      <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.</p></aside>
 <p><img alt="Studio Journeys Flow" src="images/journeys-flow.svg"></p>
 <h3>1. Inspect the journey definition</h3>
 <p>Open <strong><code>journeys/find_streaming_provider.journey</code></strong>:</p>
@@ -557,7 +556,7 @@ steps:
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Headless Android CLI" duration="8">
-      <p>Use the <strong>Android CLI</strong> to inspect symbols, render previews, and run lint checks from scripts and terminal agents.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Use the <strong>Android CLI</strong> to inspect symbols, render previews, and run lint checks from scripts and terminal agents.</p></aside>
 <p><img alt="Android CLI Bridge" src="images/android-cli-bridge.svg"></p>
 <h3>Useful commands</h3>
 <div class="code-container"><pre><code class=" language-bash"># Inspect project modules and configuration
@@ -575,7 +574,7 @@ android build --fix-lint
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="App Quality Insights" duration="5">
-      <p>Review production telemetry from Firebase Crashlytics and Google Play Vitals inside Android Studio with one-click Gemini diagnostics.</p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.Review production telemetry from Firebase Crashlytics and Google Play Vitals inside Android Studio with one-click Gemini diagnostics.</p></aside>
 <p><img alt="App Quality Insights Overview" src="images/aqi-slide-overview.svg"></p>
 <ol>
 <li><p><strong>Open AQI:</strong> Navigate to <strong>View &gt; Tool Windows &gt; App Quality Insights</strong>.</p></li>
@@ -585,7 +584,7 @@ android build --fix-lint
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Summary &amp; next steps" duration="2">
-      <p><img alt="ICanHazStream Complete" src="images/poster.svg"></p>
+      <aside class="warning"><p><strong>Unpublished Draft Preview</strong>: This codelab is currently in draft review and not published in the public directory.<img alt="ICanHazStream Complete" src="images/poster.svg"></p></aside>
 <h3>Summary of key workflows</h3>
 <ul>
 <li><p><strong>Guardrails:</strong> Ground code generation with <code>AGENTS.md</code>, <code>.aiexclude</code>, and design token skills.</p></li>
