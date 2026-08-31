@@ -14,6 +14,8 @@ tags: ai, gemini, android-studio, agent-mode, compose, mcp, journeys, android-cl
 ## Welcome & starter setup
 Duration: 7
 
+> **Unpublished Draft Preview**: This codelab is currently in draft review and not published in the public directory. {.warning}
+
 ![ICanHazStream Workshop Banner](images/poster.svg)
 
 **ICanHazStream** (`me.kartikarora.icanhazstream`) is a multi-module Android app that tracks movie and TV streaming availability across platforms like Netflix, Disney+, Prime Video, Apple TV, Stan, and Binge.
