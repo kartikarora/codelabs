@@ -3,7 +3,7 @@ id: gemini-in-android-studio
 summary: Master practical AI workflows in Android Studio with ICanHazStream. Refactor legacy Java and XML code, generate Compose UI from wireframe sketches, build multi-file features with Agent Mode, connect GitHub MCP, run Journeys E2E tests, and script workflows with the Android CLI.
 categories: AI, Android, Compose
 environments: Android
-status: Published
+status: Draft
 authors: Kartik Arora
 feedback_link: mailto:hello@kartikarora.me
 tags: ai, gemini, android-studio, agent-mode, compose, mcp, journeys, android-cli

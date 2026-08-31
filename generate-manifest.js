@@ -22,6 +22,16 @@ if (fs.existsSync(codelabsDir)) {
     if (fs.existsSync(jsonPath)) {
       const meta = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
       
+      // Filter out draft or unpublished codelabs from manifest
+      const statusList = Array.isArray(meta.status)
+        ? meta.status.map(s => String(s).toLowerCase())
+        : (meta.status ? [String(meta.status).toLowerCase()] : []);
+
+      if (statusList.includes('draft')) {
+        console.log(`Skipping draft codelab from manifest: ${dir}`);
+        return;
+      }
+
       // Determine the image path
       let image = null;
       if (meta.image) {
