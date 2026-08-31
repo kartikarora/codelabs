@@ -107,7 +107,7 @@ if (fs.existsSync(codelabsDir)) {
 
         if (statusList.includes('draft')) {
           const draftRightColumnHtml = `
-  <!-- Draft Preview Right Sidebar Column -->
+  <!-- Draft Preview Right Sidebar Column (Brand Design System) -->
   <aside id="draft-sidebar-column" style="
     position: fixed;
     top: 0;
@@ -116,69 +116,69 @@ if (fs.existsSync(codelabsDir)) {
     width: 280px;
     height: 100vh;
     box-sizing: border-box;
-    background: #161b22;
-    border-left: 1px solid #30363d;
+    background: var(--bg-alt, #161b22);
+    border-left: 1px solid var(--border, #30363d);
     z-index: 9999;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    font-family: 'Space Grotesk', -apple-system, sans-serif;
-    color: #e6edf3;
+    font-family: var(--font-sans, 'Space Grotesk', -apple-system, sans-serif);
+    color: var(--primary, #e6edf3);
   ">
     <!-- Header -->
-    <div style="padding: 20px 18px; border-bottom: 1px solid #30363d;">
-      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 4px; background: rgba(210, 153, 34, 0.18); border: 1px solid #d29922; color: #d29922; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
+    <div style="padding: 20px 18px; border-bottom: 1px solid var(--border, #30363d);">
+      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 4px; background: var(--glow, rgba(0, 153, 255, 0.15)); border: 1px solid var(--accent, #0099ff); color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
         <span>Draft Preview</span>
       </div>
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: #e6edf3; line-height: 1.3;">Gemini in Android Studio</h3>
-      <p style="margin: 0; font-size: 12px; color: #8b949e; line-height: 1.4;">Unpublished technical workshop currently under internal review.</p>
+      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">Gemini in Android Studio</h3>
+      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">Unpublished technical workshop currently under internal review.</p>
     </div>
 
     <!-- Metadata Sections -->
     <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px; flex: 1;">
       <!-- Card: Review Status -->
-      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Status</div>
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #d29922;">
-          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #d29922;"></span>
+      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px;">
+        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Status</div>
+        <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--accent, #0099ff);">
+          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent, #0099ff);"></span>
           <span>Draft (Unpublished)</span>
         </div>
-        <div style="font-size: 11px; color: #8b949e; margin-top: 4px;">Not listed in public directory</div>
+        <div style="font-size: 11px; color: var(--secondary, #8b949e); margin-top: 4px;">Not listed in public directory</div>
       </div>
 
       <!-- Card: Workshop Specs -->
-      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px; font-size: 12px;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Workshop Specs</div>
+      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px; font-size: 12px;">
+        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Workshop Specs</div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: #8b949e;">App:</span>
-          <span style="color: #58a6ff; font-family: 'JetBrains Mono', monospace; font-size: 11px;">ICanHazStream</span>
+          <span style="color: var(--secondary, #8b949e);">App:</span>
+          <span style="color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">ICanHazStream</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: #8b949e;">Kotlin:</span>
-          <span style="color: #e6edf3; font-family: 'JetBrains Mono', monospace; font-size: 11px;">2.4.10</span>
+          <span style="color: var(--secondary, #8b949e);">Kotlin:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">2.4.10</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: #8b949e;">Studio:</span>
-          <span style="color: #e6edf3; font-family: 'JetBrains Mono', monospace; font-size: 11px;">Quail / Canary</span>
+          <span style="color: var(--secondary, #8b949e);">Studio:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">Quail / Canary</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span style="color: #8b949e;">Steps:</span>
-          <span style="color: #e6edf3; font-family: 'JetBrains Mono', monospace; font-size: 11px;">17 (3 Acts)</span>
+          <span style="color: var(--secondary, #8b949e);">Steps:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">17 (3 Acts)</span>
         </div>
       </div>
 
       <!-- Card: Review Guidance -->
-      <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 12px;">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Review Notice</div>
-        <p style="margin: 0; font-size: 11px; color: #8b949e; line-height: 1.4;">
+      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px;">
+        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Review Notice</div>
+        <p style="margin: 0; font-size: 11px; color: var(--secondary, #8b949e); line-height: 1.4;">
           This tutorial is in private preview. If you encounter missing dependencies or API changes, please report them.
         </p>
       </div>
     </div>
 
     <!-- Footer Action -->
-    <div style="padding: 16px 18px; border-top: 1px solid #30363d;">
-      <a href="mailto:hello@kartikarora.me?subject=Feedback:%20Gemini%20in%20Android%20Studio%20Workshop" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: #58a6ff; color: #0d1117; font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
+    <div style="padding: 16px 18px; border-top: 1px solid var(--border, #30363d);">
+      <a href="mailto:hello@kartikarora.me?subject=Feedback:%20Gemini%20in%20Android%20Studio%20Workshop" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Space Grotesk', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
         Send Feedback
       </a>
     </div>
