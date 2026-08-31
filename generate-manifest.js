@@ -106,30 +106,33 @@ if (fs.existsSync(codelabsDir)) {
           : (meta.status ? [String(meta.status).toLowerCase()] : []);
 
         if (statusList.includes('draft')) {
-          const htmlPath = path.join(distDir, dir, 'index.html');
-          if (fs.existsSync(htmlPath)) {
-            let html = fs.readFileSync(htmlPath, 'utf8');
-            const previewScript = `
-  <!-- Draft Preview URL Decorator -->
+          // 1. Create physical /preview directory with full assets to prevent 404 on refresh
+          const previewDir = path.join(distDir, dir, 'preview');
+          copyRecursiveSync(codelabPath, previewDir);
+          console.log(`Created physical preview directory at dist/${dir}/preview`);
+
+          // 2. Add client-side redirect in dist/${dir}/index.html to route to /preview/
+          const rootHtmlPath = path.join(distDir, dir, 'index.html');
+          if (fs.existsSync(rootHtmlPath)) {
+            const redirectScript = `
+  <!-- Draft Auto-Route to /preview/ -->
   <script>
     (function() {
       try {
-        var p = window.location.pathname;
-        if (!p.includes('/preview')) {
-          var clean = p.replace(/\\/index\\.html$/, '').replace(/\\/+$/, '');
-          window.history.replaceState(null, '', clean + '/preview' + window.location.search + window.location.hash);
+        if (!window.location.pathname.includes('/preview')) {
+          var clean = window.location.pathname.replace(/\\/index\\.html$/, '').replace(/\\/+$/, '');
+          window.location.replace(clean + '/preview/' + window.location.search + window.location.hash);
         }
       } catch(e) {}
     })();
   </script>`;
-
-            if (html.includes('</body>')) {
-              html = html.replace('</body>', previewScript + '\n</body>');
+            let rootHtml = fs.readFileSync(rootHtmlPath, 'utf8');
+            if (rootHtml.includes('<head>')) {
+              rootHtml = rootHtml.replace('<head>', '<head>\n' + redirectScript);
             } else {
-              html += previewScript;
+              rootHtml = redirectScript + '\n' + rootHtml;
             }
-            fs.writeFileSync(htmlPath, html, 'utf8');
-            console.log(`Injected /preview URL decorator in dist/${dir}/index.html`);
+            fs.writeFileSync(rootHtmlPath, rootHtml, 'utf8');
           }
         }
       }
