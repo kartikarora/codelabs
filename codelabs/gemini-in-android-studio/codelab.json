@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "../../",
   "mainga": "",
-  "updated": "2026-08-31T03:55:22.851Z",
+  "updated": "2026-08-31T03:56:11.465Z",
   "id": "gemini-in-android-studio",
   "duration": 131,
   "title": "Gemini in Android Studio: The ICanHazStream Workshop",
@@ -14,6 +14,6 @@
   "category": ["AI", "Android", "Compose"],
   "tags": ["ai", "gemini", "android-studio", "agent-mode", "compose", "mcp", "journeys", "android-cli"],
   "feedback": "mailto:hello@kartikarora.me",
-  "image": "images/studio-labs-settings.svg",
+  "image": "images/poster.svg",
   "url": "gemini-in-android-studio"
 }

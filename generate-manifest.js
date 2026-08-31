@@ -106,12 +106,32 @@ if (fs.existsSync(codelabsDir)) {
           : (meta.status ? [String(meta.status).toLowerCase()] : []);
 
         if (statusList.includes('draft')) {
+          const floatingBadgeHtml = `
+  <!-- Floating Draft Preview Watermark -->
+  <aside id="draft-floating-badge" style="position: fixed; bottom: 24px; right: 24px; z-index: 999999; display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: rgba(22, 27, 34, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid #d29922; border-radius: 9999px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); pointer-events: auto; user-select: none;">
+    <span style="display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 9999px; background: rgba(210, 153, 34, 0.2); border: 1px solid #d29922; color: #d29922; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Draft</span>
+    <span style="font-family: 'Space Grotesk', -apple-system, sans-serif; font-size: 12px; font-weight: 600; color: #e6edf3;">Unpublished Preview</span>
+    <span style="font-family: 'Space Grotesk', -apple-system, sans-serif; font-size: 11px; color: #8b949e;">• Internal Review</span>
+  </aside>`;
+
           // 1. Create physical /preview directory with full assets to prevent 404 on refresh
           const previewDir = path.join(distDir, dir, 'preview');
           copyRecursiveSync(codelabPath, previewDir);
           console.log(`Created physical preview directory at dist/${dir}/preview`);
 
-          // 2. Add client-side redirect in dist/${dir}/index.html to route to /preview/
+          // Inject floating watermark badge into dist/${dir}/preview/index.html
+          const previewHtmlPath = path.join(previewDir, 'index.html');
+          if (fs.existsSync(previewHtmlPath)) {
+            let prevHtml = fs.readFileSync(previewHtmlPath, 'utf8');
+            if (prevHtml.includes('</body>')) {
+              prevHtml = prevHtml.replace('</body>', floatingBadgeHtml + '\n</body>');
+            } else {
+              prevHtml += floatingBadgeHtml;
+            }
+            fs.writeFileSync(previewHtmlPath, prevHtml, 'utf8');
+          }
+
+          // 2. Add client-side redirect and floating badge in dist/${dir}/index.html
           const rootHtmlPath = path.join(distDir, dir, 'index.html');
           if (fs.existsSync(rootHtmlPath)) {
             const redirectScript = `
@@ -131,6 +151,9 @@ if (fs.existsSync(codelabsDir)) {
               rootHtml = rootHtml.replace('<head>', '<head>\n' + redirectScript);
             } else {
               rootHtml = redirectScript + '\n' + rootHtml;
+            }
+            if (rootHtml.includes('</body>')) {
+              rootHtml = rootHtml.replace('</body>', floatingBadgeHtml + '\n</body>');
             }
             fs.writeFileSync(rootHtmlPath, rootHtml, 'utf8');
           }
