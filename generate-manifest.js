@@ -88,7 +88,7 @@ function copyRecursiveSync(src, dest) {
   }
 }
 
-// 6. Copy each codelab directory directly to dist root
+// 6. Copy each codelab directory directly to dist root and inject draft preview banners
 if (fs.existsSync(codelabsDir)) {
   const dirs = fs.readdirSync(codelabsDir);
   dirs.forEach(dir => {
@@ -96,6 +96,50 @@ if (fs.existsSync(codelabsDir)) {
     if (fs.statSync(codelabPath).isDirectory()) {
       copyRecursiveSync(codelabPath, path.join(distDir, dir));
       console.log(`Copied ${dir}/ to dist/${dir}`);
+
+      // Check if this codelab is a draft
+      const jsonPath = path.join(codelabPath, 'codelab.json');
+      if (fs.existsSync(jsonPath)) {
+        const meta = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+        const statusList = Array.isArray(meta.status)
+          ? meta.status.map(s => String(s).toLowerCase())
+          : (meta.status ? [String(meta.status).toLowerCase()] : []);
+
+        if (statusList.includes('draft')) {
+          const htmlPath = path.join(distDir, dir, 'index.html');
+          if (fs.existsSync(htmlPath)) {
+            let html = fs.readFileSync(htmlPath, 'utf8');
+            const draftBanner = `
+  <!-- Draft Preview Watermark & Banner -->
+  <aside class="draft-preview-banner" style="position: sticky; top: 0; z-index: 100000; display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: #161b22; border-bottom: 2px solid #d29922; color: #d29922; font-family: 'Space Grotesk', -apple-system, sans-serif; font-size: 13px; font-weight: 600;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="display: inline-block; padding: 2px 8px; border-radius: 4px; background: rgba(210, 153, 34, 0.2); border: 1px solid #d29922; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">Draft Preview</span>
+      <span>Unpublished Draft — This codelab is currently in review and not listed in the public directory.</span>
+    </div>
+    <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #8b949e;">Internal Review</span>
+  </aside>
+  <script>
+    (function() {
+      try {
+        var p = window.location.pathname;
+        if (!p.includes('/preview')) {
+          var clean = p.replace(/\\/index\\.html$/, '').replace(/\\/+$/, '');
+          window.history.replaceState(null, '', clean + '/preview' + window.location.search + window.location.hash);
+        }
+      } catch(e) {}
+    })();
+  </script>`;
+
+            if (html.includes('<body>')) {
+              html = html.replace('<body>', '<body>\n' + draftBanner);
+            } else {
+              html = draftBanner + '\n' + html;
+            }
+            fs.writeFileSync(htmlPath, html, 'utf8');
+            console.log(`Injected draft preview banner and /preview URL decorator in dist/${dir}/index.html`);
+          }
+        }
+      }
     }
   });
 }
