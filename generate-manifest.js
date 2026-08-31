@@ -167,11 +167,11 @@ if (fs.existsSync(codelabsDir)) {
         </div>
       </div>
 
-      <!-- Card: Review Guidance -->
+      <!-- Card: AI Transparency & Review Notice -->
       <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px;">
-        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Review Notice</div>
-        <p style="margin: 0; font-size: 11px; color: var(--secondary, #8b949e); line-height: 1.4;">
-          This tutorial is in private preview. If you encounter missing dependencies or API changes, please report them.
+        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Draft Notice</div>
+        <p style="margin: 0; font-size: 11px; color: var(--secondary, #8b949e); line-height: 1.45;">
+          This draft was generated with the help of AI and may contain mistakes. It is actively being reviewed by the author for correctness and ease of completion.
         </p>
       </div>
     </div>
