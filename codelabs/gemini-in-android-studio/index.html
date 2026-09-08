@@ -548,12 +548,16 @@ private fun WhereToWatchScreenPreview() {
 <p><strong>.gemini/mcp.json</strong></p>
 <div class="code-container"><pre><code class=" language-json">{
   &quot;mcpServers&quot;: {
-    &quot;github&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [&quot;-y&quot;, &quot;@modelcontextprotocol/server-github&quot;],
-      &quot;env&quot;: {
-        &quot;GITHUB_PERSONAL_ACCESS_TOKEN&quot;: &quot;${GITHUB_TOKEN}&quot;
-      }
+    &quot;github/github-mcp-server&quot;: {
+      &quot;httpUrl&quot;: &quot;https://api.githubcopilot.com/mcp/&quot;,
+      &quot;headers&quot;: {
+        &quot;Authorization&quot;: &quot;Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}&quot;
+      },
+      &quot;timeout&quot;: -1,
+      &quot;enabled&quot;: true,
+      &quot;trust&quot;: false,
+      &quot;includeTools&quot;: [],
+      &quot;excludeTools&quot;: []
     }
   }
 }

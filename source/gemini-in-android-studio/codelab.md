@@ -590,12 +590,16 @@ Add the GitHub MCP server to **`.gemini/mcp.json`** (or via **Settings > Tools >
 ```json
 {
   "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      }
+    "github/github-mcp-server": {
+      "httpUrl": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      },
+      "timeout": -1,
+      "enabled": true,
+      "trust": false,
+      "includeTools": [],
+      "excludeTools": []
     }
   }
 }
