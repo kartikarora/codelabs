@@ -373,31 +373,44 @@ Open **`Movie.kt`** in the **`:core:model`** module. Open the **Agent tool windo
 ```kotlin
 package me.kartikarora.icanhazstream.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Represents a film or TV title available across streaming services.
+ * Represents a movie or TV title available across streaming services.
  *
- * @property id Unique TMDB or Watchmode identifier.
+ * @property id Unique TMDB identifier.
  * @property title The official release title.
  * @property overview Synopsis and storyline summary.
- * @property releaseYear The release year.
- * @property rating Average user rating score out of 10.
- * @property posterUrl Absolute URL for the title cover artwork.
+ * @property posterPath Relative poster image path from TMDB.
+ * @property releaseDate The theatrical or digital release date (YYYY-MM-DD format).
+ * @property voteAverage Average user rating score out of 10.
+ * @property providers List of streaming providers and purchase options for this movie.
  */
 @Serializable
 data class Movie(
     val id: String,
     val title: String,
     val overview: String,
-    val releaseYear: Int,
-    val rating: Double,
-    val posterUrl: String
+    @SerialName("poster_path") val posterPath: String? = null,
+    @SerialName("release_date") val releaseDate: String? = null,
+    @SerialName("vote_average") val voteAverage: Double = 0.0,
+    val providers: List<StreamingProvider> = emptyList(),
 )
 ```
 
 ### 2. Explain regular expressions
-Highlight any complex regex (e.g. `^tt\d{7,8}$` or `^https://(www\.)?(netflix|disneyplus|apple)\.com/.+$`), right-click, and select **AI > Explain Code**. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups and patterns.
+Open **`WatchOption.kt`** in the **`:core:model`** module. Notice the deep-link validation logic:
+
+**WatchOption.kt**
+```kotlin
+fun isValidDeepLink(): Boolean {
+    val urlPattern = Regex("""^https:\/\/(?:www\.)?(?:netflix|disneyplus|primevideo|stan|binge)\.com(?:\/[a-zA-Z0-9_\-\.\/?%&=]*)?$""")
+    return deepLinkUrl != null && urlPattern.matches(deepLinkUrl)
+}
+```
+
+Highlight the regular expression pattern, right-click, and select **AI > Explain Code**. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups, non-capturing groups, and supported streaming domains.
 
 ### 3. Generate commit messages
 Stage modified files in the **Commit tool window** (`Cmd+K` / `Ctrl+K`) and click **Suggest Commit Message**:
@@ -434,6 +447,96 @@ Use Material 3 components and design tokens from :core:ui.
 Paste the generated composable into `WhereToWatchScreen.kt`.
 
 > This is an example of what the generated output might look like. Gemini may generate something different for you. {.warning}
+
+**WhereToWatchScreen.kt**
+```kotlin
+package me.kartikarora.icanhazstream.detail
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import me.kartikarora.icanhazstream.model.Movie
+import me.kartikarora.icanhazstream.model.StreamingProvider
+import me.kartikarora.icanhazstream.model.WatchOptionType
+import me.kartikarora.icanhazstream.ui.components.ProviderBadge
+import me.kartikarora.icanhazstream.ui.components.RatingChip
+
+@Composable
+fun WhereToWatchScreen(
+    movie: Movie?,
+    onProviderClick: (StreamingProvider) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (movie == null) return
+
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    val tabs = listOf("Stream", "Rent", "Buy")
+    val currentType = when (selectedTabIndex) {
+        0 -> WatchOptionType.STREAM
+        1 -> WatchOptionType.RENT
+        else -> WatchOptionType.BUY
+    }
+    val filteredProviders = movie.providers.filter { it.type == currentType }
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        item {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
+                        RatingChip(rating = movie.voteAverage)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+                }
+            }
+        }
+
+        item {
+            TabRow(selectedTabIndex = selectedTabIndex) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(title) }
+                    )
+                }
+            }
+        }
+
+        items(filteredProviders) { provider ->
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ProviderBadge(text = provider.quality ?: "HD")
+                    Button(onClick = { onProviderClick(provider) }) {
+                        Text("Watch on ${provider.name}")
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 ## Interactive Compose Previews
 Duration: 8

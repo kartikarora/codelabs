@@ -363,30 +363,40 @@ fun MovieProviderCard(
 <p><strong>Movie.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Represents a film or TV title available across streaming services.
+ * Represents a movie or TV title available across streaming services.
  *
- * @property id Unique TMDB or Watchmode identifier.
+ * @property id Unique TMDB identifier.
  * @property title The official release title.
  * @property overview Synopsis and storyline summary.
- * @property releaseYear The release year.
- * @property rating Average user rating score out of 10.
- * @property posterUrl Absolute URL for the title cover artwork.
+ * @property posterPath Relative poster image path from TMDB.
+ * @property releaseDate The theatrical or digital release date (YYYY-MM-DD format).
+ * @property voteAverage Average user rating score out of 10.
+ * @property providers List of streaming providers and purchase options for this movie.
  */
 @Serializable
 data class Movie(
     val id: String,
     val title: String,
     val overview: String,
-    val releaseYear: Int,
-    val rating: Double,
-    val posterUrl: String
+    @SerialName(&quot;poster_path&quot;) val posterPath: String? = null,
+    @SerialName(&quot;release_date&quot;) val releaseDate: String? = null,
+    @SerialName(&quot;vote_average&quot;) val voteAverage: Double = 0.0,
+    val providers: List&lt;StreamingProvider&gt; = emptyList(),
 )
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Explain regular expressions</h3>
-<p>Highlight any complex regex (e.g. <code>^tt\d{7,8}$</code> or <code>^https://(www\.)?(netflix|disneyplus|apple)\.com/.+$</code>), right-click, and select <strong>AI &gt; Explain Code</strong>. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups and patterns.</p>
+<p>Open <strong><code>WatchOption.kt</code></strong> in the <strong><code>:core:model</code></strong> module. Notice the deep-link validation logic:</p>
+<p><strong>WatchOption.kt</strong></p>
+<div class="code-container"><pre><code class=" language-kotlin">fun isValidDeepLink(): Boolean {
+    val urlPattern = Regex(&quot;&quot;&quot;^https:\/\/(?:www\.)?(?:netflix|disneyplus|primevideo|stan|binge)\.com(?:\/[a-zA-Z0-9_\-\.\/?%&amp;=]*)?$&quot;&quot;&quot;)
+    return deepLinkUrl != null &amp;&amp; urlPattern.matches(deepLinkUrl)
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Highlight the regular expression pattern, right-click, and select <strong>AI &gt; Explain Code</strong>. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups, non-capturing groups, and supported streaming domains.</p>
 <h3>3. Generate commit messages</h3>
 <p>Stage modified files in the <strong>Commit tool window</strong> (<code>Cmd+K</code> / <code>Ctrl+K</code>) and click <strong>Suggest Commit Message</strong>:</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -411,6 +421,94 @@ Use Material 3 components and design tokens from :core:ui.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Paste the generated composable into <code>WhereToWatchScreen.kt</code>.</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
+<p><strong>WhereToWatchScreen.kt</strong></p>
+<div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.detail
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import me.kartikarora.icanhazstream.model.Movie
+import me.kartikarora.icanhazstream.model.StreamingProvider
+import me.kartikarora.icanhazstream.model.WatchOptionType
+import me.kartikarora.icanhazstream.ui.components.ProviderBadge
+import me.kartikarora.icanhazstream.ui.components.RatingChip
+
+@Composable
+fun WhereToWatchScreen(
+    movie: Movie?,
+    onProviderClick: (StreamingProvider) -&gt; Unit,
+    modifier: Modifier = Modifier,
+) {
+    if (movie == null) return
+
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    val tabs = listOf(&quot;Stream&quot;, &quot;Rent&quot;, &quot;Buy&quot;)
+    val currentType = when (selectedTabIndex) {
+        0 -&gt; WatchOptionType.STREAM
+        1 -&gt; WatchOptionType.RENT
+        else -&gt; WatchOptionType.BUY
+    }
+    val filteredProviders = movie.providers.filter { it.type == currentType }
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        item {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
+                        RatingChip(rating = movie.voteAverage)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+                }
+            }
+        }
+
+        item {
+            TabRow(selectedTabIndex = selectedTabIndex) {
+                tabs.forEachIndexed { index, title -&gt;
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(title) }
+                    )
+                }
+            }
+        }
+
+        items(filteredProviders) { provider -&gt;
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ProviderBadge(text = provider.quality ?: &quot;HD&quot;)
+                    Button(onClick = { onProviderClick(provider) }) {
+                        Text(&quot;Watch on ${provider.name}&quot;)
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Interactive Compose Previews" duration="8">
