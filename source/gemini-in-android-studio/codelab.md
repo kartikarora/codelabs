@@ -565,9 +565,9 @@ private fun WhereToWatchScreenPreview() {
 }
 ```
 
-### 2. Style via Transform UI
+### 2. Style via AI preview tools
 1. Build the project (`Cmd+F9` / `Ctrl+F9`) to render the preview.
-2. Click **Transform UI with Gemini** in the preview toolbar.
+2. In the Compose Preview toolbar, click the **AI** icon and select **Change UI** (under *For Selected Preview*).
 3. Prompt:
 
 ```text
