@@ -758,25 +758,32 @@ Describe end-to-end user journeys in plain English and execute them on a live em
 ![Studio Journeys Flow](images/journeys-flow.svg)
 
 ### 1. Inspect the journey definition
-Open **`journeys/find_streaming_provider.journey`**:
+Open **`app/src/journeysTest/find_streaming_provider.journey.xml`**:
 
-**find_streaming_provider.journey**
-```yaml
-name: Find Streaming Provider for Inception
-targetApp: me.kartikarora.icanhazstream
-steps:
-  - Launch the app "ICanHazStream"
-  - Tap on the search bar and enter "Inception"
-  - Tap on the first movie card in the results
-  - Select regional filter "AU"
-  - Verify that the screen displays "Netflix" under 4K UHD streaming
+**find_streaming_provider.journey.xml**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<journey name="find_streaming_provider">
+    <description>Find streaming provider availability for Dune: Part Two</description>
+    <actions xml:space="preserve">
+        <action>View the trending movies list on the Explore screen</action>
+        <action>Tap on the movie card for "Dune: Part Two"</action>
+        <action>Switch to the "Stream" tab</action>
+        <action>Verify Netflix is available at AU$16.99/mo in 4K</action>
+        <action>Tap "Watch" button to trigger provider launch</action>
+    </actions>
+</journey>
 ```
 
+> **Tip:** You do not need to specify "Launch app" as an action step. Android Studio automatically builds, deploys, and launches the app before executing the journey actions. {.special}
+
 ### 2. Run the journey
-1. Start your Android Emulator.
-2. Open the **Journeys tool window**.
-3. Select `find_streaming_provider.journey` and click **Run Journey**.
-4. Watch Gemini interact with the emulator UI and verify assertions automatically.
+1. Ensure **Journeys** is enabled under **Settings > Studio Labs**.
+2. Select an Android Emulator or connected device from the toolbar.
+3. Open `app/src/journeysTest/find_streaming_provider.journey.xml` in the editor. You can switch between **Code** view and **Design** view in the top right.
+4. In **Design** view, click **Run Journey**, or in **Code** view, click the **Run** icon in the gutter next to the `<journey>` tag.
+5. Android Studio builds the app, connects to Gemini, and executes the journey on the live device.
+6. When complete, inspect the **Journeys Test Results** panel to see the executed steps, screenshots, and Gemini's reasoning for each action.
 
 ## Headless Android CLI
 Duration: 8

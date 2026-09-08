@@ -681,23 +681,29 @@ if (providers.isEmpty()) {
       <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.</p>
 <p><img alt="Studio Journeys Flow" src="images/journeys-flow.svg"></p>
 <h3>1. Inspect the journey definition</h3>
-<p>Open <strong><code>journeys/find_streaming_provider.journey</code></strong>:</p>
-<p><strong>find_streaming_provider.journey</strong></p>
-<div class="code-container"><pre><code class=" language-yaml">name: Find Streaming Provider for Inception
-targetApp: me.kartikarora.icanhazstream
-steps:
-  - Launch the app &quot;ICanHazStream&quot;
-  - Tap on the search bar and enter &quot;Inception&quot;
-  - Tap on the first movie card in the results
-  - Select regional filter &quot;AU&quot;
-  - Verify that the screen displays &quot;Netflix&quot; under 4K UHD streaming
+<p>Open <strong><code>app/src/journeysTest/find_streaming_provider.journey.xml</code></strong>:</p>
+<p><strong>find_streaming_provider.journey.xml</strong></p>
+<div class="code-container"><pre><code class=" language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;journey name=&quot;find_streaming_provider&quot;&gt;
+    &lt;description&gt;Find streaming provider availability for Dune: Part Two&lt;/description&gt;
+    &lt;actions xml:space=&quot;preserve&quot;&gt;
+        &lt;action&gt;View the trending movies list on the Explore screen&lt;/action&gt;
+        &lt;action&gt;Tap on the movie card for &quot;Dune: Part Two&quot;&lt;/action&gt;
+        &lt;action&gt;Switch to the &quot;Stream&quot; tab&lt;/action&gt;
+        &lt;action&gt;Verify Netflix is available at AU$16.99/mo in 4K&lt;/action&gt;
+        &lt;action&gt;Tap &quot;Watch&quot; button to trigger provider launch&lt;/action&gt;
+    &lt;/actions&gt;
+&lt;/journey&gt;
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<aside class="special"><p><strong>Tip:</strong>You do not need to specify &quot;Launch app&quot; as an action step. Android Studio automatically builds, deploys, and launches the app before executing the journey actions.</p></aside>
 <h3>2. Run the journey</h3>
 <ol>
-<li><p>Start your Android Emulator.</p></li>
-<li><p>Open the <strong>Journeys tool window</strong>.</p></li>
-<li><p>Select <code>find_streaming_provider.journey</code> and click <strong>Run Journey</strong>.</p></li>
-<li><p>Watch Gemini interact with the emulator UI and verify assertions automatically.</p></li>
+<li><p>Ensure <strong>Journeys</strong> is enabled under <strong>Settings &gt; Studio Labs</strong>.</p></li>
+<li><p>Select an Android Emulator or connected device from the toolbar.</p></li>
+<li><p>Open <code>app/src/journeysTest/find_streaming_provider.journey.xml</code> in the editor. You can switch between <strong>Code</strong> view and <strong>Design</strong> view in the top right.</p></li>
+<li><p>In <strong>Design</strong> view, click <strong>Run Journey</strong>, or in <strong>Code</strong> view, click the <strong>Run</strong> icon in the gutter next to the <code>&lt;journey&gt;</code> tag.</p></li>
+<li><p>Android Studio builds the app, connects to Gemini, and executes the journey on the live device.</p></li>
+<li><p>When complete, inspect the <strong>Journeys Test Results</strong> panel to see the executed steps, screenshots, and Gemini&#39;s reasoning for each action.</p></li>
 </ol>
 
     </klaat-kodelab-step>
