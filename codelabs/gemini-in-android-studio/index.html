@@ -88,20 +88,7 @@
 <li><p><strong>JDK:</strong> JDK 21+.</p></li>
 </ul>
 <a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Quail 4)</a>
-<aside class="warning"><p>Use a personal <code>@gmail.com</code>account. Corporate accounts often restrict cloud AI indexing.</p></aside>
-<h3>1. Open the starter project</h3>
-<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio Quail 4 (2026.1.4+). Key modules include:</p>
-<ul>
-<li><p><code>:app</code>: Navigation graph (<code>StreamNavGraph.kt</code>).</p></li>
-<li><p><code>:feature:explore</code>: Trending movies and provider discovery.</p></li>
-<li><p><code>:feature:detail</code>: Movie details and &quot;Where to Watch&quot; availability.</p></li>
-<li><p><code>:feature:watchlist</code>: Saved watchlist and price drop alerts.</p></li>
-<li><p><code>:core:ui</code>: Ready-made design tokens and components (<code>MovieCard</code>, <code>ProviderBadge</code>).</p></li>
-<li><p><code>:core:data</code>: Repositories and Ktor Client 3.5.2 networking.</p></li>
-<li><p><code>:core:model</code>: <code>@Serializable</code> domain models (<code>Movie</code>, <code>StreamingProvider</code>).</p></li>
-<li><p><code>:core:testing</code>: In-memory test fakes (<code>FakeMovieRepository</code>).</p></li>
-</ul>
-<h3>2. Install the Android CLI</h3>
+<h3>1. Install the Android CLI</h3>
 <p>The <code>android</code> CLI allows terminal scripts and AI agents to interact directly with Android Studio tools and daemons.</p>
 <a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/tools/android-cli" target="_blank"><span class="material-symbols-outlined">terminal</span>Android CLI Documentation &amp; Guide</a>
 <p>Install via terminal:</p>
@@ -120,11 +107,11 @@
 <p>Verify installation:</p>
 <div class="code-container"><pre><code class=" language-bash">android --version
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>3. Install the @kartikarora Compose theme skill</h3>
+<h3>2. Install the @kartikarora Compose theme skill</h3>
 <p>Install the brand skill so Gemini reuses existing <code>:core:ui</code> components (<code>MovieCard</code>, <code>ProviderBadge</code>) instead of generating generic composables:</p>
 <div class="code-container"><pre><code class=" language-bash">npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-theme.skill
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>4. Configure Agent Permissions</h3>
+<h3>3. Configure Agent Permissions</h3>
 <p>Grant appropriate file permissions for Gemini and Agent Mode to read and scaffold files in the multi-module project:</p>
 <ol>
 <li><p>Open <strong>Settings</strong> (<code>Cmd+,</code> on macOS / <code>Ctrl+Alt+S</code> on Windows &amp; Linux).</p></li>
@@ -138,7 +125,7 @@
 </ol>
 <p><img alt="Agent Permissions Settings" src="images/agent-permissions-settings.svg"></p>
 <aside class="special"><p>Files matching patterns in <code>.aiexclude</code>(such as keystores and API tokens) are strictly blocked from AI indexing and cloud transmission regardless of agent permissions.</p></aside>
-<h3>5. Enable Journeys in Studio Labs</h3>
+<h3>4. Enable Journeys in Studio Labs</h3>
 <p>Enable natural language user journey testing with automated multimodal vision assertions:</p>
 <ol>
 <li><p>In <strong>Settings</strong>, navigate to <strong>Studio Labs</strong> in the sidebar.</p></li>
@@ -146,35 +133,86 @@
 <li><p>Click <strong>Apply &amp; OK</strong>.</p></li>
 </ol>
 <p><img alt="Studio Labs Settings" src="images/studio-labs-settings.svg"></p>
-<h3>6. Open the Agent tool window</h3>
+<h3>5. Open the Agent tool window</h3>
 <p>Open the dedicated <strong>Agent tool window</strong> via <strong>View &gt; Tool Windows &gt; Agent</strong> (or click the <strong>Agent</strong> icon in the right sidebar). This window is your primary assistant interface for conversational coding, multi-module feature scaffolding, and MCP tool execution.</p>
 
     </klaat-kodelab-step>
-    <klaat-kodelab-step label="Project guardrails" duration="8">
-      <p>Establish engineering conventions in <code>AGENTS.md</code> and block sensitive files with <code>.aiexclude</code>.</p>
+    <klaat-kodelab-step label="Clone starter &amp; project guardrails" duration="8">
+      <p>Clone the starter repository, establish engineering conventions in <code>AGENTS.md</code>, and block sensitive files with <code>.aiexclude</code>.</p>
 <p><img alt="Guardrails Architecture" src="images/guardrails-architecture.svg"></p>
-<h3>1. Define project engineering standards</h3>
+<h3>1. Clone and open the starter project</h3>
+<p>Clone the workshop repository from GitHub:</p>
+<p><strong>macOS / Linux:</strong></p>
+<div class="code-container"><pre><code class=" language-bash">git clone https://github.com/kartikarora/ICanHazStream.git
+cd ICanHazStream
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p><strong>Windows (cmd / PowerShell):</strong></p>
+<div class="code-container"><pre><code class=" language-cmd">git clone https://github.com/kartikarora/ICanHazStream.git
+cd ICanHazStream
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio Quail 4 (2026.1.4+) using <strong>File &gt; Open</strong> and let the Gradle sync complete. Key modules include:</p>
+<ul>
+<li><p><code>:app</code>: Navigation graph (<code>StreamNavGraph.kt</code>).</p></li>
+<li><p><code>:feature:explore</code>: Trending movies and provider discovery.</p></li>
+<li><p><code>:feature:detail</code>: Movie details and &quot;Where to Watch&quot; availability.</p></li>
+<li><p><code>:feature:watchlist</code>: Saved watchlist and price drop alerts.</p></li>
+<li><p><code>:core:ui</code>: Ready-made design tokens and components (<code>MovieCard</code>, <code>ProviderBadge</code>).</p></li>
+<li><p><code>:core:data</code>: Repositories and Ktor Client 3.5.2 networking.</p></li>
+<li><p><code>:core:model</code>: <code>@Serializable</code> domain models (<code>Movie</code>, <code>StreamingProvider</code>).</p></li>
+<li><p><code>:core:testing</code>: In-memory test fakes (<code>FakeMovieRepository</code>).</p></li>
+</ul>
+<h3>2. Define project engineering standards</h3>
 <p>Create <strong><code>AGENTS.md</code></strong> in the project root by running this terminal command:</p>
 <div class="code-container"><pre><code class=" language-bash">cat &lt;&lt; &#39;EOF&#39; &gt; AGENTS.md
-# ICanHazStream: AI Engineering Guidelines
+# ICanHazStream — AI Agent Rules
 
-### Architecture and code conventions
-- Pattern: Clean Architecture with UDF and MVVM.
-- State: Expose immutable `StateFlow` from ViewModels via `asStateFlow()`. No LiveData in new code.
-- Networking and serialization: Use Ktor Client 3.5.2 and kotlinx.serialization.
-- Testing: Use in-memory test fakes (`FakeMovieRepository`) and Turbine for Flow tests.
-- UI system: Use composables from `:core:ui` with Space Grotesk typography and Material 3 colour tokens.
+This document defines the rules and conventions for AI coding assistants working in this project.
+
+## Architecture
+
+- **Multi-module project** using convention plugins from `build-logic/`.
+- **Package namespace:** `me.kartikarora.icanhazstream.*`
+- **Source convention:** Kotlin files in `src/main/kotlin/`, Java files in `src/main/java/`.
+
+## Brand Design System
+
+The `:core:ui` module contains the **@kartikarora Compose Design System** with:
+- `ICanHazStreamTheme` — Material 3 theme with Space Grotesk typography
+- `MovieCard` — Brand-styled movie card component
+- `ProviderBadge` — Streaming platform badge (Netflix, Disney+, Prime Video, Stan, Binge)
+- `RatingChip` — Movie rating display chip
+- `StreamTopBar` — Top app bar with brand typography
+
+**Always use these components instead of creating raw Composables.**
+
+## Installed AI Skill
+
+The `kartikarora-compose-theme` skill (installed in `.agents/skills/`) teaches the AI
+about the pre-built `:core:ui` component library. When generating UI code, always import
+`me.kartikarora.icanhazstream.ui.components.*` and `me.kartikarora.icanhazstream.ui.theme.*`.
+
+## Testing Philosophy
+
+- **Fakes over Mocks**: Use test fakes from `:core:testing` (e.g., `FakeMovieRepository`).
+- **JUnit 5** for unit tests, **Turbine** for `StateFlow` testing.
+- **Compose UI Test** for instrumented tests.
+
+## JetBrains Stack
+
+- **Ktor Client 3.5.2** for HTTP networking
+- **kotlinx.serialization 1.11.0** for JSON parsing
+- **kotlinx.coroutines 1.11.0** for async operations
 EOF
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Block sensitive files from AI indexing</h3>
+<h3>3. Block sensitive files from AI indexing</h3>
 <p>Create <strong><code>.aiexclude</code></strong> in the project root to prevent API keys and credentials from being indexed or sent to cloud models:</p>
 <div class="code-container"><pre><code class=" language-bash">cat &lt;&lt; &#39;EOF&#39; &gt; .aiexclude
-local.properties
+# Block local keystores, private credentials, and solution code from Gemini indexing
 *.jks
 *.keystore
-secrets/
-tmdb-api-key.txt
-streaming-secrets.json
+local.properties
+google-services.json
+.solutions/
 EOF
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
