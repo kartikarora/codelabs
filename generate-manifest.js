@@ -122,7 +122,7 @@ if (fs.existsSync(codelabsDir)) {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    font-family: var(--font-sans, 'Space Grotesk', -apple-system, sans-serif);
+    font-family: var(--font-sans, 'Albert Sans', -apple-system, sans-serif);
     color: var(--primary, #e6edf3);
   ">
     <!-- Header -->
@@ -178,7 +178,7 @@ if (fs.existsSync(codelabsDir)) {
 
     <!-- Footer Action -->
     <div style="padding: 16px 18px; border-top: 1px solid var(--border, #30363d);">
-      <a href="mailto:hello@kartikarora.me?subject=Feedback:%20Gemini%20in%20Android%20Studio%20Workshop" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Space Grotesk', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
+      <a href="mailto:hello@kartikarora.me?subject=Feedback:%20Gemini%20in%20Android%20Studio%20Workshop" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Albert Sans', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
         Send Feedback
       </a>
     </div>

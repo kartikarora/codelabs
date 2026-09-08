@@ -8,7 +8,7 @@ Hosted on Cloudflare Pages at [codelabs.kartikarora.me](https://codelabs.kartika
 
 ## 🛠️ Architecture & Tech Stack
 
-- **Design System**: [@kartikarora Brand Design System](https://distribute.kartikarora.me/css/kartikarora.css) (Fluid typography, Space Grotesk & JetBrains Mono, dynamic system themes, CLS prevention).
+- **Design System**: [@kartikarora Brand Design System](https://distribute.kartikarora.me/css/kartikarora.css) (Fluid typography, Albert Sans & JetBrains Mono, dynamic system themes, CLS prevention).
 - **Codelab Compiler**: **Klaat** (`klaat-snapshot` / `klaat`) — High-performance markdown to interactive HTML codelab exporter.
 - **Manifest & Build System**: Node.js (`generate-manifest.js`) generates `dist/codelabs.json` and prepares the static site output.
 - **Deployment Platform**: Cloudflare Pages / Wrangler (`wrangler.toml`).
