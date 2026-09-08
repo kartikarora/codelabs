@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560">
-  <rect width="960" height="560" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 580" width="960" height="580">
+  <rect width="960" height="580" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
 
   <!-- Dialog Titlebar -->
   <rect width="960" height="40" rx="12" fill="#161b22" />
@@ -7,13 +7,13 @@
   <circle cx="20" cy="20" r="5" fill="#f85149" />
   <circle cx="36" cy="20" r="5" fill="#d29922" />
   <circle cx="52" cy="20" r="5" fill="#2ea043" />
-  <text x="480" y="25" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#e6edf3" text-anchor="middle">Settings — Studio Labs &amp; Gemini</text>
+  <text x="480" y="25" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#e6edf3" text-anchor="middle">Settings — Studio Labs</text>
   <line x1="0" y1="40" x2="960" y2="40" stroke="#30363d" stroke-width="1" />
 
   <!-- Left Sidebar (Categories) -->
   <g transform="translate(0, 40)">
-    <rect width="240" height="470" fill="#161b22" />
-    <line x1="240" y1="0" x2="240" y2="470" stroke="#30363d" stroke-width="1" />
+    <rect width="240" height="490" fill="#161b22" />
+    <line x1="240" y1="0" x2="240" y2="490" stroke="#30363d" stroke-width="1" />
 
     <!-- Search box -->
     <rect x="16" y="16" width="208" height="32" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1" />
@@ -24,62 +24,35 @@
     <text x="24" y="112" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Keymap</text>
     <text x="24" y="144" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Build, Execution, Deployment</text>
     <text x="24" y="176" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Languages &amp; Frameworks</text>
+    <text x="24" y="208" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Tools &gt; AI &gt; Agent permissions</text>
     
     <!-- Active Category -->
-    <rect x="12" y="196" width="216" height="32" rx="6" fill="#21262d" />
-    <text x="24" y="217" font-family="'Space Grotesk', sans-serif" font-size="12" font-weight="600" fill="#58a6ff">Tools &gt; Gemini &amp; Studio Labs</text>
+    <rect x="12" y="228" width="216" height="32" rx="6" fill="#21262d" />
+    <text x="24" y="249" font-family="'Space Grotesk', sans-serif" font-size="12" font-weight="600" fill="#58a6ff">Studio Labs</text>
 
-    <text x="24" y="256" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Plugins</text>
-    <text x="24" y="288" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Version Control</text>
+    <text x="24" y="288" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Plugins</text>
+    <text x="24" y="320" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Version Control</text>
   </g>
 
   <!-- Main Settings Content -->
-  <g transform="translate(260, 60)">
-    <text x="0" y="20" font-family="'Space Grotesk', sans-serif" font-size="18" font-weight="700" fill="#e6edf3">Studio Labs (Experimental AI Capabilities)</text>
-    <text x="0" y="42" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Configure upcoming Gemini agent workflows, Compose transform tools, and journey runners.</text>
+  <g transform="translate(260, 56)">
+    <text x="0" y="20" font-family="'Space Grotesk', sans-serif" font-size="18" font-weight="700" fill="#e6edf3">Studio Labs</text>
+    <text x="0" y="40" font-family="'Space Grotesk', sans-serif" font-size="12" fill="#8b949e">Configure experimental features and early-access developer tools.</text>
 
-    <!-- Option 1: Agent Mode -->
-    <g transform="translate(0, 70)">
-      <rect width="660" height="68" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
+    <!-- Studio Labs Journeys Card -->
+    <g transform="translate(0, 58)">
+      <rect width="660" height="96" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
       <!-- Checkbox (Checked) -->
-      <rect x="16" y="24" width="20" height="20" rx="4" fill="#58a6ff" />
-      <path d="M21 34 L25 38 L31 29" fill="none" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="48" y="32" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#e6edf3">Enable Agent Mode</text>
-      <text x="48" y="52" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Allows Gemini to autonomously plan, create, and modify multi-module project files with Gradle validation.</text>
-    </g>
-
-    <!-- Option 2: Transform UI with Gemini -->
-    <g transform="translate(0, 150)">
-      <rect width="660" height="68" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
-      <!-- Checkbox (Checked) -->
-      <rect x="16" y="24" width="20" height="20" rx="4" fill="#58a6ff" />
-      <path d="M21 34 L25 38 L31 29" fill="none" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="48" y="32" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#e6edf3">Transform UI with Gemini</text>
-      <text x="48" y="52" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Enables interactive natural language styling and visual component changes directly inside Compose Previews.</text>
-    </g>
-
-    <!-- Option 3: Studio Journeys -->
-    <g transform="translate(0, 230)">
-      <rect width="660" height="68" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
-      <!-- Checkbox (Checked) -->
-      <rect x="16" y="24" width="20" height="20" rx="4" fill="#58a6ff" />
-      <path d="M21 34 L25 38 L31 29" fill="none" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="48" y="32" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#e6edf3">Journeys for Android Studio</text>
-      <text x="48" y="52" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Executes plain-English user journeys with automated multimodal vision assertions on connected emulators.</text>
-    </g>
-
-    <!-- Context Sharing Section -->
-    <g transform="translate(0, 312)">
-      <rect width="660" height="54" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1" />
-      <rect x="16" y="17" width="20" height="20" rx="4" fill="#58a6ff" />
-      <path d="M21 27 L25 31 L31 22" fill="none" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="48" y="30" font-family="'Space Grotesk', sans-serif" font-size="13" font-weight="600" fill="#e6edf3">Enable Context Sharing (Repository Symbol Indexing)</text>
-      <text x="48" y="46" font-family="'Space Grotesk', sans-serif" font-size="10" fill="#8b949e">Indexes classes, functions, and layout files while respecting .aiexclude rules.</text>
+      <rect x="16" y="26" width="20" height="20" rx="4" fill="#58a6ff" />
+      <path d="M21 36 L25 40 L31 31" fill="none" stroke="#0d1117" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="48" y="34" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#e6edf3">Journeys</text>
+      <text x="48" y="56" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Enables natural language user journey testing with automated multimodal vision assertions on Android emulators.</text>
+      <text x="48" y="74" font-family="'Space Grotesk', sans-serif" font-size="11" fill="#8b949e">Provides the dedicated Journeys tool window for defining and executing test scripts.</text>
     </g>
   </g>
 
   <!-- Bottom Dialog Footer -->
-  <g transform="translate(0, 510)">
+  <g transform="translate(0, 530)">
     <line x1="0" y1="0" x2="960" y2="0" stroke="#30363d" stroke-width="1" />
     <rect width="960" height="50" fill="#161b22" />
     <path d="M0 38 L0 50 L960 50 L960 38 Z" fill="#161b22" />

@@ -83,15 +83,14 @@
 <p>In this workshop, you will use <strong>Gemini in Android Studio</strong> to modernise legacy code, generate Compose UI from wireframes, scaffold multi-module features with <strong>Agent Mode</strong>, connect external context via <strong>GitHub MCP</strong>, and automate tests with <strong>Studio Journeys</strong> and the <strong>Android CLI</strong>.</p>
 <h3>Prerequisites</h3>
 <ul>
-<li><p><strong>Android Studio:</strong> Latest <strong>Quail (2026.1.3+)</strong> or <strong>Rabbit Canary (2026.2.1+)</strong>.</p></li>
+<li><p><strong>Android Studio:</strong> Minimum <strong>Android Studio Quail 4 (2026.1.4+)</strong>.</p></li>
 <li><p><strong>Google Account:</strong> Signed in to Android Studio for Gemini access.</p></li>
 <li><p><strong>JDK:</strong> JDK 21+.</p></li>
 </ul>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Quail Stable)</a>
-<a class="klaat-button klaat-button--secondary" href="https://developer.android.com/studio/preview" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio Preview (Rabbit Canary)</a>
+<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Quail 4)</a>
 <aside class="warning"><p>Use a personal <code>@gmail.com</code>account. Corporate accounts often restrict cloud AI indexing.</p></aside>
 <h3>1. Open the starter project</h3>
-<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio. Key modules include:</p>
+<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio Quail 4 (2026.1.4+). Key modules include:</p>
 <ul>
 <li><p><code>:app</code>: Navigation graph (<code>StreamNavGraph.kt</code>).</p></li>
 <li><p><code>:feature:explore</code>: Trending movies and provider discovery.</p></li>
@@ -125,26 +124,39 @@
 <p>Install the brand skill so Gemini reuses existing <code>:core:ui</code> components (<code>MovieCard</code>, <code>ProviderBadge</code>) instead of generating generic composables:</p>
 <div class="code-container"><pre><code class=" language-bash">npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-theme.skill
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>4. Enable context sharing and Studio Labs</h3>
+<h3>4. Configure Agent Permissions</h3>
+<p>Grant appropriate file permissions for Gemini and Agent Mode to read and scaffold files in the multi-module project:</p>
 <ol>
-<li><p>Open <strong>Settings</strong> (<code>Cmd+,</code> / <code>Ctrl+Alt+S</code>).</p></li>
-<li><p>Go to <strong>Tools &gt; Gemini</strong> and enable <strong>Enable context sharing</strong>.</p></li>
-<li><p>Go to <strong>Studio Labs</strong> and enable:</p><ul>
-<li><p><strong>Agent Mode</strong></p></li>
-<li><p><strong>Transform UI with Gemini</strong></p></li>
-<li><p><strong>Journeys for Android Studio</strong></p></li>
+<li><p>Open <strong>Settings</strong> (<code>Cmd+,</code> on macOS / <code>Ctrl+Alt+S</code> on Windows &amp; Linux).</p></li>
+<li><p>Navigate to <strong>Tools &gt; AI &gt; Agent permissions</strong>.</p></li>
+<li><p>Under <strong>File Permissions</strong>, configure the following options:</p><ul>
+<li><p><strong>Read files in the project:</strong> Set to <strong>Always allow</strong>.</p></li>
+<li><p><strong>Write source files in the project:</strong> Set to <strong>Always allow</strong> (allows Agent Mode to scaffold composables, ViewModels, and test classes).</p></li>
+<li><p><strong>Delete or rename files in the project:</strong> Set to <strong>Always allow</strong> (for seamless code refactoring).</p></li>
+<li><p><strong>Access gitignored files:</strong> Keep at <strong>Ask every time</strong> (sensitive credentials and keys remain protected).</p></li>
 </ul></li>
 </ol>
+<p><img alt="Agent Permissions Settings" src="images/agent-permissions-settings.svg"></p>
+<aside class="special"><p>Files matching patterns in <code>.aiexclude</code>(such as keystores and API tokens) are strictly blocked from AI indexing and cloud transmission regardless of agent permissions.</p></aside>
+<h3>5. Enable Journeys in Studio Labs</h3>
+<p>Enable natural language user journey testing with automated multimodal vision assertions:</p>
+<ol>
+<li><p>In <strong>Settings</strong>, navigate to <strong>Studio Labs</strong> in the sidebar.</p></li>
+<li><p>Check <strong>Journeys</strong> to activate the Studio Journeys testing engine.</p></li>
+<li><p>Click <strong>Apply &amp; OK</strong>.</p></li>
+</ol>
 <p><img alt="Studio Labs Settings" src="images/studio-labs-settings.svg"></p>
+<h3>6. Open the Agent tool window</h3>
+<p>Open the dedicated <strong>Agent tool window</strong> via <strong>View &gt; Tool Windows &gt; Agent</strong> (or click the <strong>Agent</strong> icon in the right sidebar). This window is your primary assistant interface for conversational coding, multi-module feature scaffolding, and MCP tool execution.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Project guardrails" duration="8">
       <p>Establish engineering conventions in <code>AGENTS.md</code> and block sensitive files with <code>.aiexclude</code>.</p>
 <p><img alt="Guardrails Architecture" src="images/guardrails-architecture.svg"></p>
 <h3>1. Define project engineering standards</h3>
-<p>Create <strong><code>AGENTS.md</code></strong> in the project root:</p>
-<p><strong>AGENTS.md</strong></p>
-<div class="code-container"><pre><code class=" language-markdown"># ICanHazStream: AI Engineering Guidelines
+<p>Create <strong><code>AGENTS.md</code></strong> in the project root by running this terminal command:</p>
+<div class="code-container"><pre><code class=" language-bash">cat &lt;&lt; &#39;EOF&#39; &gt; AGENTS.md
+# ICanHazStream: AI Engineering Guidelines
 
 ### Architecture and code conventions
 - Pattern: Clean Architecture with UDF and MVVM.
@@ -152,38 +164,34 @@
 - Networking and serialization: Use Ktor Client 3.5.2 and kotlinx.serialization.
 - Testing: Use in-memory test fakes (`FakeMovieRepository`) and Turbine for Flow tests.
 - UI system: Use composables from `:core:ui` with Space Grotesk typography and Material 3 colour tokens.
+EOF
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Block sensitive files from AI indexing</h3>
 <p>Create <strong><code>.aiexclude</code></strong> in the project root to prevent API keys and credentials from being indexed or sent to cloud models:</p>
-<p><strong>.aiexclude</strong></p>
-<div class="code-container"><pre><code class=" language-text">local.properties
+<div class="code-container"><pre><code class=" language-bash">cat &lt;&lt; &#39;EOF&#39; &gt; .aiexclude
+local.properties
 *.jks
 *.keystore
 secrets/
 tmdb-api-key.txt
 streaming-secrets.json
+EOF
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
     </klaat-kodelab-step>
-    <klaat-kodelab-step label="Inline prompts &amp; live diffs" duration="8">
-      <p>Use in-editor inline prompts (<code>Cmd+\</code> / <code>Ctrl+\</code>) to refactor code without leaving your file.</p>
+    <klaat-kodelab-step label="In-editor refactoring &amp; live diffs" duration="8">
+      <p>Refactor code using specific architecture guidelines and review live diffs in the editor.</p>
 <h3>1. Open the target ViewModel</h3>
-<p>Open <strong><code>:feature:explore/src/main/kotlin/me/kartikarora/icanhazstream/explore/TrendingMoviesViewModel.kt</code></strong>:</p>
+<p>Open <strong><code>TrendingMoviesViewModel.kt</code></strong> in the <strong><code>:feature:explore</code></strong> module:</p>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">private val _trendingMovies = MutableLiveData&lt;List&lt;Movie&gt;&gt;()
 val trendingMovies: LiveData&lt;List&lt;Movie&gt;&gt; = _trendingMovies
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Refactor with inline prompt</h3>
-<ol>
-<li><p>Highlight <code>_trendingMovies</code>.</p></li>
-<li><p>Press <strong><code>Cmd + \</code></strong> (macOS) or <strong><code>Ctrl + \</code></strong> (Windows/Linux).</p></li>
-<li><p>Enter:</p></li>
-</ol>
-<div class="code-container"><pre><code class=" language-text">Refactor this LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
+<h3>2. Refactor via the Agent tool window</h3>
+<p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code> or from the right sidebar) and submit your refactoring prompt:</p>
+<div class="code-container"><pre><code class=" language-text">@TrendingMoviesViewModel.kt Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<ol start="4">
-<li><p>Review the inline diff and press <strong>Accept</strong> (<code>Cmd+Enter</code>).</p></li>
-</ol>
+<p>Review the side-by-side diff preview and click <strong>Apply Changes</strong> (<code>Cmd+Enter</code> or click Apply).</p>
 <p><img alt="Inline Diff Preview" src="images/inline-diff-demo.svg"></p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
@@ -195,7 +203,7 @@ val trendingMovies: StateFlow&lt;List&lt;Movie&gt;&gt; = _trendingMovies.asState
     <klaat-kodelab-step label="Java to Kotlin migration" duration="7">
       <p>Convert legacy Java utilities into idiomatic Kotlin functions.</p>
 <h3>1. Inspect the legacy calculation logic</h3>
-<p>Open <strong><code>:core:data/src/main/java/me/kartikarora/icanhazstream/data/legacy/WatchCostUtils.java</code></strong>:</p>
+<p>Open <strong><code>WatchCostUtils.java</code></strong> in the <strong><code>:core:data</code></strong> module:</p>
 <p><strong>WatchCostUtils.java</strong></p>
 <div class="code-container"><pre><code class=" language-java">package me.kartikarora.icanhazstream.data.legacy;
 
@@ -209,19 +217,13 @@ public class WatchCostUtils {
     }
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Run the transform</h3>
-<ol>
-<li><p>Select the code in <code>WatchCostUtils.java</code>.</p></li>
-<li><p>Right-click and choose <strong>Gemini &gt; Transform selected code</strong>.</p></li>
-<li><p>Prompt:</p></li>
-</ol>
-<div class="code-container"><pre><code class=" language-text">Convert this Java utility class to an idiomatic Kotlin file with a top-level calculation function in package me.kartikarora.icanhazstream.data.
+<h3>2. Run the transform with the Agent tool window</h3>
+<p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit:</p>
+<div class="code-container"><pre><code class=" language-text">@WatchCostUtils.java Convert this Java utility class to an idiomatic Kotlin file with a top-level calculation function in package me.kartikarora.icanhazstream.data.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<ol start="4">
-<li><p>Save the output to <strong><code>:core:data/src/main/kotlin/me/kartikarora/icanhazstream/data/WatchCostMath.kt</code></strong> and delete the old <code>.java</code> file.</p></li>
-</ol>
+<p>Save the output to <strong><code>WatchCostUtils.kt</code></strong> in the <strong><code>:core:data</code></strong> module and delete the old <code>.java</code> file.</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
-<p><strong>WatchCostMath.kt</strong></p>
+<p><strong>WatchCostUtils.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.data
 
 fun calculateOptimalWatchCost(
@@ -240,7 +242,7 @@ fun calculateOptimalWatchCost(
       <p>Migrate an XML layout and ViewHolder to a declarative <code>@Composable</code> using brand design tokens.</p>
 <p><img alt="XML to Compose Migration" src="images/xml-to-compose.svg"></p>
 <h3>1. Inspect the layout and target file</h3>
-<p>Open <strong><code>:feature:explore/src/main/res/layout/item_movie_provider.xml</code></strong> and <strong><code>:feature:explore/src/main/kotlin/me/kartikarora/icanhazstream/explore/MovieProviderCard.kt</code></strong>:</p>
+<p>Open <strong><code>item_movie_provider.xml</code></strong> and <strong><code>MovieProviderCard.kt</code></strong> in the <strong><code>:feature:explore</code></strong> module:</p>
 <p><strong>MovieProviderCard.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.explore
 
@@ -256,8 +258,8 @@ fun MovieProviderCard(
 ) {
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Convert with Gemini Chat</h3>
-<p>Open <strong>Gemini Chat</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and enter:</p>
+<h3>2. Convert with the Agent tool window</h3>
+<p>Open the <strong>Agent tool window</strong> (<strong>View &gt; Tool Windows &gt; Agent</strong> or from the right sidebar) and enter:</p>
 <div class="code-container"><pre><code class=" language-text">@item_movie_provider.xml Convert this XML layout and its ViewHolder into a declarative Jetpack Compose composable for MovieProviderCard.kt. Use the @kartikarora design tokens, MovieCard, and ProviderBadge components from :core:ui.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -316,7 +318,9 @@ fun MovieProviderCard(
     <klaat-kodelab-step label="Day-to-day assistant tools" duration="5">
       <p>Speed up daily tasks with built-in documentation, code explanation, and commit helpers.</p>
 <h3>1. Generate KDoc comments</h3>
-<p>Open <strong><code>:core:model/src/main/kotlin/me/kartikarora/icanhazstream/model/Movie.kt</code></strong>. Right-click the class and select <strong>Gemini &gt; Document Class</strong>:</p>
+<p>Open <strong><code>Movie.kt</code></strong> in the <strong><code>:core:model</code></strong> module. Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit this prompt:</p>
+<div class="code-container"><pre><code class=" language-text">@Movie.kt Generate comprehensive KDoc comments for this data class and all its properties.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>Movie.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.model
@@ -344,7 +348,7 @@ data class Movie(
 )
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Explain regular expressions</h3>
-<p>Highlight any complex regex (e.g. <code>^tt\d{7,8}$</code> or <code>^https://(www\.)?(netflix|disneyplus|apple)\.com/.+$</code>), right-click, and select <strong>Gemini &gt; Explain Code</strong> for a breakdown of capture groups and patterns.</p>
+<p>Highlight any complex regex (e.g. <code>^tt\d{7,8}$</code> or <code>^https://(www\.)?(netflix|disneyplus|apple)\.com/.+$</code>), right-click, and select <strong>AI &gt; Explain Code</strong>. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups and patterns.</p>
 <h3>3. Generate commit messages</h3>
 <p>Stage modified files in the <strong>Commit tool window</strong> (<code>Cmd+K</code> / <code>Ctrl+K</code>) and click <strong>Suggest Commit Message</strong>:</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -353,12 +357,12 @@ data class Movie(
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Wireframe to Compose" duration="10">
-      <p>Attach UI wireframe sketches directly into Gemini Chat to generate Compose layouts.</p>
+      <p>Attach UI wireframe sketches directly into the <strong>Agent tool window</strong> to generate Compose layouts.</p>
 <p><img alt="Where to Watch Wireframe" src="images/wireframe-sample.svg"></p>
 <h3>1. Locate the wireframe asset</h3>
-<p>Use <strong><code>assets/wireframe-where-to-watch.png</code></strong> (or the diagram above) and open <strong><code>:feature:detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt</code></strong>.</p>
+<p>Use <strong><code>assets/wireframe-where-to-watch.png</code></strong> (or the diagram above) and open <strong><code>WhereToWatchScreen.kt</code></strong> in the <strong><code>:feature:detail</code></strong> module.</p>
 <h3>2. Generate screen from mockup</h3>
-<p>Attach <code>assets/wireframe-where-to-watch.png</code> in <strong>Gemini Chat</strong> with this prompt:</p>
+<p>Attach <code>assets/wireframe-where-to-watch.png</code> in the <strong>Agent tool window</strong> with this prompt:</p>
 <div class="code-container"><pre><code class=" language-text">Generate the Jetpack Compose screen for WhereToWatchScreen.kt matching this wireframe mockup.
 Include:
 1. Movie poster header with title, release year, runtime, and 4K UHD badge.
@@ -374,7 +378,9 @@ Use Material 3 components and design tokens from :core:ui.
     <klaat-kodelab-step label="Interactive Compose Previews" duration="8">
       <p>Iterate on visual styling directly inside the <strong>Compose Preview</strong> panel using natural language.</p>
 <h3>1. Add preview functions</h3>
-<p>At the bottom of <code>WhereToWatchScreen.kt</code>, right-click and choose <strong>Gemini &gt; Generate Compose Preview</strong>:</p>
+<p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit this prompt:</p>
+<div class="code-container"><pre><code class=" language-text">@WhereToWatchScreen.kt Add a @PreviewLightDark Composable preview function WhereToWatchScreenPreview() wrapped in ICanHazStreamTheme.
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <div class="code-container"><pre><code class=" language-kotlin">@PreviewLightDark
 @Composable
@@ -402,7 +408,7 @@ private fun WhereToWatchScreenPreview() {
       <p>Connect Gemini to the <strong>GitHub MCP Server</strong> to ground code generation in repository issues, PRDs, and pull requests.</p>
 <p><img alt="MCP Architecture" src="images/mcp-architecture.svg"></p>
 <h3>1. Configure the MCP server</h3>
-<p>Add the GitHub MCP server to <strong><code>.gemini/mcp.json</code></strong> (or via <strong>Settings &gt; Tools &gt; Gemini &gt; MCP Servers</strong>):</p>
+<p>Add the GitHub MCP server to <strong><code>.gemini/mcp.json</code></strong> (or via <strong>Settings &gt; Tools &gt; AI &gt; MCP Servers</strong>):</p>
 <p><strong>.gemini/mcp.json</strong></p>
 <div class="code-container"><pre><code class=" language-json">{
   &quot;mcpServers&quot;: {
@@ -416,8 +422,8 @@ private fun WhereToWatchScreenPreview() {
   }
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Query upstream context in chat</h3>
-<p>In <strong>Gemini Chat</strong>, enter:</p>
+<h3>2. Query upstream context in the Agent tool window</h3>
+<p>In the <strong>Agent tool window</strong>, enter:</p>
 <div class="code-container"><pre><code class=" language-text">Using the connected GitHub MCP server, fetch the product requirements and accepted schema from issue #42 (&#39;Watchlist price drop alerts and regional availability notifications&#39;). Ground the implementation in our existing data layer.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Gemini queries <code>get_issue</code> and <code>get_file_contents</code> over MCP to retrieve the exact requirements before scaffolding.</p>
@@ -427,7 +433,7 @@ private fun WhereToWatchScreenPreview() {
       <p>Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p>
 <p><img alt="Agent Mode Loop" src="images/agent-mode-loop.svg"></p>
 <h3>1. Launch Agent Mode</h3>
-<p>Toggle the Gemini tool window from <strong>Chat</strong> to <strong>Agent Mode</strong> and submit:</p>
+<p>In the <strong>Agent tool window</strong> (<strong>View &gt; Tool Windows &gt; Agent</strong>), submit your prompt to build the feature across modules:</p>
 <div class="code-container"><pre><code class=" language-text">Build the &quot;Watchlist &amp; Price Drop Alerts&quot; feature in :feature:watchlist.
 1. Create WatchlistViewModel.kt exposing WatchlistUiState (Loading, Empty, Success).
 2. Create WatchlistRepository.kt with functions to add movies, track rental price drops, and observe saved titles.
@@ -436,14 +442,14 @@ private fun WhereToWatchScreenPreview() {
 Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Review and apply changes</h3>
-<p>Agent Mode creates <code>WatchlistViewModel.kt</code>, <code>WatchlistRepository.kt</code>, and <code>WatchlistScreen.kt</code> in <code>:feature:watchlist</code>, and registers the route in <code>:app/src/main/kotlin/.../StreamNavGraph.kt</code>.</p>
+<p>Agent Mode creates <code>WatchlistViewModel.kt</code>, <code>WatchlistRepository.kt</code>, and <code>WatchlistScreen.kt</code> in the <strong><code>:feature:watchlist</code></strong> module, and registers the route in <strong><code>StreamNavGraph.kt</code></strong> in the <strong><code>:app</code></strong> module.</p>
 <p>Review the structured multi-file diff and click <strong>Apply All Changes</strong>.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Automated build repair" duration="8">
       <p>Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.</p>
 <h3>1. Request automated compilation</h3>
-<p>In the Agent window, submit:</p>
+<p>In the <strong>Agent tool window</strong>, submit:</p>
 <div class="code-container"><pre><code class=" language-text">Check and compile the project by running a Gradle build for :feature:watchlist. If any dependencies or imports are missing in build.gradle.kts or libs.versions.toml, diagnose and fix them.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Self-healing cycle</h3>
@@ -451,7 +457,7 @@ Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
 <ol>
 <li><p>Executes <code>./gradlew :feature:watchlist:assembleDebug</code>.</p></li>
 <li><p>Spots missing test dependencies (<code>runTest</code>, <code>turbine</code>).</p></li>
-<li><p>Updates <code>feature/watchlist/build.gradle.kts</code> and syncs Gradle.</p></li>
+<li><p>Updates <code>build.gradle.kts</code> in the <strong><code>:feature:watchlist</code></strong> module and syncs Gradle.</p></li>
 <li><p>Re-runs the build until compilation succeeds.</p></li>
 </ol>
 
@@ -459,10 +465,10 @@ Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
     <klaat-kodelab-step label="Unit tests &amp; Turbine" duration="8">
       <p>Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.</p>
 <h3>1. Open the test skeleton</h3>
-<p>Open <strong><code>:feature:watchlist/src/test/kotlin/me/kartikarora/icanhazstream/watchlist/WatchlistViewModelTest.kt</code></strong>.</p>
-<h3>2. Generate tests with Gemini</h3>
-<p>Right-click in the editor and choose <strong>AI &gt; Generate Unit Tests</strong> (or prompt in chat):</p>
-<div class="code-container"><pre><code class=" language-text">Generate unit tests for WatchlistViewModel using FakeMovieRepository from :core:testing and app.cash.turbine.test. Include test cases for empty state, adding a movie to watchlist, and price drop notifications.
+<p>Open <strong><code>WatchlistViewModelTest.kt</code></strong> in the <strong><code>:feature:watchlist</code></strong> module.</p>
+<h3>2. Generate unit tests with the Agent tool window</h3>
+<p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit your test prompt:</p>
+<div class="code-container"><pre><code class=" language-text">@WatchlistViewModel.kt Generate unit tests for WatchlistViewModel inside WatchlistViewModelTest.kt using FakeMovieRepository from :core:testing and app.cash.turbine.test. Include test cases for empty state, adding a movie to watchlist, and price drop notifications.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>WatchlistViewModelTest.kt</strong></p>
@@ -588,7 +594,7 @@ android build --fix-lint
 <h3>Summary of key workflows</h3>
 <ul>
 <li><p><strong>Guardrails:</strong> Ground code generation with <code>AGENTS.md</code>, <code>.aiexclude</code>, and design token skills.</p></li>
-<li><p><strong>In-Editor AI:</strong> Refactor <code>LiveData</code> to <code>StateFlow</code> with inline prompts (<code>Cmd+\</code>).</p></li>
+<li><p><strong>In-Editor AI:</strong> Refactor <code>LiveData</code> to <code>StateFlow</code> and explain regex using the <strong>Agent tool window</strong> and <strong>AI &gt; Explain Code</strong>.</p></li>
 <li><p><strong>Modernisation:</strong> Convert legacy Java calculation math and XML layouts to Compose.</p></li>
 <li><p><strong>Design to Code:</strong> Generate UI from wireframes and style interactively in Compose Previews.</p></li>
 <li><p><strong>Context &amp; Tooling:</strong> Connect upstream repository context via <strong>GitHub MCP</strong>.</p></li>
