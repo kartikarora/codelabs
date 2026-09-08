@@ -609,7 +609,7 @@ Add the GitHub MCP server to **`.gemini/mcp.json`** (or via **Settings > Tools >
 In the **Agent tool window**, enter:
 
 ```text
-Using the connected GitHub MCP server, fetch the product requirements and accepted schema from issue #1 ('Watchlist price drop alerts and regional availability notifications'). Ground the implementation in our existing data layer.
+Using the connected GitHub MCP server, fetch the product requirements and accepted schema from issue #1 in kartikarora/ICanHazStream ('Watchlist price drop alerts and regional availability notifications'). Ground the implementation in our existing data layer.
 ```
 
 Gemini queries `get_issue` and `get_file_contents` over MCP to retrieve the exact requirements before scaffolding.
