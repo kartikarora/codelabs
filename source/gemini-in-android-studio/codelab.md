@@ -780,15 +780,23 @@ Open **`app/src/journeysTest/find_streaming_provider.journey.xml`**:
 ### 2. Configure build variants
 Journeys run against specific build variants configured in your module-level build file. When created with the wizard, the test suite targets the currently active build variant.
 
-If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the `testSuites` block in **`app/build.gradle.kts`**:
+If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the test suite under `testOptions` in **`app/build.gradle.kts`**:
 
 ```kotlin
 android {
     // ...
-    testSuites {
-        create("journeysTest") {
-            // Target specific build variants for journeys execution
-            targetVariants += listOf("debug")
+    testOptions {
+        suites {
+            create("journeysTest") {
+                useJunitEngine {
+                    inputs += listOf(com.android.build.api.dsl.AgpTestSuiteInputParameters.TESTED_APKS)
+                    includeEngines += listOf("journeys-test-engine")
+                    enginesDependencies(libs.junit.platform.launcher)
+                    enginesDependencies(libs.junit.platform.engine)
+                    enginesDependencies(libs.journeys.junit.engine)
+                }
+                targetVariants += listOf("debug")
+            }
         }
     }
 }

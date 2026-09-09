@@ -698,13 +698,21 @@ if (providers.isEmpty()) {
 <aside class="special"><p><strong>Tip:</strong>You do not need to specify &quot;Launch app&quot; as an action step. Android Studio automatically builds, deploys, and launches the app before executing the journey actions.</p></aside>
 <h3>2. Configure build variants</h3>
 <p>Journeys run against specific build variants configured in your module-level build file. When created with the wizard, the test suite targets the currently active build variant.</p>
-<p>If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the <code>testSuites</code> block in <strong><code>app/build.gradle.kts</code></strong>:</p>
+<p>If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the test suite under <code>testOptions</code> in <strong><code>app/build.gradle.kts</code></strong>:</p>
 <div class="code-container"><pre><code class=" language-kotlin">android {
     // ...
-    testSuites {
-        create(&quot;journeysTest&quot;) {
-            // Target specific build variants for journeys execution
-            targetVariants += listOf(&quot;debug&quot;)
+    testOptions {
+        suites {
+            create(&quot;journeysTest&quot;) {
+                useJunitEngine {
+                    inputs += listOf(com.android.build.api.dsl.AgpTestSuiteInputParameters.TESTED_APKS)
+                    includeEngines += listOf(&quot;journeys-test-engine&quot;)
+                    enginesDependencies(libs.junit.platform.launcher)
+                    enginesDependencies(libs.junit.platform.engine)
+                    enginesDependencies(libs.journeys.junit.engine)
+                }
+                targetVariants += listOf(&quot;debug&quot;)
+            }
         }
     }
 }
