@@ -836,6 +836,20 @@ Query authoritative Android developer documentation directly from the terminal:
 android docs search "Navigation Compose Type Safety"
 ```
 
+### 5. Manage Android AI skills
+Discover and install specialized official Android agent skills to expand AI capabilities:
+
+```bash
+# List installed and available Android skills (e.g. edge-to-edge, styles, navigation-3)
+android skills list
+
+# Search for skills by keyword
+android skills find "navigation"
+
+# Install a specific skill
+android skills add navigation-3
+```
+
 ## App Quality Insights
 Duration: 5
 
