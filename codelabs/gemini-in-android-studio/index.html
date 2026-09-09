@@ -708,20 +708,39 @@ if (providers.isEmpty()) {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Headless Android CLI" duration="8">
-      <p>Use the <strong>Android CLI</strong> to inspect symbols, render previews, and run lint checks from scripts and terminal agents.</p>
+      <p>Use the <strong>Android CLI</strong> to inspect project structure, find symbols, render previews, inspect UI layouts, and search official documentation headlessly.</p>
 <p><img alt="Android CLI Bridge" src="images/android-cli-bridge.svg"></p>
-<h3>Useful commands</h3>
-<div class="code-container"><pre><code class=" language-bash"># Inspect project modules and configuration
-android project inspect
+<h3>1. Project inspection and Studio status</h3>
+<p>Inspect project metadata and verify running Android Studio instances:</p>
+<div class="code-container"><pre><code class=" language-bash"># Describe project structure and build artifact paths
+android describe
 
-# Search for symbols across all modules
-android symbol find &quot;MovieRepository&quot;
+# Check connected Android Studio instances and open projects
+android studio check
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<h3>2. Symbol navigation and code analysis</h3>
+<p>Find symbol declarations and run static analysis on source files through Android Studio:</p>
+<div class="code-container"><pre><code class=" language-bash"># Find the declaration of a symbol across project modules
+android studio find-declaration MovieRepository
 
-# Render Compose previews headlessly
-android preview render --module feature:detail
+# Find usages of a symbol in the open project
+android studio find-usages WhereToWatchScreen
 
-# Run lint checks and apply automatic fixes
-android build --fix-lint
+# Analyze a source file for errors and warnings in Studio
+android studio analyze-file feature/detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<h3>3. Headless Compose preview rendering</h3>
+<p>Render Compose previews directly to an image without opening the editor:</p>
+<div class="code-container"><pre><code class=" language-bash"># Render WhereToWatchPreview to a PNG file
+android studio render-compose-preview \
+  feature/detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt \
+  WhereToWatchPreview \
+  --output-image-file=preview.png
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<h3>4. Search official documentation</h3>
+<p>Query authoritative Android developer documentation directly from the terminal:</p>
+<div class="code-container"><pre><code class=" language-bash"># Search official Android documentation for Jetpack Navigation 3 guides
+android docs search &quot;Navigation Compose Type Safety&quot;
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
     </klaat-kodelab-step>

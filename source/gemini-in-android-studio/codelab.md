@@ -788,23 +788,52 @@ Open **`app/src/journeysTest/find_streaming_provider.journey.xml`**:
 ## Headless Android CLI
 Duration: 8
 
-Use the **Android CLI** to inspect symbols, render previews, and run lint checks from scripts and terminal agents.
+Use the **Android CLI** to inspect project structure, find symbols, render previews, inspect UI layouts, and search official documentation headlessly.
 
 ![Android CLI Bridge](images/android-cli-bridge.svg)
 
-### Useful commands
+### 1. Project inspection and Studio status
+Inspect project metadata and verify running Android Studio instances:
+
 ```bash
-# Inspect project modules and configuration
-android project inspect
+# Describe project structure and build artifact paths
+android describe
 
-# Search for symbols across all modules
-android symbol find "MovieRepository"
+# Check connected Android Studio instances and open projects
+android studio check
+```
 
-# Render Compose previews headlessly
-android preview render --module feature:detail
+### 2. Symbol navigation and code analysis
+Find symbol declarations and run static analysis on source files through Android Studio:
 
-# Run lint checks and apply automatic fixes
-android build --fix-lint
+```bash
+# Find the declaration of a symbol across project modules
+android studio find-declaration MovieRepository
+
+# Find usages of a symbol in the open project
+android studio find-usages WhereToWatchScreen
+
+# Analyze a source file for errors and warnings in Studio
+android studio analyze-file feature/detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt
+```
+
+### 3. Headless Compose preview rendering
+Render Compose previews directly to an image without opening the editor:
+
+```bash
+# Render WhereToWatchPreview to a PNG file
+android studio render-compose-preview \
+  feature/detail/src/main/kotlin/me/kartikarora/icanhazstream/detail/WhereToWatchScreen.kt \
+  WhereToWatchPreview \
+  --output-image-file=preview.png
+```
+
+### 4. Search official documentation
+Query authoritative Android developer documentation directly from the terminal:
+
+```bash
+# Search official Android documentation for Jetpack Navigation 3 guides
+android docs search "Navigation Compose Type Safety"
 ```
 
 ## App Quality Insights
