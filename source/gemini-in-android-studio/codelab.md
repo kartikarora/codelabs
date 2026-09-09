@@ -777,13 +777,34 @@ Open **`app/src/journeysTest/find_streaming_provider.journey.xml`**:
 
 > **Tip:** You do not need to specify "Launch app" as an action step. Android Studio automatically builds, deploys, and launches the app before executing the journey actions. {.special}
 
-### 2. Run the journey
+### 2. Configure build variants
+Journeys run against specific build variants configured in your module-level build file. When created with the wizard, the test suite targets the currently active build variant.
+
+If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the `testSuites` block in **`app/build.gradle.kts`**:
+
+```kotlin
+android {
+    // ...
+    testSuites {
+        create("journeysTest") {
+            // Target specific build variants for journeys execution
+            targetVariants += listOf("debug")
+        }
+    }
+}
+```
+
+### 3. Run the journey
 1. Ensure **Journeys** is enabled under **Settings > Studio Labs**.
 2. Select an Android Emulator or connected device from the toolbar.
 3. Open `app/src/journeysTest/find_streaming_provider.journey.xml` in the editor. You can switch between **Code** view and **Design** view in the top right.
 4. In **Design** view, click **Run Journey**, or in **Code** view, click the **Run** icon in the gutter next to the `<journey>` tag.
-5. Android Studio builds the app, connects to Gemini, and executes the journey on the live device.
-6. When complete, inspect the **Journeys Test Results** panel to see the executed steps, screenshots, and Gemini's reasoning for each action.
+5. Android Studio creates a **Journeys Test** configuration, builds and deploys the app, connects to Gemini, and executes the journey on the live device.
+6. When complete, inspect the **Journeys Test Results** panel to see the step breakdown, device screenshots, and Gemini's reasoning for each action.
+
+> **Running against pre-installed apps:** You can also run journeys against any pre-installed app by setting `JOURNEYS_CUSTOM_APP_ID=me.kartikarora.icanhazstream` as an environment variable in the run configuration.
+>
+> **Known Issue (Configuration Cache):** If journeys behave unexpectedly with multiple journey files or authentication, temporarily set `org.gradle.configuration-cache=false` in `gradle.properties`. {.special}
 
 ## Headless Android CLI
 Duration: 8

@@ -696,15 +696,29 @@ if (providers.isEmpty()) {
 &lt;/journey&gt;
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="special"><p><strong>Tip:</strong>You do not need to specify &quot;Launch app&quot; as an action step. Android Studio automatically builds, deploys, and launches the app before executing the journey actions.</p></aside>
-<h3>2. Run the journey</h3>
+<h3>2. Configure build variants</h3>
+<p>Journeys run against specific build variants configured in your module-level build file. When created with the wizard, the test suite targets the currently active build variant.</p>
+<p>If you switch active build variants in Android Studio (for example, to a different product flavor or build type), configure the <code>testSuites</code> block in <strong><code>app/build.gradle.kts</code></strong>:</p>
+<div class="code-container"><pre><code class=" language-kotlin">android {
+    // ...
+    testSuites {
+        create(&quot;journeysTest&quot;) {
+            // Target specific build variants for journeys execution
+            targetVariants += listOf(&quot;debug&quot;)
+        }
+    }
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<h3>3. Run the journey</h3>
 <ol>
 <li><p>Ensure <strong>Journeys</strong> is enabled under <strong>Settings &gt; Studio Labs</strong>.</p></li>
 <li><p>Select an Android Emulator or connected device from the toolbar.</p></li>
 <li><p>Open <code>app/src/journeysTest/find_streaming_provider.journey.xml</code> in the editor. You can switch between <strong>Code</strong> view and <strong>Design</strong> view in the top right.</p></li>
 <li><p>In <strong>Design</strong> view, click <strong>Run Journey</strong>, or in <strong>Code</strong> view, click the <strong>Run</strong> icon in the gutter next to the <code>&lt;journey&gt;</code> tag.</p></li>
-<li><p>Android Studio builds the app, connects to Gemini, and executes the journey on the live device.</p></li>
-<li><p>When complete, inspect the <strong>Journeys Test Results</strong> panel to see the executed steps, screenshots, and Gemini&#39;s reasoning for each action.</p></li>
+<li><p>Android Studio creates a <strong>Journeys Test</strong> configuration, builds and deploys the app, connects to Gemini, and executes the journey on the live device.</p></li>
+<li><p>When complete, inspect the <strong>Journeys Test Results</strong> panel to see the step breakdown, device screenshots, and Gemini&#39;s reasoning for each action.</p></li>
 </ol>
+<aside class="special"><p><strong>Running against pre-installed apps:</strong> You can also run journeys against any pre-installed app by setting <code>JOURNEYS_CUSTOM_APP_ID=me.kartikarora.icanhazstream</code> as an environment variable in the run configuration.</p><p><strong>Known Issue (Configuration Cache):</strong> If journeys behave unexpectedly with multiple journey files or authentication, temporarily set <code>org.gradle.configuration-cache=false</code> in <code>gradle.properties</code>.</p></aside>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Headless Android CLI" duration="8">
