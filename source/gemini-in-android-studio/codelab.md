@@ -3,7 +3,7 @@ id: gemini-in-android-studio
 summary: Get hands-on experience with the latest Gemini powered coding features inside Android Studio. Working on a real-world multi-module project, you’ll scaffold new features with Agent Mode, convert wireframes into sleek Compose interfaces, run tests and use the Android CLI's powers.
 categories: AI, Android, Compose
 environments: Android
-status: Draft
+status: Published
 authors: Kartik Arora
 feedback_link: mailto:hello@kartikarora.me
 tags: ai, gemini, android-studio, agent-mode, compose, mcp, journeys, android-cli
