@@ -1,0 +1,125 @@
+# Kartik Arora Codelabs — Full Curriculum Digest
+
+This document provides a comprehensive, full-text reference of all workshops and codelabs hosted at https://codelabs.kartikarora.me for AI models, agents, and answer engines.
+
+---
+
+## 1. Compose Preview Screenshot Testing
+- **URL**: https://codelabs.kartikarora.me/compose-preview-screenshot-testing/
+- **Categories**: Android
+- **Estimated Duration**: 58 minutes
+- **Author**: Kartik Arora
+- **Summary**: Learn how to set up Compose Preview Screenshot Testing, create and capture screenshots of composables, and incorporate screenshot tests into your CI workflow.
+- **Steps** (9):
+  1. Welcome to the world of Screenshot Testing
+  2. Getting set up
+  3. Explore the Project
+  4. Setup dependencies
+  5. Setup previews for testing
+  6. Generate reference images
+  7. Validate and generate test reports
+  8. Update reference images
+  9. Setup with CI
+
+---
+
+## 2. Hands-On Android App Building with Gemini in Android Studio
+- **URL**: https://codelabs.kartikarora.me/gemini-in-android-studio/
+- **Categories**: AI, Android, Compose
+- **Estimated Duration**: 131 minutes
+- **Author**: Kartik Arora
+- **Summary**: Get hands-on experience with the latest Gemini powered coding features inside Android Studio. Working on a real-world multi-module project, you’ll scaffold new features with Agent Mode, convert wireframes into sleek Compose interfaces, run tests and use the Android CLI's powers.
+- **Steps** (22):
+  1. Welcome & starter setup
+  2. Clone starter & project guardrails
+  3. Architecture
+  4. Brand Design System
+  5. Installed AI Skill
+  6. Testing Philosophy
+  7. JetBrains Stack
+  8. In-editor refactoring & live diffs
+  9. Java to Kotlin migration
+  10. Legacy XML to Compose
+  11. Day-to-day assistant tools
+  12. Wireframe to Compose
+  13. Interactive Compose Previews
+  14. Connecting GitHub MCP
+  15. Multi-module Agent Mode
+  16. Automated build repair
+  17. Unit tests & Turbine
+  18. Crash debugging in Logcat
+  19. Studio Journeys E2E tests
+  20. Headless Android CLI
+  21. App Quality Insights
+  22. Summary & next steps
+
+---
+
+## 3. Gemini SDK with Python (March 2025)
+- **URL**: https://codelabs.kartikarora.me/gemini-sdk-python-march-2025/
+- **Categories**: AI, Python
+- **Estimated Duration**: 45 minutes
+- **Author**: Kartik Arora
+- **Summary**: A hands-on introduction to the Gemini SDK using Python, exploring text generation, multi-modal interactions, streaming, and function calling.
+- **Steps** (7):
+  1. Unleashing the Power of AI
+  2. Setup and Installation
+  3. Text Generation
+  4. Working with Images
+  5. Prompting with Video
+  6. Function Calling
+  7. Conclusion
+
+---
+
+## 4. I Build with AI and so can you! 🚀
+- **URL**: https://codelabs.kartikarora.me/i-build-with-ai/
+- **Categories**: AI, Development
+- **Estimated Duration**: 71 minutes
+- **Author**: Kartik Arora
+- **Summary**: Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
+- **Steps** (13):
+  1. Welcome!
+  2. Prerequisites
+  3. Getting Set Up
+  4. Create your PRD
+  5. Configure your AI Agent
+  6. Add a LocalStorage Skill
+  7. SKILL: LocalStorage Management
+  8. Time to Build!
+  9. Keep it consistent with ADRs
+  10. Connect to the World with Context7
+  11. Bonus: Add a Unit Testing Skill
+  12. SKILL: Unit Testing
+  13. Congratulations! 🏆
+
+---
+
+## 5. I Build with AI and so can you! (Android Edition) 🚀
+- **URL**: https://codelabs.kartikarora.me/i-build-with-ai-android/
+- **Categories**: AI, Android, Development
+- **Estimated Duration**: 63 minutes
+- **Author**: Kartik Arora
+- **Summary**: Learn to build better Android apps by collaborating with AI using the Antigravity CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.
+- **Steps** (12):
+  1. Welcome!
+  2. Prerequisites
+  3. Getting Set Up
+  4. Create your PRD
+  5. Configure your AI Agent
+  6. Add a State Management Skill
+  7. SKILL: State Management
+  8. Time to Build!
+  9. Connect to the World with Context7
+  10. Bonus: Add a Unit Testing Skill
+  11. SKILL: Unit Testing
+  12. Congratulations! 🏆
+
+---
+
+## About the Author
+Kartik Arora is a Software Engineer and Google Developer Expert (GDE) for Android. He creates hands-on technical workshops, codelabs, and developer resources.
+- Website: https://kartikarora.me
+- GitHub: https://github.com/kartikarora
+- LinkedIn: https://linkedin.com/in/arorakartik
+- Medium: https://medium.com/@kartikarora

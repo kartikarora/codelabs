@@ -3,7 +3,9 @@ const path = require('path');
 
 const distDir = path.join(__dirname, 'dist');
 const codelabsDir = path.join(__dirname, 'codelabs');
+const sourceDir = path.join(__dirname, 'source');
 const output = [];
+const codelabsDetail = [];
 
 // 1. Clean and create dist directory
 if (fs.existsSync(distDir)) {
@@ -22,13 +24,13 @@ if (fs.existsSync(codelabsDir)) {
     if (fs.existsSync(jsonPath)) {
       const meta = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
       
-      // Filter out draft or unpublished codelabs from manifest
+      // Filter out draft or unpublished codelabs from public feeds
       const statusList = Array.isArray(meta.status)
         ? meta.status.map(s => String(s).toLowerCase())
         : (meta.status ? [String(meta.status).toLowerCase()] : []);
 
       if (statusList.includes('draft')) {
-        console.log(`Skipping draft codelab from manifest: ${dir}`);
+        console.log(`Skipping draft codelab from public index/manifest: ${dir}`);
         return;
       }
 
@@ -37,28 +39,50 @@ if (fs.existsSync(codelabsDir)) {
       if (meta.image) {
         image = `./${dir}/${meta.image}`;
       } else {
-        // Fallback: Find the first jpeg image in the img directory
+        // Fallback: Find the first jpeg/png image in img or images directory
         const imgDir = path.join(codelabPath, 'img');
+        const imagesDir = path.join(codelabPath, 'images');
         if (fs.existsSync(imgDir)) {
           const images = fs.readdirSync(imgDir);
-          const jpeg = images.find(f => f.toLowerCase().endsWith('.jpeg') || f.toLowerCase().endsWith('.jpg'));
-          if (jpeg) {
-            image = `./${dir}/img/${jpeg}`;
-          }
+          const pic = images.find(f => /\.(jpe?g|png|svg)$/i.test(f));
+          if (pic) image = `./${dir}/img/${pic}`;
+        } else if (fs.existsSync(imagesDir)) {
+          const images = fs.readdirSync(imagesDir);
+          const pic = images.find(f => /\.(jpe?g|png|svg)$/i.test(f));
+          if (pic) image = `./${dir}/images/${pic}`;
         }
       }
 
-      // Ensure we have the necessary fields for the card
-      output.push({
-        id: meta.id,
-        title: meta.title,
-        summary: meta.summary,
-        updated: meta.updated,
-        duration: meta.duration,
+      const itemData = {
+        id: meta.id || dir,
+        title: meta.title || dir,
+        summary: meta.summary || '',
+        updated: meta.updated || new Date().toISOString(),
+        duration: meta.duration || 0,
         category: meta.category || [],
         tags: meta.tags || [],
         url: `./${dir}/index.html`,
-        image: image
+        canonicalUrl: `https://codelabs.kartikarora.me/${dir}/`,
+        image: image,
+        authors: meta.authors || 'Kartik Arora'
+      };
+
+      output.push(itemData);
+
+      // Extract steps from source markdown if available
+      const sourceMdPath = path.join(sourceDir, dir, 'codelab.md');
+      let steps = [];
+      if (fs.existsSync(sourceMdPath)) {
+        const mdContent = fs.readFileSync(sourceMdPath, 'utf8');
+        const stepMatches = mdContent.match(/^##\s+(.+)$/gm);
+        if (stepMatches) {
+          steps = stepMatches.map(s => s.replace(/^##\s+/, '').trim());
+        }
+      }
+
+      codelabsDetail.push({
+        ...itemData,
+        steps: steps
       });
     }
   });
@@ -68,11 +92,240 @@ if (fs.existsSync(codelabsDir)) {
 fs.writeFileSync(path.join(distDir, 'codelabs.json'), JSON.stringify(output, null, 2));
 console.log('Generated dist/codelabs.json');
 
-// 4. Copy index.html to dist
-fs.copyFileSync(path.join(__dirname, 'index.html'), path.join(distDir, 'index.html'));
-console.log('Copied index.html to dist');
+// 4. Generate dynamic sitemap.xml in root and dist
+const today = new Date().toISOString().split('T')[0];
+let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://codelabs.kartikarora.me/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>`;
 
-// 5. Helper function to copy directories recursively
+output.forEach(item => {
+  const itemDate = item.updated ? item.updated.split('T')[0] : today;
+  sitemapXml += `
+  <url>
+    <loc>${item.canonicalUrl}</loc>
+    <lastmod>${itemDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+});
+
+sitemapXml += `
+</urlset>
+`;
+
+fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml);
+fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
+console.log('Generated sitemap.xml');
+
+// 5. Generate dynamic llms.txt (GEO standard)
+let llmsTxt = `# Kartik Arora Codelabs
+
+> Interactive technical tutorials, hands-on workshops, and step-by-step guides for mastering modern software engineering, Android development, and generative AI agents.
+
+Welcome to the Codelabs portal by Kartik Arora ([codelabs.kartikarora.me](https://codelabs.kartikarora.me)). This site provides structured, step-by-step learning modules designed for developers, engineers, and AI practitioners.
+
+## Author & Instructor
+- **Author**: Kartik Arora
+- **Website**: https://kartikarora.me
+- **GitHub**: https://github.com/kartikarora
+- **LinkedIn**: https://linkedin.com/in/arorakartik
+- **Medium**: https://medium.com/@kartikarora
+
+## Available Codelabs & Workshops
+`;
+
+// Group codelabs by primary category or list all
+output.forEach(cl => {
+  const durationStr = cl.duration ? ` (Duration: ~${cl.duration} mins)` : '';
+  const tagsStr = (cl.tags && cl.tags.length > 0) ? ` | Tags: ${cl.tags.join(', ')}` : '';
+  llmsTxt += `\n- [${cl.title}](${cl.canonicalUrl}): ${cl.summary}${durationStr}${tagsStr}`;
+});
+
+llmsTxt += `
+
+## Machine-Readable Feeds & Full Digest
+- [Codelabs JSON Feed](https://codelabs.kartikarora.me/codelabs.json): Complete catalog metadata in JSON format.
+- [Extended Full Digest (llms-full.txt)](https://codelabs.kartikarora.me/llms-full.txt): Detailed step-by-step curriculum and outline for all codelabs.
+- [Sitemap](https://codelabs.kartikarora.me/sitemap.xml): XML sitemap for search engines.
+`;
+
+fs.writeFileSync(path.join(distDir, 'llms.txt'), llmsTxt);
+fs.writeFileSync(path.join(__dirname, 'llms.txt'), llmsTxt);
+console.log('Generated llms.txt');
+
+// 6. Generate dynamic llms-full.txt (Extended GEO Curriculum)
+let llmsFullTxt = `# Kartik Arora Codelabs — Full Curriculum Digest
+
+This document provides a comprehensive, full-text reference of all workshops and codelabs hosted at https://codelabs.kartikarora.me for AI models, agents, and answer engines.
+`;
+
+codelabsDetail.forEach((cl, idx) => {
+  llmsFullTxt += `\n---\n\n## ${idx + 1}. ${cl.title}\n`;
+  llmsFullTxt += `- **URL**: ${cl.canonicalUrl}\n`;
+  if (cl.category && cl.category.length > 0) {
+    llmsFullTxt += `- **Categories**: ${cl.category.join(', ')}\n`;
+  }
+  if (cl.duration) {
+    llmsFullTxt += `- **Estimated Duration**: ${cl.duration} minutes\n`;
+  }
+  llmsFullTxt += `- **Author**: ${cl.authors}\n`;
+  llmsFullTxt += `- **Summary**: ${cl.summary}\n`;
+  if (cl.steps && cl.steps.length > 0) {
+    llmsFullTxt += `- **Steps** (${cl.steps.length}):\n`;
+    cl.steps.forEach((step, sIdx) => {
+      llmsFullTxt += `  ${sIdx + 1}. ${step}\n`;
+    });
+  }
+});
+
+llmsFullTxt += `
+---
+
+## About the Author
+Kartik Arora is a Software Engineer and Google Developer Expert (GDE) for Android. He creates hands-on technical workshops, codelabs, and developer resources.
+- Website: https://kartikarora.me
+- GitHub: https://github.com/kartikarora
+- LinkedIn: https://linkedin.com/in/arorakartik
+- Medium: https://medium.com/@kartikarora
+`;
+
+fs.writeFileSync(path.join(distDir, 'llms-full.txt'), llmsFullTxt);
+fs.writeFileSync(path.join(__dirname, 'llms-full.txt'), llmsFullTxt);
+console.log('Generated llms-full.txt');
+
+// 7. Dynamically update index.html with up-to-date JSON-LD and noscript fallback
+const rootHtmlPath = path.join(__dirname, 'index.html');
+if (fs.existsSync(rootHtmlPath)) {
+  let html = fs.readFileSync(rootHtmlPath, 'utf8');
+
+  // Generate structured data ItemList
+  const itemListElements = output.map((cl, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "item": {
+      "@type": "LearningResource",
+      "name": cl.title,
+      "description": cl.summary,
+      "url": cl.canonicalUrl,
+      "educationalLevel": "Beginner to Advanced",
+      "author": { "@id": "https://codelabs.kartikarora.me/#author" },
+      "timeRequired": cl.duration ? `PT${cl.duration}M` : undefined,
+      "keywords": cl.tags || cl.category || []
+    }
+  }));
+
+  const structuredDataObj = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://codelabs.kartikarora.me/#website",
+        "url": "https://codelabs.kartikarora.me/",
+        "name": "Kartik Arora Codelabs",
+        "description": "Interactive technical tutorials, workshops, and step-by-step guides on Android, AI, Gemini, and Modern Web.",
+        "inLanguage": "en-US",
+        "publisher": {
+          "@id": "https://codelabs.kartikarora.me/#author"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://codelabs.kartikarora.me/#author",
+        "name": "Kartik Arora",
+        "url": "https://kartikarora.me",
+        "sameAs": [
+          "https://github.com/kartikarora",
+          "https://linkedin.com/in/arorakartik",
+          "https://medium.com/@kartikarora"
+        ],
+        "jobTitle": "Software Engineer & Google Developer Expert (Android)"
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://codelabs.kartikarora.me/#codelabs-list",
+        "name": "Technical Codelabs & Workshops",
+        "itemListElement": itemListElements
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What are Kartik Arora's Codelabs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Kartik Arora's Codelabs are hands-on, step-by-step interactive technical guides and workshops designed to teach modern software engineering, Android development, Jetpack Compose, and Generative AI workflows with Google Gemini."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What technologies are covered in these codelabs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The tutorials cover Android Studio, Jetpack Compose, screenshot testing, Gemini in Android Studio, Agent Mode, Model Context Protocol (MCP), Google GenAI Python SDK, and AI-assisted development workflows."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are these codelabs free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, all published codelabs on codelabs.kartikarora.me are freely accessible online and formatted for step-by-step self-paced learning."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
+  const jsonLdBlock = `  <script type="application/ld+json">\n  ${JSON.stringify(structuredDataObj, null, 2).split('\n').join('\n  ')}\n  </script>`;
+  html = html.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, jsonLdBlock);
+
+  // Generate noscript fallback block
+  let noscriptHtml = `        <noscript>\n`;
+  output.forEach(cl => {
+    noscriptHtml += `          <div class="card-grid-item">
+            <div class="card-content">
+              <div class="card-header">
+                <h3 class="card-title">${cl.title}</h3>
+              </div>
+              <p class="card-body">${cl.summary}</p>
+              <div class="card-footer">
+                <a href="${cl.url}" class="btn btn-primary btn-sm">Start Codelab</a>
+              </div>
+            </div>
+          </div>\n`;
+  });
+  noscriptHtml += `        </noscript>`;
+
+  html = html.replace(/<noscript>[\s\S]*?<\/noscript>/, noscriptHtml);
+
+  // Save updated root index.html and write to dist
+  fs.writeFileSync(rootHtmlPath, html, 'utf8');
+  fs.writeFileSync(path.join(distDir, 'index.html'), html, 'utf8');
+  console.log('Updated index.html with fresh JSON-LD and noscript fallback');
+}
+
+// 8. Copy static portal files to dist
+const staticFiles = [
+  'robots.txt',
+  'site.webmanifest'
+];
+
+staticFiles.forEach(fileName => {
+  const srcPath = path.join(__dirname, fileName);
+  if (fs.existsSync(srcPath)) {
+    fs.copyFileSync(srcPath, path.join(distDir, fileName));
+    console.log(`Copied ${fileName} to dist`);
+  }
+});
+
+// 9. Helper function to copy directories recursively
 function copyRecursiveSync(src, dest) {
   const stats = fs.statSync(src);
   if (stats.isDirectory()) {
@@ -88,7 +341,7 @@ function copyRecursiveSync(src, dest) {
   }
 }
 
-// 6. Copy each codelab directory directly to dist root and inject draft preview banners
+// 10. Copy each codelab directory directly to dist root and inject draft preview banners
 if (fs.existsSync(codelabsDir)) {
   const dirs = fs.readdirSync(codelabsDir);
   dirs.forEach(dir => {
