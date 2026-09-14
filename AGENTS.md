@@ -11,7 +11,7 @@ This repository hosts interactive codelabs and technical workshops published at 
 Key components:
 1. **Landing Portal (`index.html`)**: Built strictly with the **@kartikarora Brand Design System**.
 2. **Source Tutorials (`source/`)**: Authored in Markdown following **Klaat** formatting guidelines.
-3. **Codelab Artifacts (`codelabs/`)**: Static, interactive HTML exported by **Klaat** (`klaat-snapshot`).
+3. **Codelab Artifacts (`codelabs/`)**: Static, interactive HTML exported by **Klaat** (`klaat`).
 4. **Distribution Engine (`generate-manifest.js`)**: Node.js script assembling `dist/` and `dist/codelabs.json`.
 5. **Hosting Platform**: Cloudflare Pages / Workers configured in `wrangler.toml`.
 
@@ -81,7 +81,7 @@ When creating or modifying codelabs under `source/<slug>/codelab.md`:
 
 1. **Export a single codelab**:
    ```bash
-   klaat-snapshot export -o codelabs source/<slug>/codelab.md
+   klaat export -o codelabs source/<slug>/codelab.md
    ```
 2. **Regenerate distribution manifest**:
    ```bash
