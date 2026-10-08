@@ -408,11 +408,19 @@ if (fs.existsSync(codelabsDir)) {
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">Kotlin:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">2.4.10</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">2.4.20</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: var(--secondary, #8b949e);">Gradle:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">9.8.1</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">Studio:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">Quail / Canary</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">Rabbit 2 / Canary</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+          <span style="color: var(--secondary, #8b949e);">JDK:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">25 (Bundled)</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
           <span style="color: var(--secondary, #8b949e);">Steps:</span>

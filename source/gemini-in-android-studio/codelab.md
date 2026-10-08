@@ -21,11 +21,11 @@ Duration: 7
 In this workshop, you will use **Gemini in Android Studio** to modernise legacy code, generate Compose UI from wireframes, scaffold multi-module features with **Agent Mode**, connect external context via **GitHub MCP**, and automate tests with **Studio Journeys** and the **Android CLI**.
 
 ### Prerequisites
-* **Android Studio:** Minimum **Android Studio Quail 4 (2026.1.4+)**.
+* **Android Studio:** **Android Studio Rabbit 2 (2026.2.2 Canary 3)**.
 * **Google Account:** Signed in to Android Studio for Gemini access.
-* **JDK:** JDK 21+.
+* **JDK:** JDK 25 (bundled with Android Studio).
 
-[Download Android Studio (Quail 4)](https://developer.android.com/studio){.buttonPrimary icon=download}
+[Download Android Studio (Rabbit 2 Canary)](https://developer.android.com/studio/preview){.buttonPrimary icon=download}
 
 ### 1. Install the Android CLI
 The `android` CLI allows terminal scripts and AI agents to interact directly with Android Studio tools and daemons.
@@ -115,13 +115,22 @@ git clone https://github.com/kartikarora/ICanHazStream.git
 cd ICanHazStream
 ```
 
-Open **`ICanHazStream`** in Android Studio Quail 4 (2026.1.4+) using **File > Open** and let the Gradle sync complete. Key modules include:
+Open **`ICanHazStream`** in Android Studio Rabbit 2 (2026.2.2 Canary 3) using **File > Open** and let the Gradle sync complete.
+
+Unlike an empty template, **`ICanHazStream` is a fully functional, interactive app right from Step 1**:
+* **On launch:** The app loads and displays trending movies (e.g. *Dune: Part Two*, *Spider-Man: Across the Spider-Verse*, *Oppenheimer*) in a rich Compose interface.
+* **Inspect availability:** Tapping any movie navigates directly to the Australian streaming providers view on **Where to Watch**, with live category and option tabs.
+* **Explore navigation:** Users can seamlessly toggle between the **Explore** movie catalogue and the **Watchlist** via the bottom navigation bar.
+
+Throughout this workshop, you'll use Gemini in Android Studio to modernise internal architecture layers, migrate legacy Java math and XML components to Compose design tokens, expand feature capabilities with Agent Mode, and test live journeys without starting from scratch.
+
+Key modules include:
 * `:app`: Navigation graph (`StreamNavGraph.kt`).
 * `:feature:explore`: Trending movies and provider discovery.
 * `:feature:detail`: Movie details and "Where to Watch" availability.
 * `:feature:watchlist`: Saved watchlist and price drop alerts.
 * `:core:ui`: Ready-made design tokens and components (`MovieCard`, `ProviderBadge`).
-* `:core:data`: Repositories and Ktor Client 3.5.2 networking.
+* `:core:data`: Repositories and Ktor Client 3.6.0 networking.
 * `:core:model`: `@Serializable` domain models (`Movie`, `StreamingProvider`).
 * `:core:testing`: In-memory test fakes (`FakeMovieRepository`).
 
@@ -165,7 +174,7 @@ about the pre-built `:core:ui` component library. When generating UI code, alway
 
 ## JetBrains Stack
 
-- **Ktor Client 3.5.2** for HTTP networking
+- **Ktor Client 3.6.0** for HTTP networking
 - **kotlinx.serialization 1.11.0** for JSON parsing
 - **kotlinx.coroutines 1.11.0** for async operations
 EOF
@@ -188,7 +197,8 @@ EOF
 ## In-editor refactoring & live diffs
 Duration: 8
 
-Refactor code using specific architecture guidelines and review live diffs in the editor.
+Refactor active production code using specific architecture guidelines and review live diffs in the editor.
+`TrendingMoviesViewModel` already powers the live trending movie list shown on launch; in this step, you'll modernise its reactive stream from Android `LiveData` to Kotlin coroutines `StateFlow`.
 
 ### 1. Open the target ViewModel
 Open **`TrendingMoviesViewModel.kt`** in the **`:feature:explore`** module:
@@ -424,14 +434,15 @@ feat(explore): convert movie provider item layout to Compose and add KDoc
 ## Wireframe to Compose
 Duration: 10
 
-Attach UI wireframe sketches directly into the **Agent tool window** to generate Compose layouts.
+Attach UI wireframe sketches directly into the **Agent tool window** to generate or refine Compose layouts.
+In ICanHazStream, tapping any trending movie already opens a working **Where to Watch** screen displaying Australian streaming options (Stream, Rent, Buy). In this step, you'll use Gemini to refine the layout structure directly from a visual wireframe mockup.
 
 ![Where to Watch Wireframe](images/wireframe-sample.svg)
 
 ### 1. Locate the wireframe asset
 Use **`assets/wireframe-where-to-watch.png`** (or the diagram above) and open **`WhereToWatchScreen.kt`** in the **`:feature:detail`** module.
 
-### 2. Generate screen from mockup
+### 2. Refine screen from mockup
 Attach `assets/wireframe-where-to-watch.png` in the **Agent tool window** with this prompt:
 
 ```text
@@ -619,6 +630,8 @@ Duration: 12
 
 Use **Agent Mode** to plan, write, and link features across multiple modules autonomously.
 
+While the starter app already links the bottom navigation bar to an initial `WatchlistScreen` with an empty state, this step uses Agent Mode to upgrade `:feature:watchlist` into a full-featured reactive screen with `WatchlistUiState`, price alert toggles, swipe actions, and enhanced navigation wiring.
+
 ![Agent Mode Loop](images/agent-mode-loop.svg)
 
 ### 1. Launch Agent Mode
@@ -630,7 +643,7 @@ Build the "Watchlist & Price Drop Alerts" feature in :feature:watchlist.
 2. Create WatchlistRepository.kt with functions to add movies, track rental price drops, and observe saved titles.
 3. Build WatchlistScreen.kt with movie cards, price alert toggles, and swipe-to-delete.
 4. Add the watchlist route to the root StreamNavGraph.kt in :app.
-Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
+Follow the rules in AGENTS.md and use Ktor 3.6.0 and StateFlow.
 ```
 
 ### 2. Review and apply changes
@@ -754,6 +767,7 @@ Apply the change and re-run to verify the fix.
 Duration: 10
 
 Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.
+Because ICanHazStream provides real, interactive UI flows right from the start, you can validate realistic user journeys—such as browsing trending movies, inspecting streaming providers on Where to Watch, and verifying pricing—end-to-end on a live device.
 
 ![Studio Journeys Flow](images/journeys-flow.svg)
 
@@ -866,7 +880,7 @@ android docs search "Navigation Compose Type Safety"
 ```
 
 ### 5. Manage Android AI skills
-Discover and install specialized official Android agent skills to expand AI capabilities:
+Discover and install specialised official Android agent skills to expand AI capabilities:
 
 ```bash
 # List installed and available Android skills (e.g. edge-to-edge, styles, navigation-3)

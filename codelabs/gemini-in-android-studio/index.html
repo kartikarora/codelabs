@@ -83,11 +83,11 @@
 <p>In this workshop, you will use <strong>Gemini in Android Studio</strong> to modernise legacy code, generate Compose UI from wireframes, scaffold multi-module features with <strong>Agent Mode</strong>, connect external context via <strong>GitHub MCP</strong>, and automate tests with <strong>Studio Journeys</strong> and the <strong>Android CLI</strong>.</p>
 <h3>Prerequisites</h3>
 <ul>
-<li><p><strong>Android Studio:</strong> Minimum <strong>Android Studio Quail 4 (2026.1.4+)</strong>.</p></li>
+<li><p><strong>Android Studio:</strong> <strong>Android Studio Rabbit 2 (2026.2.2 Canary 3)</strong>.</p></li>
 <li><p><strong>Google Account:</strong> Signed in to Android Studio for Gemini access.</p></li>
-<li><p><strong>JDK:</strong> JDK 21+.</p></li>
+<li><p><strong>JDK:</strong> JDK 25 (bundled with Android Studio).</p></li>
 </ul>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Quail 4)</a>
+<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio/preview" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Rabbit 2 Canary)</a>
 <h3>1. Install the Android CLI</h3>
 <p>The <code>android</code> CLI allows terminal scripts and AI agents to interact directly with Android Studio tools and daemons.</p>
 <a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/tools/android-cli" target="_blank"><span class="material-symbols-outlined">terminal</span>Android CLI Documentation &amp; Guide</a>
@@ -150,14 +150,22 @@ cd ICanHazStream
 <div class="code-container"><pre><code class=" language-cmd">git clone https://github.com/kartikarora/ICanHazStream.git
 cd ICanHazStream
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio Quail 4 (2026.1.4+) using <strong>File &gt; Open</strong> and let the Gradle sync complete. Key modules include:</p>
+<p>Open <strong><code>ICanHazStream</code></strong> in Android Studio Rabbit 2 (2026.2.2 Canary 3) using <strong>File &gt; Open</strong> and let the Gradle sync complete.</p>
+<p>Unlike an empty template, <strong><code>ICanHazStream</code></strong><strong> is a fully functional, interactive app right from Step 1</strong>:</p>
+<ul>
+<li><p><strong>On launch:</strong> The app loads and displays trending movies (e.g. <em>Dune: Part Two</em>, <em>Spider-Man: Across the Spider-Verse</em>, <em>Oppenheimer</em>) in a rich Compose interface.</p></li>
+<li><p><strong>Inspect availability:</strong> Tapping any movie navigates directly to the Australian streaming providers view on <strong>Where to Watch</strong>, with live category and option tabs.</p></li>
+<li><p><strong>Explore navigation:</strong> Users can seamlessly toggle between the <strong>Explore</strong> movie catalogue and the <strong>Watchlist</strong> via the bottom navigation bar.</p></li>
+</ul>
+<p>Throughout this workshop, you&#39;ll use Gemini in Android Studio to modernise internal architecture layers, migrate legacy Java math and XML components to Compose design tokens, expand feature capabilities with Agent Mode, and test live journeys without starting from scratch.</p>
+<p>Key modules include:</p>
 <ul>
 <li><p><code>:app</code>: Navigation graph (<code>StreamNavGraph.kt</code>).</p></li>
 <li><p><code>:feature:explore</code>: Trending movies and provider discovery.</p></li>
 <li><p><code>:feature:detail</code>: Movie details and &quot;Where to Watch&quot; availability.</p></li>
 <li><p><code>:feature:watchlist</code>: Saved watchlist and price drop alerts.</p></li>
 <li><p><code>:core:ui</code>: Ready-made design tokens and components (<code>MovieCard</code>, <code>ProviderBadge</code>).</p></li>
-<li><p><code>:core:data</code>: Repositories and Ktor Client 3.5.2 networking.</p></li>
+<li><p><code>:core:data</code>: Repositories and Ktor Client 3.6.0 networking.</p></li>
 <li><p><code>:core:model</code>: <code>@Serializable</code> domain models (<code>Movie</code>, <code>StreamingProvider</code>).</p></li>
 <li><p><code>:core:testing</code>: In-memory test fakes (<code>FakeMovieRepository</code>).</p></li>
 </ul>
@@ -199,7 +207,7 @@ about the pre-built `:core:ui` component library. When generating UI code, alway
 
 ## JetBrains Stack
 
-- **Ktor Client 3.5.2** for HTTP networking
+- **Ktor Client 3.6.0** for HTTP networking
 - **kotlinx.serialization 1.11.0** for JSON parsing
 - **kotlinx.coroutines 1.11.0** for async operations
 EOF
@@ -218,7 +226,7 @@ EOF
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="In-editor refactoring &amp; live diffs" duration="8">
-      <p>Refactor code using specific architecture guidelines and review live diffs in the editor.</p>
+      <p>Refactor active production code using specific architecture guidelines and review live diffs in the editor.<code>TrendingMoviesViewModel</code> already powers the live trending movie list shown on launch; in this step, you&#39;ll modernise its reactive stream from Android <code>LiveData</code> to Kotlin coroutines <code>StateFlow</code>.</p>
 <h3>1. Open the target ViewModel</h3>
 <p>Open <strong><code>TrendingMoviesViewModel.kt</code></strong> in the <strong><code>:feature:explore</code></strong> module:</p>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
@@ -405,11 +413,11 @@ data class Movie(
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Wireframe to Compose" duration="10">
-      <p>Attach UI wireframe sketches directly into the <strong>Agent tool window</strong> to generate Compose layouts.</p>
+      <p>Attach UI wireframe sketches directly into the <strong>Agent tool window</strong> to generate or refine Compose layouts.In ICanHazStream, tapping any trending movie already opens a working <strong>Where to Watch</strong> screen displaying Australian streaming options (Stream, Rent, Buy). In this step, you&#39;ll use Gemini to refine the layout structure directly from a visual wireframe mockup.</p>
 <p><img alt="Where to Watch Wireframe" src="images/wireframe-sample.svg"></p>
 <h3>1. Locate the wireframe asset</h3>
 <p>Use <strong><code>assets/wireframe-where-to-watch.png</code></strong> (or the diagram above) and open <strong><code>WhereToWatchScreen.kt</code></strong> in the <strong><code>:feature:detail</code></strong> module.</p>
-<h3>2. Generate screen from mockup</h3>
+<h3>2. Refine screen from mockup</h3>
 <p>Attach <code>assets/wireframe-where-to-watch.png</code> in the <strong>Agent tool window</strong> with this prompt:</p>
 <div class="code-container"><pre><code class=" language-text">Generate the Jetpack Compose screen for WhereToWatchScreen.kt matching this wireframe mockup.
 Include:
@@ -571,6 +579,7 @@ private fun WhereToWatchScreenPreview() {
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Multi-module Agent Mode" duration="12">
       <p>Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p>
+<p>While the starter app already links the bottom navigation bar to an initial <code>WatchlistScreen</code> with an empty state, this step uses Agent Mode to upgrade <code>:feature:watchlist</code> into a full-featured reactive screen with <code>WatchlistUiState</code>, price alert toggles, swipe actions, and enhanced navigation wiring.</p>
 <p><img alt="Agent Mode Loop" src="images/agent-mode-loop.svg"></p>
 <h3>1. Launch Agent Mode</h3>
 <p>In the <strong>Agent tool window</strong> (<strong>View &gt; Tool Windows &gt; Agent</strong>), submit your prompt to build the feature across modules:</p>
@@ -579,7 +588,7 @@ private fun WhereToWatchScreenPreview() {
 2. Create WatchlistRepository.kt with functions to add movies, track rental price drops, and observe saved titles.
 3. Build WatchlistScreen.kt with movie cards, price alert toggles, and swipe-to-delete.
 4. Add the watchlist route to the root StreamNavGraph.kt in :app.
-Follow the rules in AGENTS.md and use Ktor 3.5.2 and StateFlow.
+Follow the rules in AGENTS.md and use Ktor 3.6.0 and StateFlow.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Review and apply changes</h3>
 <p>Agent Mode creates <code>WatchlistViewModel.kt</code>, <code>WatchlistRepository.kt</code>, and <code>WatchlistScreen.kt</code> in the <strong><code>:feature:watchlist</code></strong> module, and registers the route in <strong><code>StreamNavGraph.kt</code></strong> in the <strong><code>:app</code></strong> module.</p>
@@ -678,7 +687,7 @@ if (providers.isEmpty()) {
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Studio Journeys E2E tests" duration="10">
-      <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.</p>
+      <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.Because ICanHazStream provides real, interactive UI flows right from the start, you can validate realistic user journeys—such as browsing trending movies, inspecting streaming providers on Where to Watch, and verifying pricing—end-to-end on a live device.</p>
 <p><img alt="Studio Journeys Flow" src="images/journeys-flow.svg"></p>
 <h3>1. Inspect the journey definition</h3>
 <p>Open <strong><code>app/src/journeysTest/find_streaming_provider.journey.xml</code></strong>:</p>
@@ -765,7 +774,7 @@ android studio render-compose-preview \
 android docs search &quot;Navigation Compose Type Safety&quot;
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>5. Manage Android AI skills</h3>
-<p>Discover and install specialized official Android agent skills to expand AI capabilities:</p>
+<p>Discover and install specialised official Android agent skills to expand AI capabilities:</p>
 <div class="code-container"><pre><code class=" language-bash"># List installed and available Android skills (e.g. edge-to-edge, styles, navigation-3)
 android skills list
 
