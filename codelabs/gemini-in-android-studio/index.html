@@ -114,7 +114,7 @@
 <h3>3. Configure Agent Permissions</h3>
 <p>Grant appropriate file permissions for Gemini and Agent Mode to read and scaffold files in the multi-module project:</p>
 <ol>
-<li><p>Open <strong>Settings</strong> (<code>Cmd+,</code> on macOS / <code>Ctrl+Alt+S</code> on Windows &amp; Linux).</p></li>
+<li><p>Open the <strong>Settings</strong> menu (<strong>Android Studio &gt; Settings</strong> on macOS, or <strong>File &gt; Settings</strong> on Windows &amp; Linux).</p></li>
 <li><p>Navigate to <strong>Tools &gt; AI &gt; Agent permissions</strong>.</p></li>
 <li><p>Under <strong>File Permissions</strong>, configure the following options:</p><ul>
 <li><p><strong>Read files in the project:</strong> Set to <strong>Always allow</strong>.</p></li>
@@ -233,11 +233,11 @@ EOF
 <div class="code-container"><pre><code class=" language-kotlin">private val _trendingMovies = MutableLiveData&lt;List&lt;Movie&gt;&gt;()
 val trendingMovies: LiveData&lt;List&lt;Movie&gt;&gt; = _trendingMovies
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Refactor via the Agent tool window</h3>
-<p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code> or from the right sidebar) and submit your refactoring prompt:</p>
-<div class="code-container"><pre><code class=" language-text">@TrendingMoviesViewModel.kt Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
+<h3>2. Refactor via in-editor Gemini</h3>
+<p>Highlight the <code>_trendingMovies</code> declarations in the editor, right-click, and select <strong>Gemini &gt; Generate Code with Gemini</strong> (or <strong>Refactor with Gemini</strong>). Enter your refactoring prompt:</p>
+<div class="code-container"><pre><code class=" language-text">Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Review the side-by-side diff preview and click <strong>Apply Changes</strong> (<code>Cmd+Enter</code> or click Apply).</p>
+<p>Review the side-by-side diff preview and click <strong>Apply Changes</strong> (or click the <strong>Apply</strong> button in the diff bar).</p>
 <p><img alt="Inline Diff Preview" src="images/inline-diff-demo.svg"></p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
@@ -406,7 +406,7 @@ data class Movie(
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Highlight the regular expression pattern, right-click, and select <strong>AI &gt; Explain Code</strong>. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups, non-capturing groups, and supported streaming domains.</p>
 <h3>3. Generate commit messages</h3>
-<p>Stage modified files in the <strong>Commit tool window</strong> (<code>Cmd+K</code> / <code>Ctrl+K</code>) and click <strong>Suggest Commit Message</strong>:</p>
+<p>Open the <strong>Commit tool window</strong> (from the left tool window bar or <strong>View &gt; Tool Windows &gt; Commit</strong>), stage modified files, and click <strong>Suggest Commit Message</strong> (the sparkle icon):</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <div class="code-container"><pre><code class=" language-text">feat(explore): convert movie provider item layout to Compose and add KDoc
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
@@ -539,7 +539,7 @@ private fun WhereToWatchScreenPreview() {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Style via AI preview tools</h3>
 <ol>
-<li><p>Build the project (<code>Cmd+F9</code> / <code>Ctrl+F9</code>) to render the preview.</p></li>
+<li><p>Build the project (select <strong>Build &gt; Make Project</strong> from the main menu, or click the hammer icon in the toolbar) to render the preview.</p></li>
 <li><p>In the Compose Preview toolbar, click the <strong>AI</strong> icon and select <strong>Change UI</strong> (under <em>For Selected Preview</em>).</p></li>
 <li><p>Prompt:</p></li>
 </ol>
@@ -658,7 +658,7 @@ class WatchlistViewModelTest {
     }
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Run tests (<code>Ctrl+Shift+R</code> / <code>Cmd+Shift+R</code>) to confirm they pass.</p>
+<p>Run tests by clicking the <strong>Run test gutter icon</strong> (the green play arrow next to the test class or function) to confirm they pass.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Crash debugging in Logcat" duration="7">
@@ -667,7 +667,7 @@ class WatchlistViewModelTest {
 <p>Run the app on the emulator, open Explore, tap <strong>&quot;Untracked Indie Release #9&quot;</strong>, and set region filter to <strong>&quot;Australia (AU)&quot;</strong>.</p>
 <h3>2. Inspect in Logcat</h3>
 <ol>
-<li><p>Open <strong>Logcat</strong> (<code>Cmd+6</code> / <code>Alt+6</code>).</p></li>
+<li><p>Open the <strong>Logcat tool window</strong> (from the bottom tool window bar or <strong>View &gt; Tool Windows &gt; Logcat</strong>).</p></li>
 <li><p>Find the error:</p><div class="code-container"><pre><code class=" language-text">FATAL EXCEPTION: main
 java.lang.NullPointerException: Missing streaming provider list for region &#39;AU&#39; in MovieDetailViewModel.kt:42
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div></li>

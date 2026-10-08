@@ -69,7 +69,7 @@ npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-them
 ### 3. Configure Agent Permissions
 Grant appropriate file permissions for Gemini and Agent Mode to read and scaffold files in the multi-module project:
 
-1. Open **Settings** (`Cmd+,` on macOS / `Ctrl+Alt+S` on Windows & Linux).
+1. Open the **Settings** menu (**Android Studio > Settings** on macOS, or **File > Settings** on Windows & Linux).
 2. Navigate to **Tools > AI > Agent permissions**.
 3. Under **File Permissions**, configure the following options:
    * **Read files in the project:** Set to **Always allow**.
@@ -209,14 +209,14 @@ private val _trendingMovies = MutableLiveData<List<Movie>>()
 val trendingMovies: LiveData<List<Movie>> = _trendingMovies
 ```
 
-### 2. Refactor via the Agent tool window
-Open the **Agent tool window** (`View > Tool Windows > Agent` or from the right sidebar) and submit your refactoring prompt:
+### 2. Refactor via in-editor Gemini
+Highlight the `_trendingMovies` declarations in the editor, right-click, and select **Gemini > Generate Code with Gemini** (or **Refactor with Gemini**). Enter your refactoring prompt:
 
 ```text
-@TrendingMoviesViewModel.kt Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
+Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
 ```
 
-Review the side-by-side diff preview and click **Apply Changes** (`Cmd+Enter` or click Apply).
+Review the side-by-side diff preview and click **Apply Changes** (or click the **Apply** button in the diff bar).
 
 ![Inline Diff Preview](images/inline-diff-demo.svg)
 
@@ -423,7 +423,7 @@ fun isValidDeepLink(): Boolean {
 Highlight the regular expression pattern, right-click, and select **AI > Explain Code**. Android Studio automatically sends the selection to the Agent tool window and provides an instant breakdown of capture groups, non-capturing groups, and supported streaming domains.
 
 ### 3. Generate commit messages
-Stage modified files in the **Commit tool window** (`Cmd+K` / `Ctrl+K`) and click **Suggest Commit Message**:
+Open the **Commit tool window** (from the left tool window bar or **View > Tool Windows > Commit**), stage modified files, and click **Suggest Commit Message** (the sparkle icon):
 
 > This is an example of what the generated output might look like. Gemini may generate something different for you. {.warning}
 
@@ -577,7 +577,7 @@ private fun WhereToWatchScreenPreview() {
 ```
 
 ### 2. Style via AI preview tools
-1. Build the project (`Cmd+F9` / `Ctrl+F9`) to render the preview.
+1. Build the project (select **Build > Make Project** from the main menu, or click the hammer icon in the toolbar) to render the preview.
 2. In the Compose Preview toolbar, click the **AI** icon and select **Change UI** (under *For Selected Preview*).
 3. Prompt:
 
@@ -727,7 +727,7 @@ class WatchlistViewModelTest {
 }
 ```
 
-Run tests (`Ctrl+Shift+R` / `Cmd+Shift+R`) to confirm they pass.
+Run tests by clicking the **Run test gutter icon** (the green play arrow next to the test class or function) to confirm they pass.
 
 ## Crash debugging in Logcat
 Duration: 7
@@ -738,7 +738,7 @@ Diagnose and patch exceptions directly from Logcat using **Ask Gemini**.
 Run the app on the emulator, open Explore, tap **"Untracked Indie Release #9"**, and set region filter to **"Australia (AU)"**.
 
 ### 2. Inspect in Logcat
-1. Open **Logcat** (`Cmd+6` / `Alt+6`).
+1. Open the **Logcat tool window** (from the bottom tool window bar or **View > Tool Windows > Logcat**).
 2. Find the error:
    ```text
    FATAL EXCEPTION: main

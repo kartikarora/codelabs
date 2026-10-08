@@ -141,7 +141,7 @@ Ask me clarifying questions, one at a time.
 
 ### Option 1: Antigravity IDE
 
-1. Use the AI chat panel (Cmd/Ctrl+L or chat icon)
+1. Open the AI chat panel using the chat icon in the side toolbar
 2. Paste the prompt above
 3. Antigravity IDE will generate and create the file automatically (it will ask for permission)
 
@@ -200,7 +200,7 @@ Format as markdown with clear sections.
 
 ### Option 1: Antigravity IDE
 
-1. Use AI chat (Cmd/Ctrl+L)
+1. Open the AI chat panel via the chat icon in the side toolbar
 2. Paste prompt → Antigravity IDE generates and creates the file
 
 ### Option 2: Antigravity CLI
@@ -379,7 +379,7 @@ Include:
 ```
 
 #### Option 1: Antigravity IDE
-1. Use AI chat (Cmd/Ctrl+L)
+1. Open the AI chat panel via the chat icon in the side toolbar
 2. Paste prompt → Antigravity IDE generates and creates the file
 
 #### Option 2: Antigravity CLI
@@ -401,7 +401,7 @@ Link ADR-001: "Pure CSS and Vanilla JS Architecture" and explain that all new fe
 ```
 
 #### Option 1: Antigravity IDE
-1. Use AI chat (Cmd/Ctrl+L)
+1. Open the AI chat panel via the chat icon in the side toolbar
 2. Paste prompt → Antigravity IDE generates and updates the file
 
 #### Option 2: Antigravity CLI
