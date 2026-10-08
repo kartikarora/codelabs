@@ -88,9 +88,10 @@ if (fs.existsSync(codelabsDir)) {
   });
 }
 
-// 3. Write codelabs.json to dist
+// 3. Write codelabs.json to dist and root
 fs.writeFileSync(path.join(distDir, 'codelabs.json'), JSON.stringify(output, null, 2));
-console.log('Generated dist/codelabs.json');
+fs.writeFileSync(path.join(__dirname, 'codelabs.json'), JSON.stringify(output, null, 2));
+console.log('Generated dist/codelabs.json and root codelabs.json');
 
 // 4. Generate dynamic sitemap.xml in root and dist
 const today = new Date().toISOString().split('T')[0];
