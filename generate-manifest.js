@@ -317,9 +317,7 @@ if (fs.existsSync(rootHtmlPath)) {
 // 8. Copy static portal files to dist
 const staticFiles = [
   'robots.txt',
-  'site.webmanifest',
-  '.assetsignore',
-  '_worker.js'
+  'site.webmanifest'
 ];
 
 staticFiles.forEach(fileName => {

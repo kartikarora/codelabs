@@ -1,5 +1,6 @@
 name = "codelabs-page"
 compatibility_date = "2026-03-10"
+main = "_worker.js"
 assets = { directory = "dist" }
 
 [build]
