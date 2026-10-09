@@ -318,6 +318,7 @@ if (fs.existsSync(rootHtmlPath)) {
 const staticFiles = [
   'robots.txt',
   'site.webmanifest',
+  '.assetsignore',
   '_worker.js'
 ];
 
