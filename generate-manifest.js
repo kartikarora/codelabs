@@ -144,7 +144,8 @@ Welcome to the Codelabs portal by Kartik Arora ([codelabs.kartikarora.me](https:
 output.forEach(cl => {
   const durationStr = cl.duration ? ` (Duration: ~${cl.duration} mins)` : '';
   const tagsStr = (cl.tags && cl.tags.length > 0) ? ` | Tags: ${cl.tags.join(', ')}` : '';
-  llmsTxt += `\n- [${cl.title}](${cl.canonicalUrl}): ${cl.summary}${durationStr}${tagsStr}`;
+  const mdUrl = `https://codelabs.kartikarora.me/${cl.id}/index.md`;
+  llmsTxt += `\n- [${cl.title}](${cl.canonicalUrl}) ([Markdown](${mdUrl})): ${cl.summary}${durationStr}${tagsStr}`;
 });
 
 llmsTxt += `
@@ -168,6 +169,7 @@ This document provides a comprehensive, full-text reference of all workshops and
 codelabsDetail.forEach((cl, idx) => {
   llmsFullTxt += `\n---\n\n## ${idx + 1}. ${cl.title}\n`;
   llmsFullTxt += `- **URL**: ${cl.canonicalUrl}\n`;
+  llmsFullTxt += `- **Markdown Source**: https://codelabs.kartikarora.me/${cl.id}/index.md\n`;
   if (cl.category && cl.category.length > 0) {
     llmsFullTxt += `- **Categories**: ${cl.category.join(', ')}\n`;
   }
@@ -315,7 +317,8 @@ if (fs.existsSync(rootHtmlPath)) {
 // 8. Copy static portal files to dist
 const staticFiles = [
   'robots.txt',
-  'site.webmanifest'
+  'site.webmanifest',
+  '_worker.js'
 ];
 
 staticFiles.forEach(fileName => {
@@ -350,6 +353,79 @@ if (fs.existsSync(codelabsDir)) {
     if (fs.statSync(codelabPath).isDirectory()) {
       copyRecursiveSync(codelabPath, path.join(distDir, dir));
       console.log(`Copied ${dir}/ to dist/${dir}`);
+
+      // 10a. Copy raw source markdown as index.md for LLMs and AI agents
+      const sourceMdPath = path.join(sourceDir, dir, 'codelab.md');
+      if (fs.existsSync(sourceMdPath)) {
+        fs.copyFileSync(sourceMdPath, path.join(distDir, dir, 'index.md'));
+        console.log(`Copied source/${dir}/codelab.md to dist/${dir}/index.md`);
+      }
+
+      // 10b. Inject LLM discovery links and TechArticle JSON-LD schema into codelab index.html
+      const codelabHtmlPath = path.join(distDir, dir, 'index.html');
+      if (fs.existsSync(codelabHtmlPath)) {
+        let codelabHtml = fs.readFileSync(codelabHtmlPath, 'utf8');
+
+        // Extract metadata for JSON-LD
+        let codelabTitle = dir;
+        let codelabSummary = '';
+        let codelabDuration = 0;
+        let codelabTags = [];
+        let codelabAuthor = 'Kartik Arora';
+
+        const jsonPath = path.join(codelabPath, 'codelab.json');
+        if (fs.existsSync(jsonPath)) {
+          try {
+            const meta = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+            codelabTitle = meta.title || dir;
+            codelabSummary = meta.summary || '';
+            codelabDuration = meta.duration || 0;
+            codelabTags = meta.tags || meta.category || [];
+            codelabAuthor = meta.authors || 'Kartik Arora';
+          } catch(e) {}
+        }
+
+        const detailObj = codelabsDetail.find(d => d.id === dir);
+        const stepsList = (detailObj && detailObj.steps) ? detailObj.steps : [];
+
+        const howToSteps = stepsList.map((step, sIdx) => ({
+          "@type": "HowToStep",
+          "position": sIdx + 1,
+          "name": step,
+          "url": `https://codelabs.kartikarora.me/${dir}/#step-${sIdx + 1}`
+        }));
+
+        const techArticleSchema = {
+          "@context": "https://schema.org",
+          "@type": "TechArticle",
+          "@id": `https://codelabs.kartikarora.me/${dir}/#article`,
+          "headline": codelabTitle,
+          "description": codelabSummary,
+          "url": `https://codelabs.kartikarora.me/${dir}/`,
+          "author": {
+            "@type": "Person",
+            "name": codelabAuthor,
+            "url": "https://kartikarora.me"
+          },
+          "inLanguage": "en-US",
+          "keywords": codelabTags,
+          "timeRequired": codelabDuration ? `PT${codelabDuration}M` : undefined,
+          "step": howToSteps.length > 0 ? howToSteps : undefined
+        };
+
+        const discoveryTags = `
+  <!-- LLM and Machine-Readable Discovery Tags -->
+  <link rel="alternate" type="text/markdown" href="./index.md" title="Clean Markdown Tutorial">
+  <link rel="alternate" type="application/json" href="./codelab.json" title="Tutorial Metadata JSON">
+  <script type="application/ld+json">
+  ${JSON.stringify(techArticleSchema, null, 2).split('\n').join('\n  ')}
+  </script>`;
+
+        if (codelabHtml.includes('</head>')) {
+          codelabHtml = codelabHtml.replace('</head>', discoveryTags + '\n</head>');
+          fs.writeFileSync(codelabHtmlPath, codelabHtml, 'utf8');
+        }
+      }
 
       // Check if this codelab is a draft
       const jsonPath = path.join(codelabPath, 'codelab.json');
