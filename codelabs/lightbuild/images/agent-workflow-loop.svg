@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360">
+  <defs>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="360" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+
+  <text x="40" y="45" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" fill="#f0f6fc">The Deterministic Agent Automation Loop</text>
+  <text x="40" y="70" font-family="'Albert Sans', sans-serif" font-size="14" fill="#8b949e">Why AI coding agents achieve 98% task reliability with Lightbuild YAML</text>
+
+  <!-- 4 Loop Stages -->
+  <!-- Stage 1 -->
+  <g transform="translate(40, 105)">
+    <rect width="185" height="190" rx="10" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    <circle cx="92" cy="40" r="22" fill="#0369a1" />
+    <text x="92" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+    <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#38bdf8" text-anchor="middle">Natural Prompt</text>
+    <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">"Add feature/reviews</text>
+    <text x="92" y="132" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">with Compose</text>
+    <text x="92" y="149" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">dependencies"</text>
+    <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#7dd3fc" text-anchor="middle">Gemini in Studio</text>
+  </g>
+
+  <!-- Arrow 1-2 -->
+  <path d="M 230,200 L 255,200" stroke="#38bdf8" stroke-width="2" />
+  <polygon points="255,195 265,200 255,205" fill="#38bdf8" />
+
+  <!-- Stage 2 -->
+  <g transform="translate(265, 105)">
+    <rect width="185" height="190" rx="10" fill="url(#cardGrad)" stroke="#818cf8" stroke-width="1.5" />
+    <circle cx="92" cy="40" r="22" fill="#4338ca" />
+    <text x="92" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#818cf8" text-anchor="middle">Schema-Backed Edit</text>
+    <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Agent mutates YAML</text>
+    <text x="92" y="132" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">pure key-value data.</text>
+    <text x="92" y="149" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">No lambda syntax,</text>
+    <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#a5b4fc" text-anchor="middle">no script execution</text>
+  </g>
+
+  <!-- Arrow 2-3 -->
+  <path d="M 455,200 L 480,200" stroke="#818cf8" stroke-width="2" />
+  <polygon points="480,195 490,200 480,205" fill="#818cf8" />
+
+  <!-- Stage 3 -->
+  <g transform="translate(490, 105)">
+    <rect width="185" height="190" rx="10" fill="url(#cardGrad)" stroke="#34d399" stroke-width="1.5" />
+    <circle cx="92" cy="40" r="22" fill="#047857" />
+    <text x="92" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#34d399" text-anchor="middle">CLI Resolution</text>
+    <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Runs CLI bridge:</text>
+    <text x="92" y="135" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7" text-anchor="middle">lightbuild resolve</text>
+    <text x="92" y="155" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Freezes tree into</text>
+    <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6ee7b7" text-anchor="middle">resolved.deps</text>
+  </g>
+
+  <!-- Arrow 3-4 -->
+  <path d="M 680,200 L 705,200" stroke="#34d399" stroke-width="2" />
+  <polygon points="705,195 715,200 705,205" fill="#34d399" />
+
+  <!-- Stage 4 -->
+  <g transform="translate(715, 105)">
+    <rect width="145" height="190" rx="10" fill="url(#cardGrad)" stroke="#fbbf24" stroke-width="1.5" />
+    <circle cx="72" cy="40" r="22" fill="#b45309" />
+    <text x="72" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="72" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#fbbf24" text-anchor="middle">Instant Sync</text>
+    <text x="72" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Studio Canary</text>
+    <text x="72" y="132" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">syncs in &lt; 2s</text>
+    <text x="72" y="155" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fde68a" text-anchor="middle">BUILD GREEN ✓</text>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "../../",
+  "mainga": "",
+  "updated": "2026-11-05T22:58:44.178Z",
+  "id": "lightbuild",
+  "duration": 85,
+  "title": "Declarative Android Builds with Lightbuild",
+  "summary": "Learn how Google's experimental Lightbuild replaces imperative build.gradle.kts scripts with schema-validated YAML and pre-resolved lockfiles (resolved.deps) in a multi-module Compose app.",
+  "source": "source/lightbuild/codelab.md",
+  "theme": "",
+  "status": ["Draft"],
+  "category": ["Android", "AI", "Architecture", "Tooling"],
+  "tags": ["android", "lightbuild", "gradle", "declarative-builds", "ai-agents", "gemini", "kotlin", "compose"],
+  "feedback": "mailto:hello@kartikarora.me",
+  "image": "images/poster.svg",
+  "url": "lightbuild"
+}

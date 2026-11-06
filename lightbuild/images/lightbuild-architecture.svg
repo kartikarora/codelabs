@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360">
+  <defs>
+    <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="hlGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="360" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+
+  <!-- Title -->
+  <text x="40" y="45" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" fill="#f0f6fc">Lightbuild Transpilation &amp; Execution Pipeline</text>
+  <text x="40" y="70" font-family="'Albert Sans', sans-serif" font-size="14" fill="#8b949e">Declarative frontend compiles into standard Gradle &amp; AGP execution models</text>
+
+  <!-- Step 1: Input Declarations -->
+  <g transform="translate(40, 105)">
+    <rect width="230" height="200" rx="10" fill="url(#boxGrad)" stroke="#38bdf8" stroke-width="1.5" />
+    <rect width="230" height="32" rx="10" fill="#1e293b" />
+    <text x="20" y="22" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#38bdf8">1. Declarative Input</text>
+    
+    <g transform="translate(16, 50)" font-family="'JetBrains Mono', monospace" font-size="12">
+      <text y="0" fill="#79c0ff">project.lightbuild.yaml</text>
+      <text y="22" fill="#8b949e">  • Repositories</text>
+      <text y="44" fill="#8b949e">  • Modules list</text>
+      <text y="66" fill="#8b949e">  • Kotlin 2.x &amp; Java 17</text>
+      <text y="98" fill="#a5d6ff">lightbuild.yaml</text>
+      <text y="120" fill="#8b949e">  • app shell vs library</text>
+      <text y="142" fill="#8b949e">  • compileSdk / minSdk</text>
+    </g>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g transform="translate(285, 195)" stroke="#38bdf8" stroke-width="2" fill="none">
+    <line x1="0" y1="0" x2="35" y2="0" />
+    <polygon points="35,-5 45,0 35,5" fill="#38bdf8" stroke="none" />
+  </g>
+
+  <!-- Step 2: Lightbuild Engine -->
+  <g transform="translate(345, 105)">
+    <rect width="230" height="200" rx="10" fill="url(#boxGrad)" stroke="#818cf8" stroke-width="1.5" />
+    <rect width="230" height="32" rx="10" fill="#1e293b" />
+    <text x="20" y="22" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#818cf8">2. Lightbuild Engine</text>
+
+    <g transform="translate(16, 50)" font-family="'JetBrains Mono', monospace" font-size="12">
+      <text y="0" fill="#f0f6fc">Static Schema Parser</text>
+      <text y="22" fill="#8b949e">  • Real-time validation</text>
+      <text y="44" fill="#8b949e">  • Sub-second IDE sync</text>
+      <text y="76" fill="#f0f6fc">resolved.deps Lockfile</text>
+      <text y="98" fill="#8b949e">  • Freezes transitive deps</text>
+      <text y="120" fill="#8b949e">  • Zero network queries</text>
+      <text y="142" fill="#34d399">  • lightbuild CLI bridge</text>
+    </g>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g transform="translate(590, 195)" stroke="#818cf8" stroke-width="2" fill="none">
+    <line x1="0" y1="0" x2="35" y2="0" />
+    <polygon points="35,-5 45,0 35,5" fill="#818cf8" stroke="none" />
+  </g>
+
+  <!-- Step 3: Execution Runtime -->
+  <g transform="translate(640, 105)">
+    <rect width="220" height="200" rx="10" fill="url(#boxGrad)" stroke="#34d399" stroke-width="1.5" />
+    <rect width="220" height="32" rx="10" fill="#1e293b" />
+    <text x="20" y="22" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#34d399">3. Build Execution</text>
+
+    <g transform="translate(16, 50)" font-family="'JetBrains Mono', monospace" font-size="12">
+      <text y="0" fill="#f0f6fc">Android Gradle Plugin</text>
+      <text y="22" fill="#8b949e">  • AGP 9.4 compilation</text>
+      <text y="44" fill="#8b949e">  • D8 / R8 optimization</text>
+      <text y="66" fill="#8b949e">  • Kotlin 2.4 compiler</text>
+      <text y="98" fill="#f0f6fc">Deterministic Artifacts</text>
+      <text y="120" fill="#8b949e">  • APK / AAB bundles</text>
+      <text y="142" fill="#7ee787">  • Fast incremental runs</text>
+    </g>
+  </g>
+</svg>
