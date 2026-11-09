@@ -1,37 +1,66 @@
-# Typographic Identity & Blockquote Mandates
+# Typographic Identity & Editorial Statements (v2.0.0)
 
-The `@kartikarora` brand features a bold typographic identity with strict rules for headings, body text, and high-impact pull quotes.
+The `@kartikarora` brand features an authoritative, clean typographic identity combining **Albert Sans** (Display & Body) and **JetBrains Mono** (Code, numbers, telemetry).
 
-## Fonts
-- **Sans-serif:** `var(--font-sans)` (Albert Sans)
-- **Monospace:** `var(--font-mono)` (JetBrains Mono)
+---
 
-## Heading Ratios
+## Fonts & Sourcing
+
+- **Display & Body:** `"Albert Sans", system-ui, -apple-system, sans-serif`
+- **Code, Metrics & Telemetry:** `"JetBrains Mono", ui-monospace, monospace`
+
+---
+
+## Headings Rules
+
+1. **Balance:** Every heading (`h1`–`h3`) carries `text-wrap: balance` and `-0.02em` letter-spacing.
+2. **Measure Caps:** Heading measures ride directly on elements in character width:
+   - `h1`: max-width `20ch`
+   - `h2`: max-width `30ch`
+   - `h3`: max-width `40ch`
+3. **Never Accented Single Words:** A heading is one weight, one style, and one color. Never highlight or italicize a single word within a heading (e.g., `<h2>Build <span class="accent">faster</span> apps</h2>` is prohibited).
+
+---
+
+## The Editorial Statement (Reimagined Blockquote)
+
+The brand pull quote has been elevated from an exaggerated italic block into a **commanding editorial statement**:
+
 ```html
-<h1>Main Title</h1>        <!-- 700 weight, -0.02em letter-spacing -->
-<h2>Section Title</h2>      <!-- 700 weight -->
-<h3>Subsection</h3>         <!-- 700 weight -->
+<blockquote class="brand-statement">
+  "Software should behave like a physical instrument: immediate, tactile, and predictable."
+  <cite>— Kartik Arora, Droidcon Berlin</cite>
+</blockquote>
 ```
 
-## Blockquotes
-
-### CSS Definition (Reference Only)
+### CSS Definition
 ```css
-blockquote {
-    font-size: clamp(2rem, 6vw, 4.5rem);
-    margin: clamp(var(--space-sm), 2vw, var(--space-md)) 0;
-    padding-left: clamp(var(--space-md), 3vw, var(--space-lg));
-    border-left: 6px solid var(--accent);
-    font-weight: 700;
-    color: var(--primary);
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    font-style: italic;
+blockquote, .brand-statement {
+  font-family: var(--font-sans);
+  font-size: var(--text-section);
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--color-ink);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-signal);
+  margin: var(--space-xl) 0;
+  max-width: 48ch;
+  font-style: normal; /* No fake italics */
+}
+
+blockquote cite, .brand-statement cite {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  margin-top: var(--space-xs);
+  font-style: normal;
 }
 ```
 
-### Strict Mandates
-1. **HIGH IMPACT ONLY:** Use only for significant pull quotes or critical statements. Do not use for general citations or long-form excerpts.
-2. **NO NESTED PARAGRAPHS:** For single-sentence quotes, place text directly inside the `<blockquote>` tag. Only use nested `<p>` tags if the quote spans multiple paragraphs.
-3. **ZERO OVERRIDES:** Never override the `font-size`, `font-style`, or `border-left` properties. The fluid typography (`clamp`) and italic style are foundational to the brand's "loud" typographic identity.
-4. **SEMANTIC TAG ONLY:** Always use the `<blockquote>` element; never attempt to replicate this style using `div` or `p` classes.
+---
+
+## Tabular Numbers
+
+All numerical data, version numbers, dates, benchmarks, and telemetry metrics MUST use `font-variant-numeric: tabular-nums` in `JetBrains Mono` to prevent layout jank during transitions or updates.

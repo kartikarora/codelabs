@@ -1,212 +1,111 @@
-# Design System Overview
+# Design System Overview (v2.0.0)
 
-This reference guide details the core tokens, colors, typography, and layout options for the `@kartikarora` brand.
+This reference guide details the core tokens, OKLCH color spectrum, typography ratios, and layout options for the `@kartikarora` brand.
 
-## Layout System
+---
 
-The brand provides standard layout containers and sectioning classes:
+## 🎨 Perceptual OKLCH Color Architecture
 
-```html
-<!-- Main Container (1200px max-width) -->
-<div class="container">
-  <!-- Content -->
-</div>
+The brand uses **OKLCH (Lightness, Chroma, Hue)** color spaces to guarantee consistent contrast ratios, eliminate muddy grays in dark mode, and ensure visual harmony across light and dark system settings.
 
-<!-- Narrow Container (800px max-width) -->
-<div class="container-narrow">
-  <!-- Articles/Forms -->
-</div>
+### Color Tokens
 
-<!-- Section (adds standard vertical padding) -->
-<section class="section">
-  <div class="container">
-    <!-- Section Header -->
-    <div class="section-header">
-      <h2 class="section-title">Section Title</h2>
-      <p class="section-subtitle">Optional subtitle text</p>
-    </div>
-
-    <!-- Section Content -->
-    
-    <!-- Section Actions -->
-    <div class="section-actions">
-      <a href="#" class="btn btn-primary">Primary Action</a>
-    </div>
-  </div>
-</section>
-```
-
-## Color System
-
-The brand implements design tokens using CSS Custom Properties (Variables) that adapt automatically to system themes via `@media (prefers-color-scheme: dark)`.
-
-### Token Definition Boilerplate
 ```css
 :root {
-  /* Fonts */
-  --font-sans: 'Albert Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+  /* Light Canvas (Paper-Anchored) */
+  --color-paper: oklch(98.5% 0.005 250);        /* Base canvas background */
+  --color-paper-alt: oklch(96.0% 0.008 250);    /* Elevated cards & wells */
+  --color-paper-sunken: oklch(93.5% 0.010 250); /* Code blocks & inputs */
 
-  /* Color System (Light Mode default) */
-  --primary: #0d1117;
-  --secondary: #57606a;
-  --tertiary: #8c959f;
-  --muted: #afb8c1;
-  --accent: #0066cc;
-  --accent-hover: #0052a3;
-  --bg: #ffffff;
-  --bg-alt: #f6f8fa;
-  --card: #ffffff;
-  --border: #d0d7de;
-  --shadow: rgba(140, 149, 159, 0.15);
-  --glow: rgba(0, 102, 204, 0.15);
+  --color-ink: oklch(18.0% 0.015 255);          /* Primary high-contrast text */
+  --color-ink-muted: oklch(46.0% 0.020 255);    /* Secondary / metadata text */
+  --color-ink-faint: oklch(66.0% 0.018 255);    /* Disabled & placeholder text */
 
-  /* Component Specific (Tabs) */
-  --tabs-bg: #f6f8fa;
-  --tabs-item-bg-active: #ffffff;
-  --tabs-text: #57606a;
-  --tabs-text-active: #0d1117;
+  --color-rule: oklch(88.0% 0.010 250);         /* Subtle hairline borders */
+  --color-rule-strong: oklch(76.0% 0.015 250);  /* Interactive/card borders */
+
+  /* The Signature Kartik Arora Signal: Precision Cobalt */
+  --color-signal: oklch(52.0% 0.24 255);        /* High-contrast interactive accent */
+  --color-signal-hover: oklch(46.0% 0.24 255);
+  --color-signal-wash: oklch(52.0% 0.24 255 / 0.10); /* Translucent badges/tints */
+  --color-signal-ink: oklch(99.0% 0 0);         /* Text on signal button */
+  --color-focus: oklch(52.0% 0.24 255);         /* A11y focus ring */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Color System (Dark Mode override) */
-    --primary: #e6edf3;
-    --secondary: #8b949e;
-    --tertiary: #484f58;
-    --muted: #30363d;
-    --accent: #0099ff;
-    --accent-hover: #33aaff;
-    --bg: #0d1117;
-    --bg-alt: #161b22;
-    --card: #161b22;
-    --border: #30363d;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --glow: rgba(0, 153, 255, 0.2);
+    /* Dark Canvas (Obsidian-Anchored) */
+    --color-paper: oklch(14.0% 0.012 255);
+    --color-paper-alt: oklch(18.5% 0.016 255);
+    --color-paper-sunken: oklch(11.0% 0.010 255);
 
-    /* Component Specific (Tabs) */
-    --tabs-bg: #161b22;
-    --tabs-item-bg-active: #0d1117;
-    --tabs-text: #8b949e;
-    --tabs-text-active: #e6edf3;
+    --color-ink: oklch(94.0% 0.015 255);
+    --color-ink-muted: oklch(72.0% 0.020 255);
+    --color-ink-faint: oklch(48.0% 0.018 255);
+
+    --color-rule: oklch(24.0% 0.018 255);
+    --color-rule-strong: oklch(34.0% 0.025 255);
+
+    /* Electric Cyan-Cobalt for Dark Canvas */
+    --color-signal: oklch(68.0% 0.22 255);
+    --color-signal-hover: oklch(74.0% 0.20 255);
+    --color-signal-wash: oklch(68.0% 0.22 255 / 0.14);
+    --color-signal-ink: oklch(10.0% 0.01 255);
+    --color-focus: oklch(68.0% 0.22 255);
   }
 }
 ```
 
-### Usage
-```css
-.custom-element {
-  color: var(--primary);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-}
-```
+---
 
-## Glassmorphism Tokens
-For premium interfaces (especially in Dark Mode), use translucent glass panels:
-```css
-.card-glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+## 📐 Fluid Typographic Scale
 
-@media (prefers-color-scheme: light) {
-  .card-glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-  }
-}
-```
+Typography scales dynamically via `clamp()` without breakpoint jumps.
 
-## Focus & Active Outlines
-Accessibility outlines to assist keyboard navigation replacing browser defaults:
-```css
-a:focus-visible,
-button:focus-visible,
-[tabindex="0"]:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px var(--glow);
-}
-```
-
-## Typography
-
-- **Sans-serif Font:** `var(--font-sans)` (`'Albert Sans', system-ui, -apple-system, sans-serif`)
-- **Monospace Font:** `var(--font-mono)` (`'JetBrains Mono', monospace`)
-
-### Fluid Typography Heading Tokens
-Use CSS `clamp()` to scale headings dynamically without breakpoint bloat:
 ```css
 :root {
-  --font-size-h1: clamp(2.2rem, 5vw, 3.5rem);
-  --font-size-h2: clamp(1.6rem, 4vw, 2.4rem);
-  --font-size-h3: clamp(1.2rem, 3vw, 1.8rem);
+  --font-sans: "Albert Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-display: clamp(2.5rem, 5.5vw, 4.25rem);
+  --text-display-s: clamp(1.85rem, 4vw, 2.75rem);
+  --text-section: clamp(1.4rem, 2.75vw, 2.0rem);
+  --text-title: 1.25rem;
+  --text-lead: 1.125rem;
+  --text-body: 1.0rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
 }
 ```
 
-### Headings
-```html
-<h1 style="font-size: var(--font-size-h1);">Main Title</h1>        <!-- Letter-spacing: -0.02em -->
-<h2 style="font-size: var(--font-size-h2);">Section Title</h2>
-<h3 style="font-size: var(--font-size-h3);">Subsection</h3>
-```
+---
 
-### Paragraphs & Blockquotes
-```html
-<p>Regular paragraph text</p>
-<p class="text-muted">Muted secondary text</p>
+## 📏 8px Spacing Grid
 
-<blockquote>
-  This is a high-impact pull quote.
-</blockquote>
-```
-
-For full constraints and CSS definition of blockquotes, refer to the main [SKILL.md](../SKILL.md#blockquote-mandates).
-
-## Spacing System
-
-Use spacing tokens for consistent margins and padding:
+Margins, padding, and gaps align to the 8px grid.
 
 ```css
+--space-2xs: 0.25rem; /* 4px */
 --space-xs:  0.5rem;  /* 8px */
---space-sm:  1rem;    /* 16px */
+--space-sm:  1.0rem;  /* 16px */
 --space-md:  1.5rem;  /* 24px */
---space-lg:  2rem;    /* 32px */
---space-xl:  3rem;    /* 48px */
---space-2xl: 4rem;    /* 64px */
---space-3xl: 6rem;    /* 96px */
+--space-lg:  2.0rem;  /* 32px */
+--space-xl:  3.0rem;  /* 48px */
+--space-2xl: 4.0rem;  /* 64px */
+--space-3xl: 6.0rem;  /* 96px */
 ```
 
-### Usage
+---
+
+## ⚡ Interaction Motion Physics
+
+Transitions follow Android Material emphasized easing:
+
 ```css
-.section {
-  padding: var(--space-2xl) var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-```
-
-## Hero Section
-Standardized hero section for landing pages.
-```html
-<section class="hero">
-  <div class="container-narrow">
-    <img src="/path/to/image.jpg" alt="Author Name" class="hero-img">
-    <h1 class="hero-title">Author Name</h1>
-    <p class="hero-subtitle">Professional Title | Role @ Company</p>
-    <p class="hero-bio">A brief professional bio or introduction text.</p>
-  </div>
-</section>
-```
-
-## Filter Controls
-Standardized controls for filtering lists or grids.
-```html
-<div class="filter-controls">
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="category-1">Category 1</button>
-  <button class="filter-btn" data-filter="category-2">Category 2</button>
-</div>
+--ease-standard: cubic-bezier(0.2, 0, 0, 1);
+--ease-out: cubic-bezier(0, 0, 0.2, 1);
+--ease-in: cubic-bezier(0.3, 0, 1, 1);
+--dur-micro: 120ms;
+--dur-short: 220ms;
+--dur-medium: 320ms;
 ```

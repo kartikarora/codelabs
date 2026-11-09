@@ -19,14 +19,14 @@ Key components:
 
 ## 🎨 Brand Design System Mandates (`kartikarora-brand`)
 
-All UI and landing page styling must adhere to the @kartikarora Brand Design System. The canonical skill instructions and reference specifications are located in [`skills/kartikarora-brand/SKILL.md`](skills/kartikarora-brand/SKILL.md).
+All UI and landing page styling must adhere to the @kartikarora Brand Design System (v2.0.0). The canonical skill instructions and reference specifications are located in [`skills/kartikarora-brand/SKILL.md`](skills/kartikarora-brand/SKILL.md).
 
 When modifying `index.html` or any custom landing pages:
 
 1. **Mandatory CDN Assets**:
    ```html
    <!-- Brand Identity CSS -->
-   <link href="https://distribute.kartikarora.me/css/kartikarora.css" rel="stylesheet">
+   <link href="https://distribute.kartikarora.me/css/kartikarora.2.0.0.css" rel="stylesheet">
 
    <!-- Required Fonts & Icons -->
    <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,13 +34,14 @@ When modifying `index.html` or any custom landing pages:
    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
    <!-- Brand Interaction JS -->
-   <script src="https://distribute.kartikarora.me/js/kartikarora.js" defer></script>
+   <script src="https://distribute.kartikarora.me/js/kartikarora.2.0.0.js" defer></script>
    ```
-2. **Typography**: Headings and body use `var(--font-sans)` (Albert Sans) and code uses `var(--font-mono)` (JetBrains Mono).
-3. **Color Tokens**: Always use CSS variables (`var(--primary)`, `var(--secondary)`, `var(--accent)`, `var(--bg)`, `var(--card)`, `var(--border)`). Never use hardcoded hex/RGB colors.
+2. **Typography**: Headings and body use `var(--font-sans)` (Albert Sans) and code/telemetry uses `var(--font-mono)` (JetBrains Mono with `tabular-nums`).
+3. **Color Tokens**: Always use semantic CSS variables (`var(--color-paper)`, `var(--color-ink)`, `var(--color-signal)`, `var(--color-rule)`, or their backward-compatible aliases `var(--bg)`, `var(--primary)`, `var(--accent)`, `var(--border)`). Never use hardcoded hex/RGB colors.
 4. **Semantic Classes**: Use `.card-grid`, `.card-grid-item`, `.btn-primary`, `.tabs`, `.tab-item`, `.tech-tag`. Do not create custom CSS duplicates.
 5. **System Color Scheme**: Always rely on system `prefers-color-scheme`. Never implement custom theme toggles or `localStorage` theme state.
 6. **CLS Prevention**: Always specify explicit `width` and `height` on dynamic images (`<img width="400" height="200" loading="lazy">`).
+7. **Brand Sloplint Compliance**: Ensure any modified page or template passes `node skills/kartikarora-brand/scripts/brand-sloplint.js <file>`.
 
 ---
 

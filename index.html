@@ -15,7 +15,7 @@
 
   <!-- Manifest & Theme Color -->
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
   <!-- Open Graph / Facebook / LinkedIn -->
@@ -37,7 +37,7 @@
   <meta name="twitter:image" content="https://kartikarora.me/img/og-card.png">
 
   <!-- Brand Identity CSS -->
-  <link href="https://distribute.kartikarora.me/css/kartikarora.css" rel="stylesheet">
+  <link href="https://distribute.kartikarora.me/css/kartikarora.2.0.0.css" rel="stylesheet">
   
   <!-- Required Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
   <!-- Brand Interaction JS -->
-  <script src="https://distribute.kartikarora.me/js/kartikarora.js" defer></script>
+  <script src="https://distribute.kartikarora.me/js/kartikarora.2.0.0.js" defer></script>
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://kartikarora.me/img/icon32.png">
@@ -54,7 +54,7 @@
   <link rel="apple-touch-icon" sizes="192x192" href="https://kartikarora.me/img/icon192.png">
 
   <!-- AEO / Structured Data (JSON-LD) for Search & Answer Engines -->
-                                                                      <script type="application/ld+json">
+                                                                          <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -293,7 +293,7 @@
       <!-- Grid -->
       <div class="card-grid" id="codelabs-list">
         <!-- Noscript fallback for non-JS web crawlers, AI search scrapers, and accessibility -->
-                                                                                                                                                                                                                                                                                        <noscript>
+                                                                                                                                                                                                                                                                                                        <noscript>
           <div class="card-grid-item">
             <div class="card-content">
               <div class="card-header">
@@ -412,7 +412,7 @@
               <div class="card-image">
                 ${cl.image 
                   ? `<img src="${cl.image}" alt="${cl.title}" width="400" height="200" loading="lazy">` 
-                  : `<div style="height: 200px; display: flex; align-items: center; justify-content: center; background: var(--bg-alt);"><span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.2;">menu_book</span></div>`
+                  : `<div style="height: 200px; display: flex; align-items: center; justify-content: center; background: var(--color-paper-alt, var(--bg-alt));"><span class="material-symbols-outlined" style="font-size: 3rem; opacity: 0.2;">menu_book</span></div>`
                 }
               </div>
               <div class="card-content">
