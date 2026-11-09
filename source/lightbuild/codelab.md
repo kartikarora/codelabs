@@ -28,23 +28,8 @@ In this codelab, you will migrate **ICanHazStream** (`me.kartikarora.icanhazstre
 * **Android CLI:** Android CLI tools installed.
 * **Git.**
 
-### 1. Enable Preview Flags
-Lightbuild is currently in early preview. Enable the experimental flag in your shell profile:
-
-```bash
-export ANDROID_CLI_BUILD=true
-```
-
-In Android Studio Canary, open `Help > Edit Custom Properties...` and add:
-
-```properties
-lightbuild.enable=true
-```
-
-Restart Android Studio after saving the file.
-
-### 2. Clone the Project
-Clone the repository and check out the starting branch:
+### 1. Clone the Project
+Clone the repository and check out the starter branch:
 
 ```bash
 git clone https://github.com/kartikarora/ICanHazStream.git
@@ -63,6 +48,21 @@ The starting code on `lightbuild-start` is a complete, working multi-module Jetp
 * `build-logic/convention/` with custom Gradle convention plugins.
 * Individual `build.gradle.kts` files per module.
 * Dynamic dependency resolution during project sync.
+
+### 2. Enable Preview Flags
+Lightbuild is currently in early preview. Enable the experimental flag in your shell profile or terminal:
+
+```bash
+export ANDROID_CLI_BUILD=true
+```
+
+In Android Studio Canary, open `Help > Edit Custom Properties...` and add:
+
+```properties
+lightbuild.enable=true
+```
+
+Restart Android Studio after saving the file.
 
 ---
 

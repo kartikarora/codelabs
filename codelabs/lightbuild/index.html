@@ -89,16 +89,8 @@
 <li><p><strong>Android CLI:</strong> Android CLI tools installed.</p></li>
 <li><p><strong>Git.</strong></p></li>
 </ul>
-<h3>1. Enable Preview Flags</h3>
-<p>Lightbuild is currently in early preview. Enable the experimental flag in your shell profile:</p>
-<div class="code-container"><pre><code class=" language-bash">export ANDROID_CLI_BUILD=true
-</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>In Android Studio Canary, open <code>Help &gt; Edit Custom Properties...</code> and add:</p>
-<div class="code-container"><pre><code class=" language-properties">lightbuild.enable=true
-</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Restart Android Studio after saving the file.</p>
-<h3>2. Clone the Project</h3>
-<p>Clone the repository and check out the starting branch:</p>
+<h3>1. Clone the Project</h3>
+<p>Clone the repository and check out the starter branch:</p>
 <div class="code-container"><pre><code class=" language-bash">git clone https://github.com/kartikarora/ICanHazStream.git
 cd ICanHazStream
 
@@ -115,6 +107,14 @@ git checkout -b my-lightbuild
 <li><p>Individual <code>build.gradle.kts</code> files per module.</p></li>
 <li><p>Dynamic dependency resolution during project sync.</p></li>
 </ul>
+<h3>2. Enable Preview Flags</h3>
+<p>Lightbuild is currently in early preview. Enable the experimental flag in your shell profile or terminal:</p>
+<div class="code-container"><pre><code class=" language-bash">export ANDROID_CLI_BUILD=true
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>In Android Studio Canary, open <code>Help &gt; Edit Custom Properties...</code> and add:</p>
+<div class="code-container"><pre><code class=" language-properties">lightbuild.enable=true
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Restart Android Studio after saving the file.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Lightbuild Architecture" duration="10">
