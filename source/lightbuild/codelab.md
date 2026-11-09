@@ -24,7 +24,7 @@ In this codelab, you will migrate **ICanHazStream** (`me.kartikarora.icanhazstre
 
 ### Prerequisites
 * **Android Studio:** Android Studio Canary (Rabbit 3 or later) with Lightbuild support.
-* **JDK:** JDK 17 or JDK 21.
+* **JDK:** JDK 21.
 * **Android CLI:** Android CLI tools installed.
 * **Git.**
 
@@ -131,7 +131,7 @@ lightbuild:
 
 build:
   java:
-    version: "17"
+    version: "21"
 ```
 
 This single data file replaces module declarations in `settings.gradle.kts` and common repository blocks. Android Studio Canary validates this file in real time using an embedded schema.
