@@ -16,21 +16,35 @@ Duration: 10
 
 ![Lightbuild Hero Banner](images/poster.svg)
 
-Android project configuration has historically used imperative build scripts (Groovy or Kotlin DSL). Because Gradle evaluates these scripts on a JVM daemon during project configuration, IDE sync times scale with project size. Furthermore, modifying imperative scripts presents reliability challenges for automated AI coding agents.
+Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.
 
-At Android Dev Summit, Google introduced **Lightbuild**: an experimental declarative build system that represents project configuration as structured YAML and uses pre-resolved dependency lockfiles (`resolved.deps`).
+At Android Dev Summit, Google introduced **Lightbuild**: an experimental declarative build system that represents project structure in YAML and uses pre-resolved dependency lockfiles (`resolved.deps`).
 
-In this codelab, you will migrate **ICanHazStream** (`me.kartikarora.icanhazstream`)—a multi-module Jetpack Compose streaming availability tracker—from Gradle convention plugins (`build-logic/`) to Lightbuild YAML.
+In this codelab, you will migrate **ICanHazStream** (`me.kartikarora.icanhazstream`), a multi-module Jetpack Compose streaming availability app, from Gradle convention plugins to Lightbuild YAML.
 
 ### Prerequisites
-* **Android Studio:** Android Studio Canary with Lightbuild support.
-* **JDK:** JDK 17 or JDK 25.
+* **Android Studio:** Android Studio Canary (Rabbit 3 or later) with Lightbuild support.
+* **JDK:** JDK 17 or JDK 21.
+* **Android CLI:** Android CLI tools installed.
 * **Git.**
 
-[Download Android Studio Canary](https://developer.android.com/studio/preview){.buttonPrimary icon=download}
+### 1. Enable Preview Flags
+Lightbuild is currently in early preview. Enable the experimental flag in your shell profile:
 
-### 1. Clone the Project
-Clone the repository and create a working branch:
+```bash
+export ANDROID_CLI_BUILD=true
+```
+
+In Android Studio Canary, open `Help > Edit Custom Properties...` and add:
+
+```properties
+lightbuild.enable=true
+```
+
+Restart Android Studio after saving the file.
+
+### 2. Clone the Project
+Clone the repository and switch to the working branch:
 
 ```bash
 git clone https://github.com/kartikarora/ICanHazStream.git
@@ -38,11 +52,10 @@ cd ICanHazStream
 git checkout -b lightbuild
 ```
 
-### 2. Inspect Existing Configuration
-The default `main` branch uses:
-* `build-logic/convention/` containing custom Gradle convention plugins.
+The starting project uses:
+* `build-logic/convention/` with custom Gradle convention plugins.
 * Individual `build.gradle.kts` files per module.
-* Dynamic dependency resolution during configuration.
+* Dynamic dependency resolution during project sync.
 
 ---
 
@@ -51,30 +64,32 @@ Duration: 10
 
 ![Lightbuild Transpilation Pipeline](images/lightbuild-architecture.svg)
 
-Lightbuild is not an alternative compiler or a replacement for the Android Gradle Plugin (AGP). It is a declarative frontend that transpiles schema-validated YAML into Gradle execution instructions.
+Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits in front of Gradle as a declarative frontend that passes structured data down to the underlying build engine.
 
 ### Core Configuration Files
 
-1. **`project.lightbuild.yaml` (Root):**
-   Replaces `settings.gradle.kts` and root `build.gradle.kts`. Defines repository sources, module list, and compiler versions.
+1. **`project.lightbuild.yaml` (Workspace Root):**
+   Replaces `settings.gradle.kts` and root build scripts. Declares active modules, repositories, and compiler versions.
 2. **`lightbuild.yaml` (Per Module):**
-   Defines module roles (`type: application` for the app shell, `type: library` for reusable modules), SDK requirements, and dependencies.
+   Defines module roles (`type: application` for the app shell, `type: library` for shared modules), SDK constraints, and direct dependencies.
 3. **`resolved.deps` (Per Module):**
-   Auto-generated lockfile recording exact resolved direct and transitive dependencies. Prevents network lookups and dependency graph recalculation during IDE sync.
+   Generated lockfile recording the resolved transitive dependency graph. Android Studio reads this file directly, removing remote network queries and transitive tree calculation during project sync.
 
 ```
 ICanHazStream/
-├── project.lightbuild.yaml       # Global workspace manifest
+├── project.lightbuild.yaml       # Workspace manifest
 ├── app/                          # App Shell module
 │   ├── lightbuild.yaml           # type: application
 │   └── resolved.deps             # Lockfile
 ├── core/
 │   ├── ui/                       # type: library
 │   ├── model/                    # type: library
-│   └── data/                     # type: library
+│   ├── data/                     # type: library
+│   └── testing/                  # type: library
 └── feature/
     ├── explore/                  # type: library
-    └── details/                  # type: library
+    ├── detail/                   # type: library
+    └── watchlist/                # type: library
 ```
 
 ![ICanHazStream Modular Architecture](images/module-dependency-graph.svg)
@@ -87,186 +102,228 @@ Duration: 10
 Create `project.lightbuild.yaml` in the root of the project:
 
 ```yaml
-# project.lightbuild.yaml
 project:
-  name: ICanHazStream
-  modules:
-    - app
-    - core/model
-    - core/data
-    - core/ui
-    - core/testing
-    - feature/explore
-    - feature/details
-    - feature/watchlist
+  name: "ICanHazStream"
+
+modules:
+  - app
+  - core/model
+  - core/data
+  - core/ui
+  - core/testing
+  - feature/explore
+  - feature/detail
+  - feature/watchlist
 
 repositories:
   - google
   - mavenCentral
 
 lightbuild:
-  version: 0.0.30
+  version: "0.0.20-alpha02"
 
 build:
   java:
-    version: 17
-  kotlin:
-    version: 2.4.20
-    jvmTarget: "17"
+    version: "17"
 ```
 
-This single file replaces module declarations in `settings.gradle.kts` and common plugin/toolchain blocks from root buildscripts.
+This single data file replaces module declarations in `settings.gradle.kts` and common repository blocks. Android Studio Canary validates this file in real time using an embedded schema.
 
 ---
 
 ## Configuring the App Shell
 Duration: 10
 
-The application module acts as an assembly shell. It configures the Android application ID, SDK levels, release signing, and aggregates feature modules.
+The application module acts as an assembly shell. It configures the application ID, SDK levels, and references the feature modules.
 
 Create `app/lightbuild.yaml`:
 
 ```yaml
-# app/lightbuild.yaml
-module:
-  type: application
+type: application
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream
   applicationId: me.kartikarora.icanhazstream
-  compileSdk: 35
-  minSdk: 26
-  targetSdk: 35
   versionCode: 1
-  versionName: "1.0.0"
-
-dependencies:
-  - module: core/ui
-  - module: core/data
-  - module: core/model
-  - module: feature/explore
-  - module: feature/details
-  - module: feature/watchlist
-  - "androidx.activity:activity-compose:1.10.1"
-  - "androidx.navigation:navigation-compose:2.10.2"
+  versionName: "1.0"
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  targetSdk:
+    version:
+      release:
+        apiLevel: 36
+  dependencies:
+    module:
+      - //feature/explore
+      - //feature/detail
+      - //feature/watchlist
+      - //core/model
+      - //core/data
+      - //core/ui
+    maven:
+      - androidx.core:core-ktx:1.10.1
+      - androidx.lifecycle:lifecycle-runtime-ktx:2.6.1
+      - androidx.activity:activity-compose:1.8.0
+      - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
+      - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
+      - org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3
 ```
 
-Inter-module dependencies use `- module: path/to/module`. External dependencies use standard artifact coordinate strings.
+Inter-module dependencies use the `//path/to/module` syntax. External dependencies are listed under `maven:`.
 
 ---
 
 ## Configuring Library Modules
 Duration: 15
 
-Modules containing business logic, data sources, and UI components are configured as `type: library`.
+Modules containing business logic, data sources, and UI components are configured as `type: library`. Android libraries require `compileSdk` and `minSdk`, but omit `targetSdk` and `applicationId`.
 
 ### 1. `:core:model/lightbuild.yaml`
 ```yaml
-module:
-  type: library
+type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.model
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    maven:
+      - org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
 ```
 
 ### 2. `:core:data/lightbuild.yaml`
 ```yaml
-module:
-  type: library
+type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.data
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - "io.ktor:ktor-client-core:3.6.0"
-  - "io.ktor:ktor-client-content-negotiation:3.6.0"
-  - "io.ktor:ktor-serialization-kotlinx-json:3.6.0"
-  - "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0"
-
-testDependencies:
-  - module: core/testing
-  - "org.junit.jupiter:junit-jupiter:5.14.4"
-  - "app.cash.turbine:turbine:1.2.1"
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+    maven:
+      - io.ktor:ktor-client-core:2.3.9
+      - io.ktor:ktor-client-okhttp:2.3.9
+      - io.ktor:ktor-client-content-negotiation:2.3.9
+      - io.ktor:ktor-serialization-kotlinx-json:2.3.9
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
 ```
 
 ### 3. `:core:ui/lightbuild.yaml`
 ```yaml
-module:
-  type: library
+type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.ui
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - "androidx.compose.ui:ui:1.8.0"
-  - "androidx.compose.material3:material3:1.4.0"
-  - "androidx.compose.foundation:foundation:1.8.0"
-  - "androidx.compose.ui:ui-tooling-preview:1.8.0"
-  - "io.coil-kt:coil-compose:2.7.0"
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+    maven:
+      - androidx.core:core-ktx:1.10.1
+      - androidx.activity:activity-compose:1.8.0
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-graphics:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.compose.material3:material3:1.2.0
 ```
 
 ### 4. `:feature:explore/lightbuild.yaml`
 ```yaml
-module:
-  type: library
+type: library
+platform: android
 
 android:
-  namespace: me.kartikarora.icanhazstream.explore
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - module: core/data
-  - module: core/ui
-  - "androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0"
-  - "androidx.compose.material3:material3:1.4.0"
-
-testDependencies:
-  - module: core/testing
-  - "app.cash.turbine:turbine:1.2.1"
+  namespace: me.kartikarora.icanhazstream.feature.explore
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+      - //core/data
+      - //core/ui
+    maven:
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.core:core-ktx:1.10.1
+      - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
+      - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
+      - androidx.compose.material3:material3:1.2.0
 ```
 
-Configure `:feature:details`, `:feature:watchlist`, and `:core:testing` following the same pattern.
+Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:testing`.
 
 ---
 
 ## Pre-Resolving Dependencies
 Duration: 10
 
-Run the resolution command to calculate and freeze the dependency graph:
+Run the resolution command to calculate and freeze dependencies:
 
 ```bash
-lightbuild resolve
+android build resolve
 ```
 
 ### Understanding `resolved.deps`
 Review the generated `app/resolved.deps` and `core/data/resolved.deps` files:
 
-```
-# Generated by Lightbuild CLI - DO NOT EDIT MANUALLY
-androidx.activity:activity-compose:1.10.1
-  androidx.activity:activity-ktx:1.10.1
-  androidx.compose.runtime:runtime:1.8.0
-  androidx.compose.ui:ui:1.8.0
-io.ktor:ktor-client-core:3.6.0
-  org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0
-  io.ktor:ktor-http:3.6.0
-  io.ktor:ktor-utils:3.6.0
+```yaml
+# This file is automatically generated by Lightbuild.
+# This file should be checked into version control.
+sourceSets:
+  main:
+  - androidx.activity:activity:1.8.0
+  - androidx.activity:activity-compose:1.8.0
+  - androidx.activity:activity-ktx:1.8.0
+  - androidx.annotation:annotation:1.6.0
+  - androidx.annotation:annotation-experimental:1.3.0
+  - androidx.annotation:annotation-jvm:1.6.0
+  - androidx.compose.runtime:runtime:1.0.1
+  - androidx.compose.ui:ui:1.0.1
+  - androidx.core:core:1.10.1
+  - androidx.core:core-ktx:1.10.1
+  - androidx.lifecycle:lifecycle-runtime:2.6.1
+  - androidx.lifecycle:lifecycle-viewmodel:2.6.1
 ```
 
-`resolved.deps` serves as a dependency lockfile. Commit it to git. Subsequent builds read from this file directly, bypassing network version resolution during project sync.
+Commit `resolved.deps` to git. When someone opens the project or runs a build, Android Studio reads this file directly, avoiding network lookups and version graph recalculations.
 
 ---
 
@@ -275,9 +332,9 @@ Duration: 15
 
 ![Deterministic Agent Automation Loop](images/agent-workflow-loop.svg)
 
-Because Lightbuild configuration is structured data rather than an executable script, AI coding agents can parse and update the build model with fewer errors.
+Because Lightbuild configurations are structured data, automated coding assistants can parse and edit project setups with fewer errors.
 
-Prompt your coding assistant (such as Gemini in Android Studio):
+Prompt your assistant (such as Gemini in Android Studio):
 
 ```text
 Add a new feature module called ':feature:reviews' to ICanHazStream.
@@ -286,11 +343,12 @@ Add a new feature module called ':feature:reviews' to ICanHazStream.
 3. Add feature/reviews to app/lightbuild.yaml dependencies.
 ```
 
-The agent edits exact YAML keys without needing to navigate Kotlin DSL syntax or version catalog mappings.
+The agent edits exact YAML fields without having to balance Kotlin DSL brackets or resolve version catalog conventions.
 
-After the agent completes the edit, run:
+After the edit completes, run:
+
 ```bash
-lightbuild resolve
+android build resolve
 ```
 
 ---
@@ -298,29 +356,34 @@ lightbuild resolve
 ## Build Verification & CLI Commands
 Duration: 5
 
-Verify the configuration from the terminal:
+Verify the configuration using the unified Android CLI:
 
 ```bash
-# Query declared modules
-lightbuild query modules
+# Query targets and source sets
+android build query --output sourcesets
 
-# Run unit tests across modules
-lightbuild test
+# Run test targets
+android build test
 
-# Compile the application artifact
-lightbuild build
+# Compile the debug application
+android build app
 ```
+
+The compiled APK will be located at `app/build/app-debug.apk`.
 
 ---
 
 ## Primary Sources & References
 
-* **Android Dev Summit Session:**  
-  * [Declarative, agent-ready Android builds with Lightbuild](https://developer.android.com/events/dev-summit/talks/declarative-agent-ready-android-builds-with-lightbuild)
+* **Android Dev Summit Session:**
+  * Title: *Declarative, agent-ready Android builds with Lightbuild*
+  * Speakers: Juan Sebastian Oviedo & Scott Myers
+  * [Official Session Archive](https://developer.android.com/events/dev-summit/talks/declarative-agent-ready-android-builds-with-lightbuild)
   * [YouTube Recording](https://www.youtube.com/watch?v=0mYQtt2RfoQ)
-* **Official Google Documentation:**  
-  * [Lightbuild Guide for AI Agents](https://developer.android.com/tools/agents/lightbuild)
-* **Companion Codebase:**  
+* **Official Google Documentation:**
+  * [Lightbuild Guide for AI Agents](https://developer.android.com/r/lightbuild)
+  * [Android CLI Reference](https://developer.android.com/tools/agents)
+* **Companion Codebase:**
   * [kartikarora/ICanHazStream (GitHub)](https://github.com/kartikarora/ICanHazStream)
-* **Presentation Slides:**  
+* **Presentation Slides:**
   * [Slide Deck](https://presentations.kartikarora.me/lightbuild/)

@@ -79,247 +79,302 @@
                   feedback-link="mailto:hello@kartikarora.me">
     <klaat-kodelab-step label="Setup and Project Context" duration="10">
       <p><img alt="Lightbuild Hero Banner" src="images/poster.svg"></p>
-<p>Android project configuration has historically used imperative build scripts (Groovy or Kotlin DSL). Because Gradle evaluates these scripts on a JVM daemon during project configuration, IDE sync times scale with project size. Furthermore, modifying imperative scripts presents reliability challenges for automated AI coding agents.</p>
-<p>At Android Dev Summit, Google introduced <strong>Lightbuild</strong>: an experimental declarative build system that represents project configuration as structured YAML and uses pre-resolved dependency lockfiles (<code>resolved.deps</code>).</p>
-<p>In this codelab, you will migrate <strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>)—a multi-module Jetpack Compose streaming availability tracker—from Gradle convention plugins (<code>build-logic/</code>) to Lightbuild YAML.</p>
+<p>Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.</p>
+<p>At Android Dev Summit, Google introduced <strong>Lightbuild</strong>: an experimental declarative build system that represents project structure in YAML and uses pre-resolved dependency lockfiles (<code>resolved.deps</code>).</p>
+<p>In this codelab, you will migrate <strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>), a multi-module Jetpack Compose streaming availability app, from Gradle convention plugins to Lightbuild YAML.</p>
 <h3>Prerequisites</h3>
 <ul>
-<li><p><strong>Android Studio:</strong> Android Studio Canary with Lightbuild support.</p></li>
-<li><p><strong>JDK:</strong> JDK 17 or JDK 25.</p></li>
+<li><p><strong>Android Studio:</strong> Android Studio Canary (Rabbit 3 or later) with Lightbuild support.</p></li>
+<li><p><strong>JDK:</strong> JDK 17 or JDK 21.</p></li>
+<li><p><strong>Android CLI:</strong> Android CLI tools installed.</p></li>
 <li><p><strong>Git.</strong></p></li>
 </ul>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio/preview" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio Canary</a>
-<h3>1. Clone the Project</h3>
-<p>Clone the repository and create a working branch:</p>
+<h3>1. Enable Preview Flags</h3>
+<p>Lightbuild is currently in early preview. Enable the experimental flag in your shell profile:</p>
+<div class="code-container"><pre><code class=" language-bash">export ANDROID_CLI_BUILD=true
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>In Android Studio Canary, open <code>Help &gt; Edit Custom Properties...</code> and add:</p>
+<div class="code-container"><pre><code class=" language-properties">lightbuild.enable=true
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Restart Android Studio after saving the file.</p>
+<h3>2. Clone the Project</h3>
+<p>Clone the repository and switch to the working branch:</p>
 <div class="code-container"><pre><code class=" language-bash">git clone https://github.com/kartikarora/ICanHazStream.git
 cd ICanHazStream
 git checkout -b lightbuild
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<h3>2. Inspect Existing Configuration</h3>
-<p>The default <code>main</code> branch uses:</p>
+<p>The starting project uses:</p>
 <ul>
-<li><p><code>build-logic/convention/</code> containing custom Gradle convention plugins.</p></li>
+<li><p><code>build-logic/convention/</code> with custom Gradle convention plugins.</p></li>
 <li><p>Individual <code>build.gradle.kts</code> files per module.</p></li>
-<li><p>Dynamic dependency resolution during configuration.</p></li>
+<li><p>Dynamic dependency resolution during project sync.</p></li>
 </ul>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Lightbuild Architecture" duration="10">
       <p><img alt="Lightbuild Transpilation Pipeline" src="images/lightbuild-architecture.svg"></p>
-<p>Lightbuild is not an alternative compiler or a replacement for the Android Gradle Plugin (AGP). It is a declarative frontend that transpiles schema-validated YAML into Gradle execution instructions.</p>
+<p>Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits in front of Gradle as a declarative frontend that passes structured data down to the underlying build engine.</p>
 <h3>Core Configuration Files</h3>
 <ol>
-<li><p><strong><code>project.lightbuild.yaml</code></strong><strong> (Root):</strong>Replaces <code>settings.gradle.kts</code> and root <code>build.gradle.kts</code>. Defines repository sources, module list, and compiler versions.</p></li>
-<li><p><strong><code>lightbuild.yaml</code></strong><strong> (Per Module):</strong>Defines module roles (<code>type: application</code> for the app shell, <code>type: library</code> for reusable modules), SDK requirements, and dependencies.</p></li>
-<li><p><strong><code>resolved.deps</code></strong><strong> (Per Module):</strong>Auto-generated lockfile recording exact resolved direct and transitive dependencies. Prevents network lookups and dependency graph recalculation during IDE sync.</p></li>
+<li><p><strong><code>project.lightbuild.yaml</code></strong><strong> (Workspace Root):</strong>Replaces <code>settings.gradle.kts</code> and root build scripts. Declares active modules, repositories, and compiler versions.</p></li>
+<li><p><strong><code>lightbuild.yaml</code></strong><strong> (Per Module):</strong>Defines module roles (<code>type: application</code> for the app shell, <code>type: library</code> for shared modules), SDK constraints, and direct dependencies.</p></li>
+<li><p><strong><code>resolved.deps</code></strong><strong> (Per Module):</strong>Generated lockfile recording the resolved transitive dependency graph. Android Studio reads this file directly, removing remote network queries and transitive tree calculation during project sync.</p></li>
 </ol>
 <div class="code-container"><pre><code class="">ICanHazStream/
-├── project.lightbuild.yaml       # Global workspace manifest
+├── project.lightbuild.yaml       # Workspace manifest
 ├── app/                          # App Shell module
 │   ├── lightbuild.yaml           # type: application
 │   └── resolved.deps             # Lockfile
 ├── core/
 │   ├── ui/                       # type: library
 │   ├── model/                    # type: library
-│   └── data/                     # type: library
+│   ├── data/                     # type: library
+│   └── testing/                  # type: library
 └── feature/
     ├── explore/                  # type: library
-    └── details/                  # type: library
+    ├── detail/                   # type: library
+    └── watchlist/                # type: library
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p><img alt="ICanHazStream Modular Architecture" src="images/module-dependency-graph.svg"></p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Defining the Root Manifest" duration="10">
       <p>Create <code>project.lightbuild.yaml</code> in the root of the project:</p>
-<div class="code-container"><pre><code class=" language-yaml"># project.lightbuild.yaml
-project:
-  name: ICanHazStream
-  modules:
-    - app
-    - core/model
-    - core/data
-    - core/ui
-    - core/testing
-    - feature/explore
-    - feature/details
-    - feature/watchlist
+<div class="code-container"><pre><code class=" language-yaml">project:
+  name: &quot;ICanHazStream&quot;
+
+modules:
+  - app
+  - core/model
+  - core/data
+  - core/ui
+  - core/testing
+  - feature/explore
+  - feature/detail
+  - feature/watchlist
 
 repositories:
   - google
   - mavenCentral
 
 lightbuild:
-  version: 0.0.30
+  version: &quot;0.0.20-alpha02&quot;
 
 build:
   java:
-    version: 17
-  kotlin:
-    version: 2.4.20
-    jvmTarget: &quot;17&quot;
+    version: &quot;17&quot;
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>This single file replaces module declarations in <code>settings.gradle.kts</code> and common plugin/toolchain blocks from root buildscripts.</p>
+<p>This single data file replaces module declarations in <code>settings.gradle.kts</code> and common repository blocks. Android Studio Canary validates this file in real time using an embedded schema.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Configuring the App Shell" duration="10">
-      <p>The application module acts as an assembly shell. It configures the Android application ID, SDK levels, release signing, and aggregates feature modules.</p>
+      <p>The application module acts as an assembly shell. It configures the application ID, SDK levels, and references the feature modules.</p>
 <p>Create <code>app/lightbuild.yaml</code>:</p>
-<div class="code-container"><pre><code class=" language-yaml"># app/lightbuild.yaml
-module:
-  type: application
+<div class="code-container"><pre><code class=" language-yaml">type: application
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream
   applicationId: me.kartikarora.icanhazstream
-  compileSdk: 35
-  minSdk: 26
-  targetSdk: 35
   versionCode: 1
-  versionName: &quot;1.0.0&quot;
-
-dependencies:
-  - module: core/ui
-  - module: core/data
-  - module: core/model
-  - module: feature/explore
-  - module: feature/details
-  - module: feature/watchlist
-  - &quot;androidx.activity:activity-compose:1.10.1&quot;
-  - &quot;androidx.navigation:navigation-compose:2.10.2&quot;
+  versionName: &quot;1.0&quot;
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  targetSdk:
+    version:
+      release:
+        apiLevel: 36
+  dependencies:
+    module:
+      - //feature/explore
+      - //feature/detail
+      - //feature/watchlist
+      - //core/model
+      - //core/data
+      - //core/ui
+    maven:
+      - androidx.core:core-ktx:1.10.1
+      - androidx.lifecycle:lifecycle-runtime-ktx:2.6.1
+      - androidx.activity:activity-compose:1.8.0
+      - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
+      - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
+      - org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Inter-module dependencies use <code>- module: path/to/module</code>. External dependencies use standard artifact coordinate strings.</p>
+<p>Inter-module dependencies use the <code>//path/to/module</code> syntax. External dependencies are listed under <code>maven:</code>.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Configuring Library Modules" duration="15">
-      <p>Modules containing business logic, data sources, and UI components are configured as <code>type: library</code>.</p>
+      <p>Modules containing business logic, data sources, and UI components are configured as <code>type: library</code>. Android libraries require <code>compileSdk</code> and <code>minSdk</code>, but omit <code>targetSdk</code> and <code>applicationId</code>.</p>
 <h3>1. `:core:model/lightbuild.yaml`</h3>
-<div class="code-container"><pre><code class=" language-yaml">module:
-  type: library
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.model
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - &quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0&quot;
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    maven:
+      - org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. `:core:data/lightbuild.yaml`</h3>
-<div class="code-container"><pre><code class=" language-yaml">module:
-  type: library
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.data
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - &quot;io.ktor:ktor-client-core:3.6.0&quot;
-  - &quot;io.ktor:ktor-client-content-negotiation:3.6.0&quot;
-  - &quot;io.ktor:ktor-serialization-kotlinx-json:3.6.0&quot;
-  - &quot;org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0&quot;
-
-testDependencies:
-  - module: core/testing
-  - &quot;org.junit.jupiter:junit-jupiter:5.14.4&quot;
-  - &quot;app.cash.turbine:turbine:1.2.1&quot;
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+    maven:
+      - io.ktor:ktor-client-core:2.3.9
+      - io.ktor:ktor-client-okhttp:2.3.9
+      - io.ktor:ktor-client-content-negotiation:2.3.9
+      - io.ktor:ktor-serialization-kotlinx-json:2.3.9
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>3. `:core:ui/lightbuild.yaml`</h3>
-<div class="code-container"><pre><code class=" language-yaml">module:
-  type: library
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
 
 android:
   namespace: me.kartikarora.icanhazstream.ui
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - &quot;androidx.compose.ui:ui:1.8.0&quot;
-  - &quot;androidx.compose.material3:material3:1.4.0&quot;
-  - &quot;androidx.compose.foundation:foundation:1.8.0&quot;
-  - &quot;androidx.compose.ui:ui-tooling-preview:1.8.0&quot;
-  - &quot;io.coil-kt:coil-compose:2.7.0&quot;
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+    maven:
+      - androidx.core:core-ktx:1.10.1
+      - androidx.activity:activity-compose:1.8.0
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-graphics:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.compose.material3:material3:1.2.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>4. `:feature:explore/lightbuild.yaml`</h3>
-<div class="code-container"><pre><code class=" language-yaml">module:
-  type: library
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
 
 android:
-  namespace: me.kartikarora.icanhazstream.explore
-  compileSdk: 35
-  minSdk: 26
-
-dependencies:
-  - module: core/model
-  - module: core/data
-  - module: core/ui
-  - &quot;androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0&quot;
-  - &quot;androidx.compose.material3:material3:1.4.0&quot;
-
-testDependencies:
-  - module: core/testing
-  - &quot;app.cash.turbine:turbine:1.2.1&quot;
+  namespace: me.kartikarora.icanhazstream.feature.explore
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+      - //core/data
+      - //core/ui
+    maven:
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.core:core-ktx:1.10.1
+      - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
+      - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
+      - androidx.compose.material3:material3:1.2.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Configure <code>:feature:details</code>, <code>:feature:watchlist</code>, and <code>:core:testing</code> following the same pattern.</p>
+<p>Follow the same pattern for <code>:feature:detail</code>, <code>:feature:watchlist</code>, and <code>:core:testing</code>.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Pre-Resolving Dependencies" duration="10">
-      <p>Run the resolution command to calculate and freeze the dependency graph:</p>
-<div class="code-container"><pre><code class=" language-bash">lightbuild resolve
+      <p>Run the resolution command to calculate and freeze dependencies:</p>
+<div class="code-container"><pre><code class=" language-bash">android build resolve
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>Understanding `resolved.deps`</h3>
 <p>Review the generated <code>app/resolved.deps</code> and <code>core/data/resolved.deps</code> files:</p>
-<div class="code-container"><pre><code class=""># Generated by Lightbuild CLI - DO NOT EDIT MANUALLY
-androidx.activity:activity-compose:1.10.1
-  androidx.activity:activity-ktx:1.10.1
-  androidx.compose.runtime:runtime:1.8.0
-  androidx.compose.ui:ui:1.8.0
-io.ktor:ktor-client-core:3.6.0
-  org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0
-  io.ktor:ktor-http:3.6.0
-  io.ktor:ktor-utils:3.6.0
+<div class="code-container"><pre><code class=" language-yaml"># This file is automatically generated by Lightbuild.
+# This file should be checked into version control.
+sourceSets:
+  main:
+  - androidx.activity:activity:1.8.0
+  - androidx.activity:activity-compose:1.8.0
+  - androidx.activity:activity-ktx:1.8.0
+  - androidx.annotation:annotation:1.6.0
+  - androidx.annotation:annotation-experimental:1.3.0
+  - androidx.annotation:annotation-jvm:1.6.0
+  - androidx.compose.runtime:runtime:1.0.1
+  - androidx.compose.ui:ui:1.0.1
+  - androidx.core:core:1.10.1
+  - androidx.core:core-ktx:1.10.1
+  - androidx.lifecycle:lifecycle-runtime:2.6.1
+  - androidx.lifecycle:lifecycle-viewmodel:2.6.1
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p><code>resolved.deps</code> serves as a dependency lockfile. Commit it to git. Subsequent builds read from this file directly, bypassing network version resolution during project sync.</p>
+<p>Commit <code>resolved.deps</code> to git. When someone opens the project or runs a build, Android Studio reads this file directly, avoiding network lookups and version graph recalculations.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Agent Modification Workflow" duration="15">
       <p><img alt="Deterministic Agent Automation Loop" src="images/agent-workflow-loop.svg"></p>
-<p>Because Lightbuild configuration is structured data rather than an executable script, AI coding agents can parse and update the build model with fewer errors.</p>
-<p>Prompt your coding assistant (such as Gemini in Android Studio):</p>
+<p>Because Lightbuild configurations are structured data, automated coding assistants can parse and edit project setups with fewer errors.</p>
+<p>Prompt your assistant (such as Gemini in Android Studio):</p>
 <div class="code-container"><pre><code class=" language-text">Add a new feature module called &#39;:feature:reviews&#39; to ICanHazStream.
 1. Add &#39;feature/reviews&#39; to project.lightbuild.yaml modules list.
 2. Create &#39;feature/reviews/lightbuild.yaml&#39; as type: library with dependencies on core/model, core/ui, and Compose Material 3.
 3. Add feature/reviews to app/lightbuild.yaml dependencies.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>The agent edits exact YAML keys without needing to navigate Kotlin DSL syntax or version catalog mappings.</p>
-<p>After the agent completes the edit, run:</p>
-<div class="code-container"><pre><code class=" language-bash">lightbuild resolve
+<p>The agent edits exact YAML fields without having to balance Kotlin DSL brackets or resolve version catalog conventions.</p>
+<p>After the edit completes, run:</p>
+<div class="code-container"><pre><code class=" language-bash">android build resolve
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Build Verification &amp; CLI Commands" duration="5">
-      <p>Verify the configuration from the terminal:</p>
-<div class="code-container"><pre><code class=" language-bash"># Query declared modules
-lightbuild query modules
+      <p>Verify the configuration using the unified Android CLI:</p>
+<div class="code-container"><pre><code class=" language-bash"># Query targets and source sets
+android build query --output sourcesets
 
-# Run unit tests across modules
-lightbuild test
+# Run test targets
+android build test
 
-# Compile the application artifact
-lightbuild build
+# Compile the debug application
+android build app
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>The compiled APK will be located at <code>app/build/app-debug.apk</code>.</p>
 
     </klaat-kodelab-step>
     <klaat-kodelab-step label="Primary Sources &amp; References">
       <ul>
 <li><p><strong>Android Dev Summit Session:</strong></p><ul>
-<li><p><a href="https://developer.android.com/events/dev-summit/talks/declarative-agent-ready-android-builds-with-lightbuild" target="_blank">Declarative, agent-ready Android builds with Lightbuild</a></p></li>
+<li><p>Title: <em>Declarative, agent-ready Android builds with Lightbuild</em></p></li>
+<li><p>Speakers: Juan Sebastian Oviedo &amp; Scott Myers</p></li>
+<li><p><a href="https://developer.android.com/events/dev-summit/talks/declarative-agent-ready-android-builds-with-lightbuild" target="_blank">Official Session Archive</a></p></li>
 <li><iframe class="youtube-video" src="https://www.youtube.com/embed/0mYQtt2RfoQ" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></li>
 </ul></li>
 <li><p><strong>Official Google Documentation:</strong></p><ul>
-<li><p><a href="https://developer.android.com/tools/agents/lightbuild" target="_blank">Lightbuild Guide for AI Agents</a></p></li>
+<li><p><a href="https://developer.android.com/r/lightbuild" target="_blank">Lightbuild Guide for AI Agents</a></p></li>
+<li><p><a href="https://developer.android.com/tools/agents" target="_blank">Android CLI Reference</a></p></li>
 </ul></li>
 <li><p><strong>Companion Codebase:</strong></p><ul>
 <li><p><a href="https://github.com/kartikarora/ICanHazStream" target="_blank">kartikarora/ICanHazStream (GitHub)</a></p></li>
