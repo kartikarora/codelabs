@@ -44,15 +44,22 @@ lightbuild.enable=true
 Restart Android Studio after saving the file.
 
 ### 2. Clone the Project
-Clone the repository and switch to the working branch:
+Clone the repository and check out the starting branch:
 
 ```bash
 git clone https://github.com/kartikarora/ICanHazStream.git
 cd ICanHazStream
-git checkout -b lightbuild
+
+# Check out the starter branch
+git checkout lightbuild-start
+
+# Create your personal migration branch to work in
+git checkout -b my-lightbuild
 ```
 
-The starting project uses:
+> **Note:** If you ever get stuck or want to inspect the completed solution, the full Lightbuild migration is available on the `lightbuild` branch (`git checkout lightbuild`).
+
+The starting code on `lightbuild-start` is a complete, working multi-module Jetpack Compose app that uses:
 * `build-logic/convention/` with custom Gradle convention plugins.
 * Individual `build.gradle.kts` files per module.
 * Dynamic dependency resolution during project sync.
