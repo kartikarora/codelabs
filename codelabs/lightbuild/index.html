@@ -128,9 +128,13 @@ git checkout -b my-lightbuild
 </ol>
 <div class="code-container"><pre><code class="">ICanHazStream/
 ├── project.lightbuild.yaml       # Workspace manifest
-├── app/                          # App Shell module
+├── app/                          # App Shell module (assembly only)
 │   ├── lightbuild.yaml           # type: application
 │   └── resolved.deps             # Lockfile
+├── app-core/                     # Core App Library module
+│   ├── lightbuild.yaml           # type: library
+│   ├── resolved.deps
+│   └── src/                      # App source code (MainActivity, StreamNavGraph)
 ├── core/
 │   ├── ui/                       # type: library
 │   ├── model/                    # type: library
@@ -151,6 +155,7 @@ git checkout -b my-lightbuild
 
 modules:
   - app
+  - app-core
   - core/model
   - core/data
   - core/ui
@@ -164,7 +169,7 @@ repositories:
   - mavenCentral
 
 lightbuild:
-  version: &quot;0.0.20-alpha02&quot;
+  version: &quot;0.0.30&quot;
 
 build:
   java:
@@ -173,9 +178,11 @@ build:
 <p>This single data file replaces module declarations in <code>settings.gradle.kts</code> and common repository blocks. Android Studio Canary validates this file in real time using an embedded schema.</p>
 
     </klaat-kodelab-step>
-    <klaat-kodelab-step label="Configuring the App Shell" duration="10">
-      <p>The application module acts as an assembly shell. It configures the application ID, SDK levels, and references the feature modules.</p>
-<p>Create <code>app/lightbuild.yaml</code>:</p>
+    <klaat-kodelab-step label="Configuring the App Shell &amp; Core Library" duration="10">
+      <p>In Lightbuild projects, application modules are strictly <strong>empty assembly shells</strong>. They configure the application ID, version codes, and SDK constraints, but do <strong>not</strong> host application source code directly. All application logic, entry points (<code>MainActivity</code>), and navigation graphs reside in a separate library module (<code>app-core</code>).</p>
+<aside class="special"><p>In Lightbuild architecture, application modules lack visibility into Kotlin/Java code stored directly inside <code>app/src/</code>. Attempting to place application code inside <code>app</code> causes runtime class-not-found errors on app launch. The application module must remain a thin assembly shell, with the application logic supplied as an <code>app-core</code> library. See <a href="https://developer.android.com/tools/agents/lightbuild/structure#application-module" target="_blank">Lightbuild Project Structure</a>.</p></aside>
+<h3>1. App Shell: `app/lightbuild.yaml`</h3>
+<p>Create <code>app/lightbuild.yaml</code> configuring the thin assembly shell that depends on <code>//app-core</code>:</p>
 <div class="code-container"><pre><code class=" language-yaml">type: application
 platform: android
 
@@ -196,6 +203,25 @@ android:
     version:
       release:
         apiLevel: 36
+  dependencies:
+    module:
+      - //app-core
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<h3>2. App Core Library: `app-core/lightbuild.yaml`</h3>
+<p>Move the Kotlin source code (<code>MainActivity.kt</code> and <code>StreamNavGraph.kt</code>) into <code>app-core/src/main/kotlin/</code> and create <code>app-core/lightbuild.yaml</code>:</p>
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
+
+android:
+  namespace: me.kartikarora.icanhazstream
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
   dependencies:
     module:
       - //feature/explore

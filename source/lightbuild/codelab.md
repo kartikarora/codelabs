@@ -85,9 +85,13 @@ Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits 
 ```
 ICanHazStream/
 ├── project.lightbuild.yaml       # Workspace manifest
-├── app/                          # App Shell module
+├── app/                          # App Shell module (assembly only)
 │   ├── lightbuild.yaml           # type: application
 │   └── resolved.deps             # Lockfile
+├── app-core/                     # Core App Library module
+│   ├── lightbuild.yaml           # type: library
+│   ├── resolved.deps
+│   └── src/                      # App source code (MainActivity, StreamNavGraph)
 ├── core/
 │   ├── ui/                       # type: library
 │   ├── model/                    # type: library
@@ -114,6 +118,7 @@ project:
 
 modules:
   - app
+  - app-core
   - core/model
   - core/data
   - core/ui
@@ -127,7 +132,7 @@ repositories:
   - mavenCentral
 
 lightbuild:
-  version: "0.0.20-alpha02"
+  version: "0.0.30"
 
 build:
   java:
@@ -138,12 +143,16 @@ This single data file replaces module declarations in `settings.gradle.kts` and 
 
 ---
 
-## Configuring the App Shell
+## Configuring the App Shell & Core Library
 Duration: 10
 
-The application module acts as an assembly shell. It configures the application ID, SDK levels, and references the feature modules.
+In Lightbuild projects, application modules are strictly **empty assembly shells**. They configure the application ID, version codes, and SDK constraints, but do **not** host application source code directly. All application logic, entry points (`MainActivity`), and navigation graphs reside in a separate library module (`app-core`).
 
-Create `app/lightbuild.yaml`:
+> In Lightbuild architecture, application modules lack visibility into Kotlin/Java code stored directly inside `app/src/`. Attempting to place application code inside `app` causes runtime class-not-found errors on app launch. The application module must remain a thin assembly shell, with the application logic supplied as an `app-core` library. See [Lightbuild Project Structure](https://developer.android.com/tools/agents/lightbuild/structure#application-module). {.special}
+
+### 1. App Shell: `app/lightbuild.yaml`
+
+Create `app/lightbuild.yaml` configuring the thin assembly shell that depends on `//app-core`:
 
 ```yaml
 type: application
@@ -166,6 +175,29 @@ android:
     version:
       release:
         apiLevel: 36
+  dependencies:
+    module:
+      - //app-core
+```
+
+### 2. App Core Library: `app-core/lightbuild.yaml`
+
+Move the Kotlin source code (`MainActivity.kt` and `StreamNavGraph.kt`) into `app-core/src/main/kotlin/` and create `app-core/lightbuild.yaml`:
+
+```yaml
+type: library
+platform: android
+
+android:
+  namespace: me.kartikarora.icanhazstream
+  compileSdk:
+    version:
+      release:
+        apiLevel: 36
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
   dependencies:
     module:
       - //feature/explore
