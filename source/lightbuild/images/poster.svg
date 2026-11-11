@@ -70,34 +70,38 @@
   </g>
 
   <!-- Right Graphic Mockup -->
-  <g transform="translate(720, 110)">
+  <g transform="translate(720, 95)">
     <!-- Terminal / Editor Card -->
-    <rect width="420" height="390" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.5))" />
+    <rect width="420" height="420" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="1.5" filter="drop-shadow(0 20px 30px rgba(0,0,0,0.5))" />
     
     <!-- Top bar -->
     <rect width="420" height="38" rx="12" fill="#161b22" />
     <circle cx="20" cy="19" r="5" fill="#f87171" />
     <circle cx="36" cy="19" r="5" fill="#fbbf24" />
     <circle cx="52" cy="19" r="5" fill="#34d399" />
-    <text x="80" y="23" font-family="'JetBrains Mono', monospace" font-size="12" fill="#8b949e">ICanHazStream — lightbuild.yaml</text>
+    <text x="80" y="23" font-family="'JetBrains Mono', monospace" font-size="12" fill="#8b949e">app — lightbuild.yaml</text>
 
     <!-- Code Content -->
-    <g transform="translate(24, 65)" font-family="'JetBrains Mono', monospace" font-size="13">
-      <text y="0" fill="#ff7b72">module:</text>
-      <text y="24" fill="#79c0ff">  type: </text><text x="60" y="24" fill="#a5d6ff">application</text>
+    <g transform="translate(24, 62)" font-family="'JetBrains Mono', monospace" font-size="12">
+      <text y="0" fill="#ff7b72">type: </text><text x="45" y="0" fill="#a5d6ff">application</text>
+      <text y="20" fill="#ff7b72">platform: </text><text x="75" y="20" fill="#a5d6ff">android</text>
       
-      <text y="60" fill="#ff7b72">android:</text>
-      <text y="84" fill="#79c0ff">  namespace: </text><text x="105" y="84" fill="#a5d6ff">me.kartikarora.icanhazstream</text>
-      <text y="108" fill="#79c0ff">  compileSdk: </text><text x="110" y="108" fill="#7ee787">35</text>
-      <text y="132" fill="#79c0ff">  minSdk: </text><text x="75" y="132" fill="#7ee787">26</text>
+      <text y="48" fill="#ff7b72">android:</text>
+      <text y="68" fill="#79c0ff">  namespace: </text><text x="100" y="68" fill="#a5d6ff">me.kartikarora.icanhazstream</text>
+      <text y="88" fill="#79c0ff">  applicationId: </text><text x="125" y="88" fill="#a5d6ff">me.kartikarora.icanhazstream</text>
+      <text y="108" fill="#79c0ff">  compileSdk:</text>
+      <text y="128" fill="#79c0ff">    version:</text>
+      <text y="148" fill="#79c0ff">      release:</text>
+      <text y="168" fill="#79c0ff">        apiLevel: </text><text x="110" y="168" fill="#7ee787">36</text>
+      <text y="192" fill="#79c0ff">  minSdk:</text>
+      <text y="212" fill="#79c0ff">    version:</text>
+      <text y="232" fill="#79c0ff">      release:</text>
+      <text y="252" fill="#79c0ff">        apiLevel: </text><text x="110" y="252" fill="#7ee787">24</text>
+      <text y="276" fill="#79c0ff">  dependencies:</text>
+      <text y="296" fill="#d2a8ff">    module:</text>
+      <text y="316" fill="#d2a8ff">      - </text><text x="25" y="316" fill="#a5d6ff">//app-core</text>
 
-      <text y="168" fill="#ff7b72">dependencies:</text>
-      <text y="192" fill="#d2a8ff">  - module: </text><text x="95" y="192" fill="#a5d6ff">core/ui</text>
-      <text y="216" fill="#d2a8ff">  - module: </text><text x="95" y="216" fill="#a5d6ff">core/data</text>
-      <text y="240" fill="#d2a8ff">  - module: </text><text x="95" y="240" fill="#a5d6ff">feature/explore</text>
-      
-      <text y="278" fill="#8b949e"># Deterministic pre-resolved lockfile</text>
-      <text y="300" fill="#34d399">$ lightbuild resolve ✓</text>
+      <text y="344" fill="#34d399">$ lightbuild build app:app-debug.apk ✓</text>
     </g>
   </g>
 </svg>

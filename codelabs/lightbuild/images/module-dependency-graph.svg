@@ -1,8 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="900" height="420">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="900" height="480">
   <defs>
     <linearGradient id="appGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#38bdf8" />
       <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="coreAppGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#0369a1" />
     </linearGradient>
     <linearGradient id="featGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#818cf8" />
@@ -15,57 +19,67 @@
   </defs>
 
   <!-- Background -->
-  <rect width="900" height="420" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
+  <rect width="900" height="480" rx="16" fill="#0d1117" stroke="#30363d" stroke-width="1.5" />
 
-  <text x="40" y="45" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" fill="#f0f6fc">ICanHazStream Modular Architecture</text>
-  <text x="40" y="70" font-family="'Albert Sans', sans-serif" font-size="14" fill="#8b949e">App Shell aggregates Feature Libraries, which depend on Core Libraries</text>
+  <text x="40" y="42" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" fill="#f0f6fc">ICanHazStream Modular Architecture</text>
+  <text x="40" y="65" font-family="'Albert Sans', sans-serif" font-size="14" fill="#8b949e">Thin App Shell aggregates App-Core, which coordinates Features and Core Libraries</text>
 
   <!-- Level 1: App Shell -->
-  <g transform="translate(340, 95)">
-    <rect width="220" height="60" rx="12" fill="url(#appGrad)" />
-    <text x="110" y="28" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">:app (App Shell)</text>
-    <text x="110" y="46" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0f2fe" text-anchor="middle">type: application</text>
+  <g transform="translate(340, 85)">
+    <rect width="220" height="52" rx="10" fill="url(#appGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">:app (App Shell)</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0f2fe" text-anchor="middle">type: application</text>
   </g>
 
-  <!-- Connectors from App to Features -->
-  <path d="M 450,155 L 450,185 L 180,185 L 180,215" stroke="#38bdf8" stroke-width="2" fill="none" />
-  <path d="M 450,155 L 450,215" stroke="#38bdf8" stroke-width="2" fill="none" />
-  <path d="M 450,155 L 450,185 L 720,185 L 720,215" stroke="#38bdf8" stroke-width="2" fill="none" />
+  <!-- Connector from App to App-Core -->
+  <path d="M 450,137 L 450,165" stroke="#38bdf8" stroke-width="2" fill="none" />
+
+  <!-- Level 1.5: App-Core -->
+  <g transform="translate(340, 165)">
+    <rect width="220" height="52" rx="10" fill="url(#coreAppGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">:app-core (App Logic)</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#bae6fd" text-anchor="middle">type: library</text>
+  </g>
+
+  <!-- Connectors from App-Core to Features -->
+  <path d="M 450,217 L 450,245 L 180,245 L 180,270" stroke="#0ea5e9" stroke-width="2" fill="none" />
+  <path d="M 450,217 L 450,270" stroke="#0ea5e9" stroke-width="2" fill="none" />
+  <path d="M 450,217 L 450,245 L 720,245 L 720,270" stroke="#0ea5e9" stroke-width="2" fill="none" />
 
   <!-- Level 2: Features -->
-  <g transform="translate(70, 215)">
-    <rect width="220" height="55" rx="10" fill="url(#featGrad)" />
-    <text x="110" y="26" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:explore</text>
-    <text x="110" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
+  <g transform="translate(70, 270)">
+    <rect width="220" height="52" rx="10" fill="url(#featGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:explore</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
   </g>
 
-  <g transform="translate(340, 215)">
-    <rect width="220" height="55" rx="10" fill="url(#featGrad)" />
-    <text x="110" y="26" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:details</text>
-    <text x="110" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
+  <g transform="translate(340, 270)">
+    <rect width="220" height="52" rx="10" fill="url(#featGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:detail</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
   </g>
 
-  <g transform="translate(610, 215)">
-    <rect width="220" height="55" rx="10" fill="url(#featGrad)" />
-    <text x="110" y="26" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:watchlist</text>
-    <text x="110" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
+  <g transform="translate(610, 270)">
+    <rect width="220" height="52" rx="10" fill="url(#featGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:feature:watchlist</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e0e7ff" text-anchor="middle">type: library</text>
   </g>
 
   <!-- Connectors from Features to Core -->
-  <path d="M 180,270 L 180,300 L 280,300 L 280,325" stroke="#818cf8" stroke-width="2" fill="none" />
-  <path d="M 450,270 L 450,325" stroke="#818cf8" stroke-width="2" fill="none" />
-  <path d="M 720,270 L 720,300 L 620,300 L 620,325" stroke="#818cf8" stroke-width="2" fill="none" />
+  <path d="M 180,322 L 180,355 L 280,355 L 280,380" stroke="#818cf8" stroke-width="2" fill="none" />
+  <path d="M 450,322 L 450,380" stroke="#818cf8" stroke-width="2" fill="none" />
+  <path d="M 720,322 L 720,355 L 620,355 L 620,380" stroke="#818cf8" stroke-width="2" fill="none" />
 
   <!-- Level 3: Core Libraries -->
-  <g transform="translate(170, 325)">
-    <rect width="220" height="55" rx="10" fill="url(#coreGrad)" />
-    <text x="110" y="26" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:core:ui</text>
-    <text x="110" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d1fae5" text-anchor="middle">design system &amp; theme</text>
+  <g transform="translate(170, 380)">
+    <rect width="220" height="52" rx="10" fill="url(#coreGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:core:ui</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d1fae5" text-anchor="middle">design system &amp; theme</text>
   </g>
 
-  <g transform="translate(510, 325)">
-    <rect width="220" height="55" rx="10" fill="url(#coreGrad)" />
-    <text x="110" y="26" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:core:data &amp; :core:model</text>
-    <text x="110" y="44" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d1fae5" text-anchor="middle">ktor client &amp; domain entities</text>
+  <g transform="translate(510, 380)">
+    <rect width="220" height="52" rx="10" fill="url(#coreGrad)" />
+    <text x="110" y="24" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle">:core:data &amp; :core:model</text>
+    <text x="110" y="42" font-family="'JetBrains Mono', monospace" font-size="11" fill="#d1fae5" text-anchor="middle">network client &amp; entities</text>
   </g>
 </svg>

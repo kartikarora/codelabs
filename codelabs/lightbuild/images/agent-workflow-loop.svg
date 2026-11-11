@@ -20,8 +20,8 @@
     <text x="92" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
     <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#38bdf8" text-anchor="middle">Natural Prompt</text>
     <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">"Add feature/reviews</text>
-    <text x="92" y="132" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">with Compose</text>
-    <text x="92" y="149" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">dependencies"</text>
+    <text x="92" y="132" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">to app-core and</text>
+    <text x="92" y="149" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">add Compose deps"</text>
     <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#7dd3fc" text-anchor="middle">Gemini in Studio</text>
   </g>
 
@@ -50,11 +50,11 @@
     <rect width="185" height="190" rx="10" fill="url(#cardGrad)" stroke="#34d399" stroke-width="1.5" />
     <circle cx="92" cy="40" r="22" fill="#047857" />
     <text x="92" y="46" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
-    <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#34d399" text-anchor="middle">CLI Resolution</text>
-    <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Runs CLI bridge:</text>
-    <text x="92" y="135" font-family="'JetBrains Mono', monospace" font-size="11" fill="#6ee7b7" text-anchor="middle">lightbuild resolve</text>
-    <text x="92" y="155" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Freezes tree into</text>
-    <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6ee7b7" text-anchor="middle">resolved.deps</text>
+    <text x="92" y="85" font-family="'Space Grotesk', sans-serif" font-size="14" font-weight="600" fill="#34d399" text-anchor="middle">Auto-Resolution</text>
+    <text x="92" y="115" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">Build or Studio run</text>
+    <text x="92" y="135" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">auto-resolves tree;</text>
+    <text x="92" y="155" font-family="'Albert Sans', sans-serif" font-size="12" fill="#8b949e" text-anchor="middle">or pre-warm with</text>
+    <text x="92" y="175" font-family="'JetBrains Mono', monospace" font-size="10" fill="#6ee7b7" text-anchor="middle">lightbuild resolve</text>
   </g>
 
   <!-- Arrow 3-4 -->

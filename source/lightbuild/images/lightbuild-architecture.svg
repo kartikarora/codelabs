@@ -71,9 +71,9 @@
 
     <g transform="translate(16, 50)" font-family="'JetBrains Mono', monospace" font-size="12">
       <text y="0" fill="#f0f6fc">Android Gradle Plugin</text>
-      <text y="22" fill="#8b949e">  • AGP 9.4 compilation</text>
+      <text y="22" fill="#8b949e">  • AGP 9.2.0 compilation</text>
       <text y="44" fill="#8b949e">  • D8 / R8 optimization</text>
-      <text y="66" fill="#8b949e">  • Kotlin 2.4 compiler</text>
+      <text y="66" fill="#8b949e">  • Kotlin 2.3.20 compiler</text>
       <text y="98" fill="#f0f6fc">Deterministic Artifacts</text>
       <text y="120" fill="#8b949e">  • APK / AAB bundles</text>
       <text y="142" fill="#7ee787">  • Fast incremental runs</text>

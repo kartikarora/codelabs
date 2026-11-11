@@ -49,20 +49,26 @@ The starting code on `lightbuild-start` is a complete, working multi-module Jetp
 * Individual `build.gradle.kts` files per module.
 * Dynamic dependency resolution during project sync.
 
-### 2. Enable Preview Flags
-Lightbuild is currently in early preview. Enable the experimental flag in your shell profile or terminal:
+### 2. Install Lightbuild
+Lightbuild is supported out of the box in the latest versions of Android Studio Canary and through the standalone `lightbuild` CLI.
+
+To install the `lightbuild` CLI using the Android CLI:
 
 ```bash
-export ANDROID_CLI_BUILD=true
+# Install the Lightbuild SDK package
+android sdk install build/lightbuild/0.0.30
+
+# Run the bundled CLI installer script
+bash "$(android info sdk)/build/lightbuild/0.0.30/cli/install.sh"
 ```
 
-In Android Studio Canary, open `Help > Edit Custom Properties...` and add:
+Verify your installation:
 
-```properties
-lightbuild.enable=true
+```bash
+lightbuild --version
 ```
 
-Restart Android Studio after saving the file.
+For full environment prerequisites, see the [Lightbuild Setup Documentation](https://developer.android.com/tools/agents/lightbuild/setup).
 
 ---
 
@@ -189,7 +195,7 @@ type: library
 platform: android
 
 android:
-  namespace: me.kartikarora.icanhazstream
+  namespace: me.kartikarora.icanhazstream.core
   compileSdk:
     version:
       release:
@@ -331,13 +337,19 @@ Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:
 
 ---
 
-## Pre-Resolving Dependencies
+## Dependency Resolution & Lockfiles
 Duration: 10
 
-Run the resolution command to calculate and freeze dependencies:
+In Lightbuild, `lightbuild build`, `lightbuild test`, and Android Studio Canary run tasks will **all automatically resolve dependencies** and generate/update `resolved.deps` whenever `lightbuild.yaml` changes.
+
+Calling `lightbuild resolve` directly is not mandatory before building, but it is useful when you want to:
+1. **Pre-warm the cache / lock dependencies** before writing code that imports them.
+2. **Verify dependency health in CI** using `lightbuild resolve --locked-dependencies`, ensuring lockfiles are strictly up to date.
+
+To manually pre-resolve dependencies:
 
 ```bash
-android build resolve
+lightbuild resolve
 ```
 
 ### Understanding `resolved.deps`
@@ -379,15 +391,15 @@ Prompt your assistant (such as Gemini in Android Studio):
 Add a new feature module called ':feature:reviews' to ICanHazStream.
 1. Add 'feature/reviews' to project.lightbuild.yaml modules list.
 2. Create 'feature/reviews/lightbuild.yaml' as type: library with dependencies on core/model, core/ui, and Compose Material 3.
-3. Add feature/reviews to app/lightbuild.yaml dependencies.
+3. Add feature/reviews to app-core/lightbuild.yaml dependencies (so the navigation graph in app-core can access it).
 ```
 
 The agent edits exact YAML fields without having to balance Kotlin DSL brackets or resolve version catalog conventions.
 
-After the edit completes, run:
+Because build tasks auto-resolve dependencies on demand, you can immediately build the target or pre-warm via CLI:
 
 ```bash
-android build resolve
+lightbuild resolve
 ```
 
 ---
@@ -395,17 +407,17 @@ android build resolve
 ## Build Verification & CLI Commands
 Duration: 5
 
-Verify the configuration using the unified Android CLI:
+Verify the configuration using the standalone `lightbuild` CLI:
 
 ```bash
 # Query targets and source sets
-android build query --output sourcesets
+lightbuild query ... --output sourcesets
 
-# Run test targets
-android build test
+# Run host unit tests
+lightbuild test core/data:hostTest
 
 # Compile the debug application
-android build app
+lightbuild build app:app-debug.apk
 ```
 
 The compiled APK will be located at `app/build/app-debug.apk`.

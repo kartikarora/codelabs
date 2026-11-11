@@ -435,6 +435,18 @@ if (fs.existsSync(codelabsDir)) {
           : (meta.status ? [String(meta.status).toLowerCase()] : []);
 
         if (statusList.includes('draft')) {
+          const draftTitle = meta.title || 'Hands-On Android Workshop';
+          const draftSummary = meta.summary || 'Unpublished technical workshop.';
+          const draftFeedbackUrl = meta.feedback || `mailto:hello@kartikarora.me?subject=${encodeURIComponent('Feedback: ' + draftTitle)}`;
+
+          const isLightbuild = dir === 'lightbuild';
+          const appName = 'ICanHazStream';
+          const kotlinVer = isLightbuild ? '2.3.20' : '2.4.20';
+          const buildSystem = isLightbuild ? 'Lightbuild 0.0.30' : 'Gradle 9.8.1';
+          const studioVer = 'Canary';
+          const jdkVer = isLightbuild ? '21' : '25 (Bundled)';
+          const stepsCount = meta.duration ? `${meta.duration} mins` : 'Hands-On';
+
           const draftRightColumnHtml = `
   <!-- Draft Preview Right Sidebar Column (Brand Design System) -->
   <aside id="draft-sidebar-column" style="
@@ -459,8 +471,8 @@ if (fs.existsSync(codelabsDir)) {
       <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 4px; background: var(--glow, rgba(0, 153, 255, 0.15)); border: 1px solid var(--accent, #0099ff); color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
         <span>Draft Preview</span>
       </div>
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">Hands-On Android App Building</h3>
-      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">Unpublished technical workshop with Gemini in Android Studio.</p>
+      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">${draftTitle}</h3>
+      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">${draftSummary}</p>
     </div>
 
     <!-- Metadata Sections -->
@@ -480,27 +492,27 @@ if (fs.existsSync(codelabsDir)) {
         <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Workshop Specs</div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">App:</span>
-          <span style="color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">ICanHazStream</span>
+          <span style="color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${appName}</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">Kotlin:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">2.4.20</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${kotlinVer}</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">Gradle:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">9.8.1</span>
+          <span style="color: var(--secondary, #8b949e);">Build:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${buildSystem}</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">Studio:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">Rabbit 2 / Canary</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${studioVer}</span>
         </div>
         <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
           <span style="color: var(--secondary, #8b949e);">JDK:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">25 (Bundled)</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${jdkVer}</span>
         </div>
         <div style="display: flex; justify-content: space-between;">
-          <span style="color: var(--secondary, #8b949e);">Steps:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">17 (3 Acts)</span>
+          <span style="color: var(--secondary, #8b949e);">Duration:</span>
+          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${stepsCount}</span>
         </div>
       </div>
 
@@ -515,7 +527,7 @@ if (fs.existsSync(codelabsDir)) {
 
     <!-- Footer Action -->
     <div style="padding: 16px 18px; border-top: 1px solid var(--border, #30363d);">
-      <a href="mailto:hello@kartikarora.me?subject=Feedback:%20Gemini%20in%20Android%20Studio%20Workshop" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Albert Sans', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
+      <a href="${draftFeedbackUrl}" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Albert Sans', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
         Send Feedback
       </a>
     </div>
