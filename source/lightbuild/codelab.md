@@ -142,7 +142,7 @@ lightbuild:
 
 build:
   java:
-    version: "21"
+    version: "17"
 ```
 
 This single data file replaces module declarations in `settings.gradle.kts` and common repository blocks. Android Studio Canary validates this file in real time using an embedded schema.
@@ -172,7 +172,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -180,7 +180,7 @@ android:
   targetSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   dependencies:
     module:
       - //app-core
@@ -199,7 +199,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -240,7 +240,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -261,7 +261,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -287,7 +287,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -314,7 +314,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
