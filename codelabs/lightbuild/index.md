@@ -175,6 +175,10 @@ android:
       - //core/data
       - //core/ui
     maven:
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.compose.material3:material3:1.2.0
+      - androidx.compose.material:material-icons-extended:1.6.0
       - androidx.core:core-ktx:1.10.1
       - androidx.lifecycle:lifecycle-runtime-ktx:2.6.1
       - androidx.activity:activity-compose:1.8.0
@@ -258,6 +262,10 @@ android:
     module:
       - //core/model
     maven:
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.compose.material3:material3:1.2.0
+      - androidx.compose.material:material-icons-extended:1.6.0
       - androidx.core:core-ktx:1.10.1
       - androidx.activity:activity-compose:1.8.0
       - androidx.compose.ui:ui:1.6.0
@@ -293,6 +301,16 @@ android:
       - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
       - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
       - androidx.compose.material3:material3:1.2.0
+  tests:
+    test:
+      dependencies:
+        module:
+          - //core/testing
+        maven:
+          - org.junit.jupiter:junit-jupiter-api:5.14.4
+          - org.junit.jupiter:junit-jupiter-engine:5.14.4
+          - app.cash.turbine:turbine:1.2.1
+          - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
 ```
 
 Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:testing`.
@@ -370,13 +388,15 @@ Verify the configuration using the unified Android CLI:
 android build query --output sourcesets
 
 # Run test targets
-android build test
+android build test //feature/explore:hostTest
 
 # Compile the debug application
 android build app
 ```
 
 The compiled APK will be located at `app/build/app-debug.apk`.
+
+> **Note:** Lightbuild 0.0.30 runs Android unit tests on JUnit 4, so JUnit 5 tests won't run. Any `src/androidTest` files also need an `androidTest` block in `lightbuild.yaml` or should be removed.
 
 ---
 
