@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh *)",
+      "Bash(column *)",
+      "Bash(do *)",
+      "Bash(base64 *)"
+    ]
+  },
+  "$version": 5
+}

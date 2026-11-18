@@ -14,6 +14,6 @@
   "category": ["Android", "AI", "Architecture", "Tooling"],
   "tags": ["android", "lightbuild", "gradle", "declarative-builds", "ai-agents", "gemini", "kotlin", "compose"],
   "feedback": "mailto:hello@kartikarora.me",
-  "image": "images/poster.svg",
+  "image": "https://distribute.kartikarora.me/assets/lightbuild/images/poster.png",
   "url": "lightbuild"
 }

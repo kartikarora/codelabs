@@ -14,7 +14,7 @@ tags: android, lightbuild, gradle, declarative-builds, ai-agents, gemini, kotlin
 ## Setup and Project Context
 Duration: 10
 
-![Lightbuild Hero Banner](images/poster.svg)
+![Lightbuild Hero Banner](https://distribute.kartikarora.me/assets/lightbuild/images/poster.png)
 
 Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.
 
@@ -69,7 +69,7 @@ Restart Android Studio after saving the file.
 ## Lightbuild Architecture
 Duration: 10
 
-![Lightbuild Transpilation Pipeline](images/lightbuild-architecture.svg)
+![Lightbuild Transpilation Pipeline](https://distribute.kartikarora.me/assets/lightbuild/images/lightbuild-architecture.svg)
 
 Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits in front of Gradle as a declarative frontend that passes structured data down to the underlying build engine.
 
@@ -99,7 +99,7 @@ ICanHazStream/
     └── watchlist/                # type: library
 ```
 
-![ICanHazStream Modular Architecture](images/module-dependency-graph.svg)
+![ICanHazStream Modular Architecture](https://distribute.kartikarora.me/assets/lightbuild/images/module-dependency-graph.svg)
 
 ---
 
@@ -157,7 +157,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -165,7 +165,7 @@ android:
   targetSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   dependencies:
     module:
       - //feature/explore
@@ -206,7 +206,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -227,7 +227,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -253,7 +253,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -284,7 +284,7 @@ android:
   compileSdk:
     version:
       release:
-        apiLevel: 36
+        apiLevel: 37
   minSdk:
     version:
       release:
@@ -355,7 +355,7 @@ Commit `resolved.deps` to git. When someone opens the project or runs a build, A
 ## Agent Modification Workflow
 Duration: 15
 
-![Deterministic Agent Automation Loop](images/agent-workflow-loop.svg)
+![Deterministic Agent Automation Loop](https://distribute.kartikarora.me/assets/lightbuild/images/agent-workflow-loop.svg)
 
 Because Lightbuild configurations are structured data, automated coding assistants can parse and edit project setups with fewer errors.
 

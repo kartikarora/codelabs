@@ -6,14 +6,23 @@
   "updated": "2026-10-08T12:31:56.636Z",
   "id": "i-build-with-ai",
   "duration": 71,
-  "title": "I Build with AI and so can you! 🚀",
+  "title": "I Build with AI and so can you! \ud83d\ude80",
   "summary": "Learn to build better software by collaborating with AI. Discover how to use PRDs, ADRs, and the Model Context Protocol (MCP) to guide AI to build exactly what you need.",
   "source": "source/i-build-with-ai/codelab.md",
   "theme": "",
-  "status": ["Published"],
-  "category": ["AI", "Development"],
-  "tags": ["ai", "gemini", "agents"],
+  "status": [
+    "Published"
+  ],
+  "category": [
+    "AI",
+    "Development"
+  ],
+  "tags": [
+    "ai",
+    "gemini",
+    "agents"
+  ],
   "feedback": "https://kartikarora.me",
-  "image": "images/poster.png",
+  "image": "https://distribute.kartikarora.me/assets/i-build-with-ai/images/poster.png",
   "url": "i-build-with-ai"
 }

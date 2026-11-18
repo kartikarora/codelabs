@@ -37,7 +37,7 @@ if (fs.existsSync(codelabsDir)) {
       // Determine the image path
       let image = null;
       if (meta.image) {
-        image = `./${dir}/${meta.image}`;
+        image = /^https?:\/\//i.test(meta.image) ? meta.image : `./${dir}/${meta.image}`;
       } else {
         // Fallback: Find the first jpeg/png image in img or images directory
         const imgDir = path.join(codelabPath, 'img');
