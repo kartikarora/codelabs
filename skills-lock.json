@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "kartikarora-brand": {
+      "source": "https://distribute.kartikarora.me/ai/kartikarora-brand.skill",
+      "sourceUrl": "https://distribute.kartikarora.me/ai/kartikarora-brand.skill",
+      "sourceType": "download",
+      "skillPath": "SKILL.md",
+      "computedHash": "79d675efcf734adb714b04d26a923658de2b512282514bdf84d1137b67395c01"
+    }
+  }
+}
