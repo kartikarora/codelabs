@@ -883,7 +883,7 @@
             <h2 class="codelab-step-title">1. Setup and Project Context</h2>
           </header>
           <div class="codelab-step-body">
-            <p><img alt="Lightbuild Hero Banner" src="images/8993e4a6-7e9e-4120-a369-0b5b7b97a5d3.png"></p>
+            <p><img alt="Lightbuild Hero Banner" src="images/2b9f2f15-cec6-4d5f-93c0-026ee36b44f7.png"></p>
 <p>Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.</p>
 <p>At Android Dev Summit, Google introduced <strong>Lightbuild</strong>: an experimental declarative build system that represents project structure in YAML and uses pre-resolved dependency lockfiles (<code>resolved.deps</code>).</p>
 <p>In this codelab, you will migrate <strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>), a multi-module Jetpack Compose streaming availability app, from Gradle convention plugins to Lightbuild YAML.</p>
@@ -1229,7 +1229,180 @@ android:
           - app.cash.turbine:turbine:1.2.1
           - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Follow the same pattern for <code>:feature:detail</code>, <code>:feature:watchlist</code>, and <code>:core:testing</code>. Because Lightbuild <code>0.0.30</code> executes Android host unit tests on <strong>JUnit 4</strong> (<code>junit:junit:4.13.2</code>), migrate host unit tests and <code>MainDispatcherRule</code> from JUnit 5 to JUnit 4, and remove unused <code>src/androidTest</code> files unless an <code>androidTest</code> block is configured (see the <code>lightbuild</code> branch for the complete setup).</p>
+<p>Follow the same pattern for <code>:feature:detail</code> and <code>:feature:watchlist</code> (including the same <code>tests:</code> block in <code>feature/watchlist/lightbuild.yaml</code>).</p>
+<h3>5. Migrating Host Unit Tests to JUnit 4 (<code>:core:testing</code> &amp; Feature Tests)</h3>
+<aside class="default"><p>On the Gradle starter branch (<code>lightbuild-start</code>), <code>AndroidFeatureConventionPlugin.kt</code> enables <code>useJUnitPlatform()</code> so Gradle runs JUnit 5 tests natively. Because Lightbuild <code>0.0.30</code> executes Android host unit tests on <strong>JUnit 4</strong> (<code>junit:junit:4.13.2</code>), update <code>:core:testing</code> and the feature unit tests to JUnit 4 and remove unused <code>src/androidTest</code> files unless you configure an <code>androidTest</code> block.</p></aside>
+<p>Create <code>core/testing/lightbuild.yaml</code> using <code>junit:junit:4.13.2</code>:</p>
+<div class="code-container"><pre><code class=" language-yaml">type: library
+platform: android
+
+android:
+  namespace: me.kartikarora.icanhazstream.testing
+  compileSdk:
+    version:
+      release:
+        apiLevel: 37
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+      - //core/data
+    maven:
+      - junit:junit:4.13.2
+      - androidx.arch.core:core-testing:2.2.0
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+      - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
+      - app.cash.turbine:turbine:1.2.1
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Remove the JUnit 5 <code>MainDispatcherExtension.kt</code> and the unconfigured <code>src/androidTest</code> directories:</p>
+<div class="code-container"><pre><code class=" language-bash">rm -rf core/testing/src/main/kotlin/me/kartikarora/icanhazstream/testing/MainDispatcherExtension.kt
+rm -rf feature/explore/src/androidTest feature/watchlist/src/androidTest
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Create <code>core/testing/src/main/kotlin/me/kartikarora/icanhazstream/testing/MainDispatcherRule.kt</code> using JUnit 4&#39;s <code>TestWatcher</code>:</p>
+<div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.testing
+
+import androidx.arch.core.executor.ArchTaskExecutor
+import androidx.arch.core.executor.TaskExecutor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
+
+/**
+ * JUnit 4 rule that swaps [Dispatchers.Main] and [ArchTaskExecutor] for deterministic coroutine tests.
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainDispatcherRule(
+    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+) : TestWatcher() {
+
+    override fun starting(description: Description) {
+        Dispatchers.setMain(testDispatcher)
+        ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
+            override fun executeOnDiskIO(runnable: Runnable) {
+                runnable.run()
+            }
+
+            override fun postToMainThread(runnable: Runnable) {
+                runnable.run()
+            }
+
+            override fun isMainThread(): Boolean = true
+        })
+    }
+
+    override fun finished(description: Description) {
+        Dispatchers.resetMain()
+        ArchTaskExecutor.getInstance().setDelegate(null)
+    }
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Update <code>feature/explore/src/test/kotlin/me/kartikarora/icanhazstream/explore/TrendingMoviesViewModelTest.kt</code>:</p>
+<div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.explore
+
+import me.kartikarora.icanhazstream.testing.FakeMovieRepository
+import me.kartikarora.icanhazstream.testing.MainDispatcherRule
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+
+/**
+ * Unit tests for [TrendingMoviesViewModel] using [FakeMovieRepository].
+ */
+class TrendingMoviesViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private lateinit var repository: FakeMovieRepository
+    private lateinit var viewModel: TrendingMoviesViewModel
+
+    @Before
+    fun setup() {
+        repository = FakeMovieRepository()
+        viewModel = TrendingMoviesViewModel(repository)
+    }
+
+    @Test
+    fun initialStateHasEmptyMoviesList() {
+        assertTrue(viewModel.trendingMovies.value.isEmpty())
+    }
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>Update <code>feature/watchlist/src/test/kotlin/me/kartikarora/icanhazstream/watchlist/WatchlistViewModelTest.kt</code>:</p>
+<div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.watchlist
+
+import app.cash.turbine.test
+import kotlinx.coroutines.test.runTest
+import me.kartikarora.icanhazstream.model.Movie
+import me.kartikarora.icanhazstream.testing.MainDispatcherRule
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+
+/**
+ * Unit tests for [WatchlistViewModel] using Turbine.
+ */
+class WatchlistViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private lateinit var repository: DefaultWatchlistRepository
+    private lateinit var viewModel: WatchlistViewModel
+
+    @Before
+    fun setup() {
+        repository = DefaultWatchlistRepository()
+        viewModel = WatchlistViewModel(repository)
+    }
+
+    @Test
+    fun initialWatchlistStateLoadsPrePopulatedMovies() = runTest {
+        viewModel.watchlist.test {
+            val initial = awaitItem()
+            assertTrue(initial.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun addingMovieToWatchlistUpdatesFlow() = runTest {
+        val newMovie = Movie(id = &quot;test_movie&quot;, title = &quot;Test Movie&quot;, overview = &quot;Overview&quot;)
+
+        viewModel.watchlist.test {
+            awaitItem() // initial state
+
+            viewModel.toggleWatchlist(newMovie)
+
+            val updated = awaitItem()
+            assertTrue(updated.any { it.id == &quot;test_movie&quot; })
+        }
+    }
+
+    @Test
+    fun removingMovieFromWatchlistUpdatesFlow() = runTest {
+        val movieToRemove = viewModel.watchlist.value.first()
+
+        viewModel.watchlist.test {
+            awaitItem() // initial state
+
+            viewModel.removeFromWatchlist(movieToRemove.id)
+
+            val updated = awaitItem()
+            assertTrue(updated.none { it.id == movieToRemove.id })
+        }
+    }
+}
+</code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
           </div>
         </section>

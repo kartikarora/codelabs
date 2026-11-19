@@ -346,7 +346,197 @@ android:
           - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
 ```
 
-Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:testing`. Because Lightbuild `0.0.30` executes Android host unit tests on **JUnit 4** (`junit:junit:4.13.2`), migrate host unit tests and `MainDispatcherRule` from JUnit 5 to JUnit 4, and remove unused `src/androidTest` files unless an `androidTest` block is configured (see the `lightbuild` branch for the complete setup).
+Follow the same pattern for `:feature:detail` and `:feature:watchlist` (including the same `tests:` block in `feature/watchlist/lightbuild.yaml`).
+
+### 5. Migrating Host Unit Tests to JUnit 4 (`:core:testing` & Feature Tests)
+
+> On the Gradle starter branch (`lightbuild-start`), `AndroidFeatureConventionPlugin.kt` enables `useJUnitPlatform()` so Gradle runs JUnit 5 tests natively. Because Lightbuild `0.0.30` executes Android host unit tests on **JUnit 4** (`junit:junit:4.13.2`), update `:core:testing` and the feature unit tests to JUnit 4 and remove unused `src/androidTest` files unless you configure an `androidTest` block.
+
+Create `core/testing/lightbuild.yaml` using `junit:junit:4.13.2`:
+
+```yaml
+type: library
+platform: android
+
+android:
+  namespace: me.kartikarora.icanhazstream.testing
+  compileSdk:
+    version:
+      release:
+        apiLevel: 37
+  minSdk:
+    version:
+      release:
+        apiLevel: 24
+  dependencies:
+    module:
+      - //core/model
+      - //core/data
+    maven:
+      - junit:junit:4.13.2
+      - androidx.arch.core:core-testing:2.2.0
+      - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0
+      - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
+      - app.cash.turbine:turbine:1.2.1
+```
+
+Remove the JUnit 5 `MainDispatcherExtension.kt` and the unconfigured `src/androidTest` directories:
+
+```bash
+rm -rf core/testing/src/main/kotlin/me/kartikarora/icanhazstream/testing/MainDispatcherExtension.kt
+rm -rf feature/explore/src/androidTest feature/watchlist/src/androidTest
+```
+
+Create `core/testing/src/main/kotlin/me/kartikarora/icanhazstream/testing/MainDispatcherRule.kt` using JUnit 4's `TestWatcher`:
+
+```kotlin
+package me.kartikarora.icanhazstream.testing
+
+import androidx.arch.core.executor.ArchTaskExecutor
+import androidx.arch.core.executor.TaskExecutor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
+
+/**
+ * JUnit 4 rule that swaps [Dispatchers.Main] and [ArchTaskExecutor] for deterministic coroutine tests.
+ */
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainDispatcherRule(
+    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+) : TestWatcher() {
+
+    override fun starting(description: Description) {
+        Dispatchers.setMain(testDispatcher)
+        ArchTaskExecutor.getInstance().setDelegate(object : TaskExecutor() {
+            override fun executeOnDiskIO(runnable: Runnable) {
+                runnable.run()
+            }
+
+            override fun postToMainThread(runnable: Runnable) {
+                runnable.run()
+            }
+
+            override fun isMainThread(): Boolean = true
+        })
+    }
+
+    override fun finished(description: Description) {
+        Dispatchers.resetMain()
+        ArchTaskExecutor.getInstance().setDelegate(null)
+    }
+}
+```
+
+Update `feature/explore/src/test/kotlin/me/kartikarora/icanhazstream/explore/TrendingMoviesViewModelTest.kt`:
+
+```kotlin
+package me.kartikarora.icanhazstream.explore
+
+import me.kartikarora.icanhazstream.testing.FakeMovieRepository
+import me.kartikarora.icanhazstream.testing.MainDispatcherRule
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+
+/**
+ * Unit tests for [TrendingMoviesViewModel] using [FakeMovieRepository].
+ */
+class TrendingMoviesViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private lateinit var repository: FakeMovieRepository
+    private lateinit var viewModel: TrendingMoviesViewModel
+
+    @Before
+    fun setup() {
+        repository = FakeMovieRepository()
+        viewModel = TrendingMoviesViewModel(repository)
+    }
+
+    @Test
+    fun initialStateHasEmptyMoviesList() {
+        assertTrue(viewModel.trendingMovies.value.isEmpty())
+    }
+}
+```
+
+Update `feature/watchlist/src/test/kotlin/me/kartikarora/icanhazstream/watchlist/WatchlistViewModelTest.kt`:
+
+```kotlin
+package me.kartikarora.icanhazstream.watchlist
+
+import app.cash.turbine.test
+import kotlinx.coroutines.test.runTest
+import me.kartikarora.icanhazstream.model.Movie
+import me.kartikarora.icanhazstream.testing.MainDispatcherRule
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+
+/**
+ * Unit tests for [WatchlistViewModel] using Turbine.
+ */
+class WatchlistViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private lateinit var repository: DefaultWatchlistRepository
+    private lateinit var viewModel: WatchlistViewModel
+
+    @Before
+    fun setup() {
+        repository = DefaultWatchlistRepository()
+        viewModel = WatchlistViewModel(repository)
+    }
+
+    @Test
+    fun initialWatchlistStateLoadsPrePopulatedMovies() = runTest {
+        viewModel.watchlist.test {
+            val initial = awaitItem()
+            assertTrue(initial.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun addingMovieToWatchlistUpdatesFlow() = runTest {
+        val newMovie = Movie(id = "test_movie", title = "Test Movie", overview = "Overview")
+
+        viewModel.watchlist.test {
+            awaitItem() // initial state
+
+            viewModel.toggleWatchlist(newMovie)
+
+            val updated = awaitItem()
+            assertTrue(updated.any { it.id == "test_movie" })
+        }
+    }
+
+    @Test
+    fun removingMovieFromWatchlistUpdatesFlow() = runTest {
+        val movieToRemove = viewModel.watchlist.value.first()
+
+        viewModel.watchlist.test {
+            awaitItem() // initial state
+
+            viewModel.removeFromWatchlist(movieToRemove.id)
+
+            val updated = awaitItem()
+            assertTrue(updated.none { it.id == movieToRemove.id })
+        }
+    }
+}
+```
 
 ---
 
