@@ -883,7 +883,7 @@
             <h2 class="codelab-step-title">1. Setup and Project Context</h2>
           </header>
           <div class="codelab-step-body">
-            <p><img alt="Lightbuild Hero Banner" src="images/df017f2d-7ddc-47ae-84ad-9bce8ec928f6.png"></p>
+            <p><img alt="Lightbuild Hero Banner" src="images/8993e4a6-7e9e-4120-a369-0b5b7b97a5d3.png"></p>
 <p>Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.</p>
 <p>At Android Dev Summit, Google introduced <strong>Lightbuild</strong>: an experimental declarative build system that represents project structure in YAML and uses pre-resolved dependency lockfiles (<code>resolved.deps</code>).</p>
 <p>In this codelab, you will migrate <strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>), a multi-module Jetpack Compose streaming availability app, from Gradle convention plugins to Lightbuild YAML.</p>
@@ -946,7 +946,7 @@ bash &quot;$(android info sdk)/build/lightbuild/0.0.30/cli/install.sh&quot;
           </header>
           <div class="codelab-step-body">
             <p><img alt="Lightbuild Transpilation Pipeline" src="images/lightbuild-architecture.svg"></p>
-<p>Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits in front of Gradle as a declarative frontend that passes structured data down to the underlying build engine.</p>
+<p>Lightbuild is not a complete replacement for Gradle, the Android Gradle Plugin (AGP), or D8/R8, but it takes over several responsibilities from them. Android Studio Canary syncs Lightbuild projects directly from the YAML files and <code>resolved.deps</code> without Gradle or AGP, and Lightbuild resolves dependencies itself. At build time, Lightbuild hands compilation and packaging off to Gradle/AGP under the hood as an implementation detail—avoid making workflows depend on the <code>.lightbuild/gradle</code> directory.</p>
 <h3>Core Configuration Files</h3>
 <ol>
 <li><p><strong><code>project.lightbuild.yaml</code></strong><strong> (Workspace Root):</strong>Replaces <code>settings.gradle.kts</code> and root build scripts. Declares active modules, repositories, and compiler versions.</p></li>
@@ -1219,8 +1219,17 @@ android:
       - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
       - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
       - androidx.compose.material3:material3:1.2.0
+  tests:
+    test:
+      dependencies:
+        module:
+          - //core/testing
+        maven:
+          - junit:junit:4.13.2
+          - app.cash.turbine:turbine:1.2.1
+          - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Follow the same pattern for <code>:feature:detail</code>, <code>:feature:watchlist</code>, and <code>:core:testing</code>.</p>
+<p>Follow the same pattern for <code>:feature:detail</code>, <code>:feature:watchlist</code>, and <code>:core:testing</code>. Because Lightbuild <code>0.0.30</code> executes Android host unit tests on <strong>JUnit 4</strong> (<code>junit:junit:4.13.2</code>), migrate host unit tests and <code>MainDispatcherRule</code> from JUnit 5 to JUnit 4, and remove unused <code>src/androidTest</code> files unless an <code>androidTest</code> block is configured (see the <code>lightbuild</code> branch for the complete setup).</p>
 
           </div>
         </section>
@@ -1327,6 +1336,7 @@ sourceSets:
 lightbuild query ... --output sourcesets
 
 # Run host unit tests
+lightbuild test feature/explore:hostTest
 lightbuild test feature/watchlist:hostTest
 
 # Compile the debug application

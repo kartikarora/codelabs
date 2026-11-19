@@ -77,7 +77,7 @@ Duration: 10
 
 ![Lightbuild Transpilation Pipeline](images/lightbuild-architecture.svg)
 
-Lightbuild does not replace the Android Gradle Plugin (AGP), D8, or R8. It sits in front of Gradle as a declarative frontend that passes structured data down to the underlying build engine.
+Lightbuild is not a complete replacement for Gradle, the Android Gradle Plugin (AGP), or D8/R8, but it takes over several responsibilities from them. Android Studio Canary syncs Lightbuild projects directly from the YAML files and `resolved.deps` without Gradle or AGP, and Lightbuild resolves dependencies itself. At build time, Lightbuild hands compilation and packaging off to Gradle/AGP under the hood as an implementation detail—avoid making workflows depend on the `.lightbuild/gradle` directory.
 
 ### Core Configuration Files
 
@@ -335,9 +335,18 @@ android:
       - androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1
       - androidx.lifecycle:lifecycle-runtime-compose:2.6.1
       - androidx.compose.material3:material3:1.2.0
+  tests:
+    test:
+      dependencies:
+        module:
+          - //core/testing
+        maven:
+          - junit:junit:4.13.2
+          - app.cash.turbine:turbine:1.2.1
+          - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0
 ```
 
-Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:testing`.
+Follow the same pattern for `:feature:detail`, `:feature:watchlist`, and `:core:testing`. Because Lightbuild `0.0.30` executes Android host unit tests on **JUnit 4** (`junit:junit:4.13.2`), migrate host unit tests and `MainDispatcherRule` from JUnit 5 to JUnit 4, and remove unused `src/androidTest` files unless an `androidTest` block is configured (see the `lightbuild` branch for the complete setup).
 
 ---
 
@@ -418,6 +427,7 @@ Verify the configuration using the standalone `lightbuild` CLI:
 lightbuild query ... --output sourcesets
 
 # Run host unit tests
+lightbuild test feature/explore:hostTest
 lightbuild test feature/watchlist:hostTest
 
 # Compile the debug application
