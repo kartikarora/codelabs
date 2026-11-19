@@ -1,20 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta charset="UTF-8">
   <title>Hands-On Android App Building with Gemini in Android Studio</title>
 
-  <!-- Brand Identity CSS (provides all CSS tokens + light/dark mode) -->
-  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/kartikarora.1.8.0.css">
+  <!-- Brand Identity CSS (v2.0.0 — provides all tokens, typography, buttons, cards, syntax, light/dark mode) -->
+  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/kartikarora.2.0.0.css">
 
-  <!-- Brand Fonts -->
+  <!-- Brand Fonts: Chivo (Display & Body) + JetBrains Mono (Code & UI Chrome) + Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300..900;1,400&family=JetBrains+Mono:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
-  <!-- Brand Interaction JS -->
-  <script src="https://distribute.kartikarora.me/js/kartikarora.1.8.0.js"></script>
+  <!-- Brand Interaction & Syntax Highlighting JS (v2.0.0) -->
+  <script src="https://distribute.kartikarora.me/js/kartikarora.2.0.0.js" defer></script>
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://kartikarora.me/img/icon32.png">
@@ -22,63 +22,916 @@
   <link rel="apple-touch-icon" sizes="180x180" href="https://kartikarora.me/img/icon180.png">
   <link rel="apple-touch-icon" sizes="192x192" href="https://kartikarora.me/img/icon192.png">
 
-  <!-- Klaat element styles (layout + component tokens, built on brand CSS vars) -->
-  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/klaat-elements.css">
+
+  <!-- Codelab Shell Layout (100% built on kartikarora.2.0.0.css tokens & classes) -->
+  <style>
+    html, body {
+      overflow-x: clip;
+    }
+
+    body.studio-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- Sticky Studio Header Bar ----------------------------------------- */
+    .codelab-nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .codelab-nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-shrink: 0;
+    }
+
+    .codelab-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      text-decoration: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 2px 2px 0 var(--color-rule-strong);
+      transition: transform 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-icon-btn:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+      text-decoration: none;
+    }
+
+    .codelab-icon-btn .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    #menu {
+      display: none;
+    }
+
+    .codelab-title-text {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--color-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    .codelab-time-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-paper-alt);
+      color: var(--color-ink);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .codelab-time-pill .material-symbols-outlined {
+      font-size: 15px;
+      color: var(--color-signal);
+    }
+
+    /* --- Codelab Two-Column Shell ----------------------------------------- */
+    .codelab-shell {
+      flex: 1 0 auto;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+      display: grid;
+      grid-template-columns: 296px minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    /* --- Left Step Navigation Sidebar ------------------------------------- */
+    .codelab-drawer {
+      position: sticky;
+      top: 88px;
+      max-height: calc(100vh - 112px);
+      display: flex;
+      flex-direction: column;
+      background: var(--color-paper-alt);
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+      overflow: hidden;
+    }
+
+    .codelab-drawer-header {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--color-rule);
+      background: var(--color-card);
+    }
+
+    .codelab-drawer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-ink-muted);
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .codelab-progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--color-paper-sunken);
+      border: 1px solid var(--color-rule-strong);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .codelab-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-signal);
+      transition: width 0.2s var(--ease-standard);
+    }
+
+    .codelab-steps-scroll {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: var(--space-sm);
+    }
+
+    .codelab-steps-nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .codelab-step-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-card);
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.35;
+      transition: transform 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-step-link:hover {
+      border-color: var(--color-signal);
+      color: var(--color-ink);
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--color-signal);
+      text-decoration: none;
+    }
+
+    .codelab-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 5px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-paper-alt);
+      color: var(--color-ink-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .codelab-step-item[data-completed="true"] .codelab-step-num {
+      background: var(--color-signal);
+      border-color: var(--color-rule-strong);
+      color: var(--color-signal-ink);
+    }
+
+    .codelab-step-item[data-selected="true"] .codelab-step-link {
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+    }
+
+    .codelab-step-item[data-selected="true"] .codelab-step-num {
+      background: var(--color-signal-secondary);
+      border-color: var(--color-rule-strong);
+      color: var(--color-signal-secondary-ink);
+    }
+
+    .codelab-drawer-footer {
+      padding: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--color-rule);
+      background: var(--color-card);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .codelab-feedback-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-signal);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .codelab-feedback-link:hover {
+      color: var(--color-signal-hover);
+      text-decoration: underline;
+    }
+
+    .codelab-feedback-link .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    /* --- Main Step Content Stage ------------------------------------------ */
+    .codelab-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .codelab-step {
+      display: none;
+    }
+
+    .codelab-step[data-selected="true"] {
+      display: flex;
+      animation: codelabStepIn 0.2s var(--ease-standard);
+    }
+
+    /* Keep reading card rock-solid without jumping on hover */
+    .codelab-step.tokyo-card:hover {
+      transform: none;
+      border-color: var(--color-rule-strong);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+    }
+
+    @keyframes codelabStepIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .codelab-step-header {
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border-bottom: 2px solid var(--color-rule);
+    }
+
+    .codelab-step-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-sm);
+    }
+
+    .codelab-step-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      font-weight: 600;
+    }
+
+    .codelab-step-duration .material-symbols-outlined {
+      font-size: 15px;
+    }
+
+    .codelab-step-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-ink);
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    /* --- Editorial Prose inside Step Card --------------------------------- */
+    .codelab-step-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-ink);
+    }
+
+    .codelab-step-body > *:first-child {
+      margin-top: 0;
+    }
+
+    .codelab-step-body > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .codelab-step-body h2,
+    .codelab-step-body h3,
+    .codelab-step-body h4 {
+      color: var(--color-ink);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+      margin: var(--space-lg) 0 var(--space-xs);
+    }
+
+    .codelab-step-body h2 { font-size: 1.45rem; }
+    .codelab-step-body h3 { font-size: 1.18rem; }
+    .codelab-step-body h4 { font-size: 1.02rem; }
+
+    .codelab-step-body p {
+      margin: 0 0 var(--space-md);
+      text-wrap: pretty;
+    }
+
+    .codelab-step-body ul,
+    .codelab-step-body ol {
+      margin: 0 0 var(--space-md);
+      padding-left: 1.4rem;
+    }
+
+    .codelab-step-body li {
+      margin-bottom: 6px;
+    }
+
+    .codelab-step-body a:not(.btn) {
+      color: var(--color-signal);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .codelab-step-body a:not(.btn):hover {
+      color: var(--color-signal-hover);
+    }
+
+    .codelab-step-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: var(--space-md) 0;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+    }
+
+    .codelab-step-body figure {
+      margin: var(--space-md) 0;
+    }
+
+    .codelab-step-body figcaption {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      margin-top: 8px;
+    }
+
+    .codelab-step-body code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--color-paper-alt);
+      border: 1px solid var(--color-rule);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--color-ink);
+    }
+
+    /* --- Code Blocks (Paired with kartikarora.2.0.0.js highlighter) ------- */
+    .codelab-step-body .code-container {
+      position: relative;
+      margin: var(--space-md) 0;
+      border: 2px solid var(--color-rule-strong);
+      border-left: 4px solid var(--color-signal);
+      border-radius: var(--radius-sm);
+      background: var(--color-paper-alt);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+      overflow: hidden;
+    }
+
+    .codelab-step-body .code-container .highlight {
+      margin: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .codelab-step-body .code-container pre {
+      margin: 0;
+      padding: 46px var(--space-md) var(--space-md);
+      overflow-x: auto;
+      background: transparent;
+      border: none;
+      line-height: 1.55;
+    }
+
+    .codelab-step-body .code-container pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 0.86rem;
+    }
+
+    .codelab-step-body .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--color-rule-strong);
+      transition: transform 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-step-body .copy-button:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+    }
+
+    .codelab-step-body .copy-button .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .codelab-step-body pre.devsite-terminal {
+      display: block;
+      width: 100%;
+      margin: var(--space-md) 0;
+      padding: var(--space-sm) var(--space-md);
+      overflow-x: auto;
+      border: 2px solid var(--color-rule-strong);
+      border-left: 4px solid var(--color-signal);
+      background: var(--color-paper-sunken);
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+    }
+
+    .codelab-step-body pre.devsite-terminal code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      white-space: pre;
+    }
+
+    /* --- Callout Asides (Tokyo Neo-Brutalist Alerts) ---------------------- */
+    .codelab-step-body aside {
+      margin: var(--space-md) 0;
+      padding: var(--space-sm) var(--space-md);
+      border: 2px solid var(--color-rule-strong);
+      border-left-width: 6px;
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+      color: var(--color-ink);
+    }
+
+    .codelab-step-body aside > *:first-child { margin-top: 0; }
+    .codelab-step-body aside > *:last-child { margin-bottom: 0; }
+
+    .codelab-step-body aside.special {
+      border-left-color: var(--color-signal);
+      background: color-mix(in srgb, var(--color-signal) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.positive {
+      border-left-color: var(--color-success);
+      background: color-mix(in srgb, var(--color-success) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.warning {
+      border-left-color: var(--color-signal-secondary);
+      background: color-mix(in srgb, var(--color-signal-secondary) 14%, var(--color-card));
+    }
+
+    .codelab-step-body aside.critical {
+      border-left-color: var(--color-danger);
+      background: color-mix(in srgb, var(--color-danger) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.default {
+      border-left-color: var(--color-ink-muted);
+      background: var(--color-paper-alt);
+    }
+
+    /* --- Buttons inside Step Content (use brand .btn directly) ------------ */
+    .codelab-step-body .klaat-button {
+      margin: var(--space-xs) var(--space-xs) var(--space-xs) 0;
+    }
+
+    .codelab-step-body .klaat-button .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* --- Tables ----------------------------------------------------------- */
+    .codelab-step-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--color-card);
+    }
+
+    .codelab-step-body th,
+    .codelab-step-body td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-rule);
+      text-align: left;
+    }
+
+    .codelab-step-body th {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--color-paper-alt);
+      color: var(--color-ink);
+      border-bottom: 2px solid var(--color-rule-strong);
+    }
+
+    .codelab-step-body tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* --- Interactive Survey ----------------------------------------------- */
+    .klaat-survey {
+      margin: var(--space-md) 0;
+      padding: var(--space-md);
+      background: var(--color-paper-alt);
+      border: 2px solid var(--color-rule-strong);
+      border-left: 6px solid var(--color-signal-secondary);
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+    }
+
+    .klaat-survey h4 {
+      margin: 0 0 var(--space-sm) !important;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--color-ink);
+    }
+
+    .klaat-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .klaat-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-card);
+      cursor: pointer;
+      font-size: 0.94rem;
+      color: var(--color-ink);
+      transition: border-color 0.2s var(--ease-standard);
+    }
+
+    .klaat-radio-label:hover {
+      border-color: var(--color-signal);
+    }
+
+    .klaat-radio-label input[type="radio"] {
+      accent-color: var(--color-signal);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* --- Embedded Media --------------------------------------------------- */
+    .codelab-step-body iframe.youtube-video,
+    .codelab-step-body iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      margin: var(--space-md) 0;
+    }
+
+    /* --- Step Navigation Controls (uses brand .btn classes) --------------- */
+    .codelab-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+
+    .codelab-controls [hidden] {
+      display: none !important;
+    }
+
+    .codelab-controls #previous-step[data-disappear="true"] {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .codelab-controls .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* --- Mobile Drawer Backdrop ------------------------------------------- */
+    .codelab-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 10, 16, 0.55);
+      z-index: 1050;
+    }
+
+    body.drawer-open .codelab-backdrop {
+      display: block;
+    }
+
+    /* --- Focus Visible & Reduced Motion ----------------------------------- */
+    .codelab-icon-btn:focus-visible,
+    .codelab-step-link:focus-visible,
+    .copy-button:focus-visible,
+    .codelab-feedback-link:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+      transition: none;
+    }
+
+    @media (max-width: 900px) {
+      #menu {
+        display: inline-flex;
+      }
+
+      .codelab-shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-md) var(--space-sm) var(--space-xl);
+      }
+
+      .codelab-drawer {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        bottom: 0;
+        width: min(300px, 85vw);
+        max-height: calc(100vh - 64px);
+        z-index: 1100;
+        border-radius: 0;
+        border-left: none;
+        transform: translateX(-105%);
+        transition: transform 0.2s var(--ease-standard);
+      }
+
+      body.drawer-open .codelab-drawer {
+        transform: translateX(0);
+      }
+
+      .codelab-step.tokyo-card {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
-
-<body>
-  <script>
-    function copyToClipboard(button) {
-      const container = button.parentElement;
-      const code = container.querySelector('code').innerText;
+<body class="studio-body"
+      id="codelab-app"
+      data-codelab-id="gemini-in-android-studio"
+      data-codelab-title="Hands-On Android App Building with Gemini in Android Studio"
+      data-environment="Android"
+      data-feedback-link="mailto:hello@kartikarora.me"
       
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(code).then(() => {
-          updateButtonText(button);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          fallbackCopy(code, button);
-        });
-      } else {
-        fallbackCopy(code, button);
-      }
-    }
+      >
 
-    function fallbackCopy(text, button) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-9999px";
-      textArea.style.top = "0";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        updateButtonText(button);
-      } catch (err) {
-        console.error('Fallback copy failed: ', err);
-      }
-      document.body.removeChild(textArea);
-    }
+  <!-- Sticky Studio Top Bar (matching kartikarora.me/brand-demo) -->
+  <header class="studio-nav">
+    <div class="studio-container" style="max-width: 1280px;">
+      <div class="studio-nav-inner">
+        <div class="codelab-nav-left">
+          <a id="arrow-back" href="../" class="codelab-icon-btn" title="Back" aria-label="Back">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </a>
+          <button type="button" id="menu" class="codelab-icon-btn" title="Toggle steps" aria-label="Toggle steps" aria-expanded="false">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="codelab-title-text">Hands-On Android App Building with Gemini in Android Studio</h1>
+        </div>
+        <div class="codelab-nav-right">
+          <span id="time-remaining" class="codelab-time-pill">
+            <span class="material-symbols-outlined">schedule</span>
+            <span id="time-remaining-label">131 min remaining</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    function updateButtonText(button) {
-      const textSpan = button.querySelector('span:last-child');
-      const originalText = textSpan.textContent;
-      textSpan.textContent = 'Copied!';
-      setTimeout(() => {
-        textSpan.textContent = originalText;
-      }, 2000);
-    }
-  </script>
+  <div class="codelab-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
 
-  <klaat-kodelab 
-                  id="gemini-in-android-studio"
-                  title="Hands-On Android App Building with Gemini in Android Studio"
-                  environment="Android"
-                  feedback-link="mailto:hello@kartikarora.me">
-    <klaat-kodelab-step label="Welcome &amp; starter setup" duration="7">
-      <p><img alt="ICanHazStream Workshop Banner" src="images/poster.svg"></p>
+  <!-- Two-Column Studio Workspace -->
+  <div class="codelab-shell">
+    <!-- Left Step Drawer -->
+    <aside id="drawer" class="codelab-drawer" aria-label="Codelab steps">
+      <div class="codelab-drawer-header">
+        <div class="codelab-drawer-meta">
+          <span id="step-progress-label">STEP 1 / 17</span>
+          <span id="total-time">131 min total</span>
+        </div>
+        <div class="codelab-progress-track" aria-hidden="true">
+          <div class="codelab-progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="codelab-steps-scroll">
+        <ol class="codelab-steps-nav" id="steps-nav">
+          <li class="codelab-step-item" data-step-index="0" data-selected="true" data-completed="true">
+            <a href="#0" class="codelab-step-link" aria-current="step">
+              <span class="codelab-step-num">01</span>
+              <span>Welcome &amp; starter setup</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="1">
+            <a href="#1" class="codelab-step-link">
+              <span class="codelab-step-num">02</span>
+              <span>Clone starter &amp; project guardrails</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="2">
+            <a href="#2" class="codelab-step-link">
+              <span class="codelab-step-num">03</span>
+              <span>In-editor refactoring &amp; live diffs</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="3">
+            <a href="#3" class="codelab-step-link">
+              <span class="codelab-step-num">04</span>
+              <span>Java to Kotlin migration</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="4">
+            <a href="#4" class="codelab-step-link">
+              <span class="codelab-step-num">05</span>
+              <span>Legacy XML to Compose</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="5">
+            <a href="#5" class="codelab-step-link">
+              <span class="codelab-step-num">06</span>
+              <span>Day-to-day assistant tools</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="6">
+            <a href="#6" class="codelab-step-link">
+              <span class="codelab-step-num">07</span>
+              <span>Wireframe to Compose</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="7">
+            <a href="#7" class="codelab-step-link">
+              <span class="codelab-step-num">08</span>
+              <span>Interactive Compose Previews</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="8">
+            <a href="#8" class="codelab-step-link">
+              <span class="codelab-step-num">09</span>
+              <span>Connecting GitHub MCP</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="9">
+            <a href="#9" class="codelab-step-link">
+              <span class="codelab-step-num">10</span>
+              <span>Multi-module Agent Mode</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="10">
+            <a href="#10" class="codelab-step-link">
+              <span class="codelab-step-num">11</span>
+              <span>Automated build repair</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="11">
+            <a href="#11" class="codelab-step-link">
+              <span class="codelab-step-num">12</span>
+              <span>Unit tests &amp; Turbine</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="12">
+            <a href="#12" class="codelab-step-link">
+              <span class="codelab-step-num">13</span>
+              <span>Crash debugging in Logcat</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="13">
+            <a href="#13" class="codelab-step-link">
+              <span class="codelab-step-num">14</span>
+              <span>Studio Journeys E2E tests</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="14">
+            <a href="#14" class="codelab-step-link">
+              <span class="codelab-step-num">15</span>
+              <span>Headless Android CLI</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="15">
+            <a href="#15" class="codelab-step-link">
+              <span class="codelab-step-num">16</span>
+              <span>App Quality Insights</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="16">
+            <a href="#16" class="codelab-step-link">
+              <span class="codelab-step-num">17</span>
+              <span>Summary &amp; next steps</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      <div class="codelab-drawer-footer">
+        <a id="feedback-link" class="codelab-feedback-link" href="mailto:hello@kartikarora.me" target="_blank" rel="noopener noreferrer">
+          <span class="material-symbols-outlined">bug_report</span>
+          <span>Report a mistake</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Step Content + Stepper Controls -->
+    <main id="main" class="codelab-main">
+      <div id="steps">
+        <section class="codelab-step tokyo-card"
+                 data-step-index="0"
+                 data-label="Welcome &amp; starter setup"
+                 data-duration="7"
+                 
+                 data-selected="true">
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 01 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                7 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">1. Welcome &amp; starter setup</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p><img alt="ICanHazStream Workshop Banner" src="images/poster.svg"></p>
 <p><strong>ICanHazStream</strong> (<code>me.kartikarora.icanhazstream</code>) is a multi-module Android app that tracks movie and TV streaming availability across platforms like Netflix, Disney+, Prime Video, Apple TV, Stan, and Binge.</p>
 <p>In this workshop, you will use <strong>Gemini in Android Studio</strong> to modernise legacy code, generate Compose UI from wireframes, scaffold multi-module features with <strong>Agent Mode</strong>, connect external context via <strong>GitHub MCP</strong>, and automate tests with <strong>Studio Journeys</strong> and the <strong>Android CLI</strong>.</p>
 <h3>Prerequisites</h3>
@@ -87,10 +940,10 @@
 <li><p><strong>Google Account:</strong> Signed in to Android Studio for Gemini access.</p></li>
 <li><p><strong>JDK:</strong> JDK 25 (bundled with Android Studio).</p></li>
 </ul>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio/preview" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Rabbit 2 Canary)</a>
+<a class="btn klaat-button btn-primary klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio/preview" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio (Rabbit 2 Canary)</a>
 <h3>1. Install the Android CLI</h3>
 <p>The <code>android</code> CLI allows terminal scripts and AI agents to interact directly with Android Studio tools and daemons.</p>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/tools/android-cli" target="_blank"><span class="material-symbols-outlined">terminal</span>Android CLI Documentation &amp; Guide</a>
+<a class="btn klaat-button btn-primary klaat-button--primary klaat-button--colored" href="https://developer.android.com/tools/android-cli" target="_blank"><span class="material-symbols-outlined">terminal</span>Android CLI Documentation &amp; Guide</a>
 <p>Install via terminal:</p>
 <p><strong>macOS (Apple Silicon):</strong></p>
 <div class="code-container"><pre><code class=" language-bash">curl -fsSL https://dl.google.com/android/cli/latest/darwin_arm64/install.sh | bash
@@ -108,7 +961,7 @@
 <div class="code-container"><pre><code class=" language-bash">android --version
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Install the @kartikarora Compose theme skill</h3>
-<p>Install the brand skill so Gemini reuses existing <code>:core:ui</code> components (<code>MovieCard</code>, <code>ProviderBadge</code>) instead of generating generic composables:</p>
+<p>The <strong>@kartikarora v2.0.0</strong> Tokyo Neo-Brutalist Compose design system skill is pre-installed in <code>.agents/skills/kartikarora-compose-theme/</code> so Gemini reuses existing <code>:core:ui</code> components (<code>TokyoCard</code>, <code>MovieCard</code>, <code>BrandButton</code>, <code>SlidingTabs</code>, <code>BrandStatement</code>, <code>ProviderBadge</code>) instead of generating generic composables. Run <code>npx skills install</code> to refresh it to the latest release:</p>
 <div class="code-container"><pre><code class=" language-bash">npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-theme.skill
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>3. Configure Agent Permissions</h3>
@@ -136,9 +989,26 @@
 <h3>5. Open the Agent tool window</h3>
 <p>Open the dedicated <strong>Agent tool window</strong> via <strong>View &gt; Tool Windows &gt; Agent</strong> (or click the <strong>Agent</strong> icon in the right sidebar). This window is your primary assistant interface for conversational coding, multi-module feature scaffolding, and MCP tool execution.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Clone starter &amp; project guardrails" duration="8">
-      <p>Clone the starter repository, establish engineering conventions in <code>AGENTS.md</code>, and block sensitive files with <code>.aiexclude</code>.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="1"
+                 data-label="Clone starter &amp; project guardrails"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 02 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">2. Clone starter &amp; project guardrails</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Clone the starter repository, establish engineering conventions in <code>AGENTS.md</code>, and block sensitive files with <code>.aiexclude</code>.</p>
 <p><img alt="Guardrails Architecture" src="images/guardrails-architecture.svg"></p>
 <h3>1. Clone and open the starter project</h3>
 <p>Clone the workshop repository from GitHub:</p>
@@ -164,7 +1034,7 @@ cd ICanHazStream
 <li><p><code>:feature:explore</code>: Trending movies and provider discovery.</p></li>
 <li><p><code>:feature:detail</code>: Movie details and &quot;Where to Watch&quot; availability.</p></li>
 <li><p><code>:feature:watchlist</code>: Saved watchlist and price drop alerts.</p></li>
-<li><p><code>:core:ui</code>: Ready-made design tokens and components (<code>MovieCard</code>, <code>ProviderBadge</code>).</p></li>
+<li><p><code>:core:ui</code>: Ready-made <strong>@kartikarora v2.0.0</strong> design tokens, bundled <strong>Chivo</strong> &amp; <strong>JetBrains Mono</strong> fonts, and components (<code>ICanHazStreamTheme</code>, <code>TokyoCard</code>, <code>MovieCard</code>, <code>BrandButton</code>, <code>SlidingTabs</code>, <code>BrandStatement</code>, <code>StatusBadge</code>, <code>ProviderBadge</code>, <code>RatingChip</code>, <code>StreamTopBar</code>).</p></li>
 <li><p><code>:core:data</code>: Repositories and Ktor Client 3.6.0 networking.</p></li>
 <li><p><code>:core:model</code>: <code>@Serializable</code> domain models (<code>Movie</code>, <code>StreamingProvider</code>).</p></li>
 <li><p><code>:core:testing</code>: In-memory test fakes (<code>FakeMovieRepository</code>).</p></li>
@@ -184,14 +1054,18 @@ This document defines the rules and conventions for AI coding assistants working
 
 ## Brand Design System
 
-The `:core:ui` module contains the **@kartikarora Compose Design System** with:
-- `ICanHazStreamTheme` — Material 3 theme with Space Grotesk typography
-- `MovieCard` — Brand-styled movie card component
-- `ProviderBadge` — Streaming platform badge (Netflix, Disney+, Prime Video, Stan, Binge)
-- `RatingChip` — Movie rating display chip
-- `StreamTopBar` — Top app bar with brand typography
+The `:core:ui` module implements the **@kartikarora v2.0.0 Tokyo Neo-Brutalist Compose Design System** (dynamic color disabled):
+- `ICanHazStreamTheme` / `KartikAroraTheme` — Material 3 theme using Akihabara Cyan (`#0084C7` light / `#00F0FF` dark), Caution Yellow (`#E6B800` light / `#FFE600` dark), and Concrete / Obsidian surfaces
+- Bundled **Chivo** (`FontWeight.Black` headings with `-0.03em` tracking) and **JetBrains Mono** typography in `core/ui/src/main/res/font/`
+- `KartikAroraShapes`, `KartikAroraCustomShapes`, and 8dp `MaterialTheme.spacing` scale
+- `TokyoCard` / `MovieCard` — Neo-brutalist card containers with 2.dp border, solid offset shadow, and hover/focus/press physics
+- `BrandButton` — High-contrast tactile buttons (`Primary`, `Secondary`, `Outline`, `Ghost`, `Small`)
+- `SlidingTabs` — Segmented tab bar with active cyan pill and Caution Yellow offset shadow
+- `BrandStatement` — Editorial callout with 3.dp signal left border
+- `StatusBadge`, `SpecCard`, `TelemetryMetric`, `FeatureCard`, `CLICommandPill`, `ArtifactRow`, `StanceView`, `KeynoteRow`, `FastTransitionSpec`
+- `ProviderBadge`, `RatingChip`, `StreamTopBar`
 
-**Always use these components instead of creating raw Composables.**
+**Always use these components and `MaterialTheme.spacing` tokens instead of creating raw Composables or hardcoded values.**
 
 ## Installed AI Skill
 
@@ -224,9 +1098,26 @@ google-services.json
 EOF
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="In-editor refactoring &amp; live diffs" duration="8">
-      <p>Refactor active production code using specific architecture guidelines and review live diffs in the editor.<code>TrendingMoviesViewModel</code> already powers the live trending movie list shown on launch; in this step, you&#39;ll modernise its reactive stream from Android <code>LiveData</code> to Kotlin coroutines <code>StateFlow</code>.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="2"
+                 data-label="In-editor refactoring &amp; live diffs"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 03 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">3. In-editor refactoring &amp; live diffs</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Refactor active production code using specific architecture guidelines and review live diffs in the editor.<code>TrendingMoviesViewModel</code> already powers the live trending movie list shown on launch; in this step, you&#39;ll modernise its reactive stream from Android <code>LiveData</code> to Kotlin coroutines <code>StateFlow</code>.</p>
 <h3>1. Open the target ViewModel</h3>
 <p>Open <strong><code>TrendingMoviesViewModel.kt</code></strong> in the <strong><code>:feature:explore</code></strong> module:</p>
 <p><strong>TrendingMoviesViewModel.kt</strong></p>
@@ -235,7 +1126,7 @@ val trendingMovies: LiveData&lt;List&lt;Movie&gt;&gt; = _trendingMovies
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Refactor via in-editor Gemini</h3>
 <p>Highlight the <code>_trendingMovies</code> declarations in the editor, right-click, and select <strong>Gemini &gt; Generate Code with Gemini</strong> (or <strong>Refactor with Gemini</strong>). Enter your refactoring prompt:</p>
-<div class="code-container"><pre><code class=" language-text">Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
+<div class="code-container"><pre><code class=" language-text">Refactor the _trendingMovies, _isLoading, and _selectedCategory LiveData streams to StateFlow with initial values and expose immutable asStateFlow() properties, then update TrendingMoviesScreen.kt to collect them with collectAsStateWithLifecycle().
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Review the side-by-side diff preview and click <strong>Apply Changes</strong> (or click the <strong>Apply</strong> button in the diff bar).</p>
 <p><img alt="Inline Diff Preview" src="images/inline-diff-demo.svg"></p>
@@ -244,10 +1135,28 @@ val trendingMovies: LiveData&lt;List&lt;Movie&gt;&gt; = _trendingMovies
 <div class="code-container"><pre><code class=" language-kotlin">private val _trendingMovies = MutableStateFlow&lt;List&lt;Movie&gt;&gt;(emptyList())
 val trendingMovies: StateFlow&lt;List&lt;Movie&gt;&gt; = _trendingMovies.asStateFlow()
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
+<p>In <strong><code>TrendingMoviesScreen.kt</code></strong>, replace the <code>LiveData</code> <code>DisposableEffect</code> observers with <code>collectAsStateWithLifecycle()</code> so <code>:feature:explore</code> continues compiling cleanly.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Java to Kotlin migration" duration="7">
-      <p>Convert legacy Java utilities into idiomatic Kotlin functions.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="3"
+                 data-label="Java to Kotlin migration"
+                 data-duration="7"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 04 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                7 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">4. Java to Kotlin migration</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Convert legacy Java utilities into idiomatic Kotlin functions.</p>
 <h3>1. Inspect the legacy calculation logic</h3>
 <p>Open <strong><code>WatchCostUtils.java</code></strong> in the <strong><code>:core:data</code></strong> module:</p>
 <p><strong>WatchCostUtils.java</strong></p>
@@ -267,7 +1176,7 @@ public class WatchCostUtils {
 <p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit:</p>
 <div class="code-container"><pre><code class=" language-text">@WatchCostUtils.java Convert this Java utility class to an idiomatic Kotlin file with a top-level calculation function in package me.kartikarora.icanhazstream.data.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
-<p>Save the output to <strong><code>WatchCostUtils.kt</code></strong> in the <strong><code>:core:data</code></strong> module and delete the old <code>.java</code> file.</p>
+<p>Save the output to <strong><code>WatchCostUtils.kt</code></strong> in the <strong><code>:core:data</code></strong> module, update the import in <strong><code>WhereToWatchScreen.kt</code></strong> from <code>me.kartikarora.icanhazstream.data.legacy.WatchCostUtils</code> to <code>me.kartikarora.icanhazstream.data.WatchCostUtils</code>, and delete the old <code>.java</code> file.</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>WatchCostUtils.kt</strong></p>
 <div class="code-container"><pre><code class=" language-kotlin">package me.kartikarora.icanhazstream.data
@@ -283,9 +1192,26 @@ fun calculateOptimalWatchCost(
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Legacy XML to Compose" duration="10">
-      <p>Migrate an XML layout and ViewHolder to a declarative <code>@Composable</code> using brand design tokens.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="4"
+                 data-label="Legacy XML to Compose"
+                 data-duration="10"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 05 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                10 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">5. Legacy XML to Compose</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Migrate an XML layout and ViewHolder to a declarative <code>@Composable</code> using brand design tokens.</p>
 <p><img alt="XML to Compose Migration" src="images/xml-to-compose.svg"></p>
 <h3>1. Inspect the layout and target file</h3>
 <p>Open <strong><code>item_movie_provider.xml</code></strong> and <strong><code>MovieProviderCard.kt</code></strong> in the <strong><code>:feature:explore</code></strong> module:</p>
@@ -306,7 +1232,7 @@ fun MovieProviderCard(
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <h3>2. Convert with the Agent tool window</h3>
 <p>Open the <strong>Agent tool window</strong> (<strong>View &gt; Tool Windows &gt; Agent</strong> or from the right sidebar) and enter:</p>
-<div class="code-container"><pre><code class=" language-text">@item_movie_provider.xml Convert this XML layout and its ViewHolder into a declarative Jetpack Compose composable for MovieProviderCard.kt. Use the @kartikarora design tokens, MovieCard, and ProviderBadge components from :core:ui.
+<div class="code-container"><pre><code class=" language-text">@item_movie_provider.xml Convert this XML layout and its ViewHolder into a declarative Jetpack Compose composable for MovieProviderCard.kt. Use the @kartikarora v2.0.0 design tokens, MaterialTheme.spacing, MovieCard (backed by TokyoCard), and ProviderBadge components from :core:ui.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <p><strong>MovieProviderCard.kt</strong></p>
@@ -317,10 +1243,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import me.kartikarora.icanhazstream.model.StreamingProvider
 import me.kartikarora.icanhazstream.ui.components.MovieCard
 import me.kartikarora.icanhazstream.ui.components.ProviderBadge
+import me.kartikarora.icanhazstream.ui.theme.spacing
 
 @Composable
 fun MovieProviderCard(
@@ -328,16 +1254,15 @@ fun MovieProviderCard(
     onClick: () -&gt; Unit,
     modifier: Modifier = Modifier
 ) {
+    val spacing = MaterialTheme.spacing
     MovieCard(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = spacing.small, vertical = spacing.extraSmall)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -347,7 +1272,7 @@ fun MovieProviderCard(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(spacing.extraSmall))
                 Text(
                     text = &quot;Quality: ${provider.quality} • Plan: ${provider.planType}&quot;,
                     style = MaterialTheme.typography.bodySmall,
@@ -360,9 +1285,26 @@ fun MovieProviderCard(
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Day-to-day assistant tools" duration="5">
-      <p>Speed up daily tasks with built-in documentation, code explanation, and commit helpers.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="5"
+                 data-label="Day-to-day assistant tools"
+                 data-duration="5"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 06 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                5 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">6. Day-to-day assistant tools</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Speed up daily tasks with built-in documentation, code explanation, and commit helpers.</p>
 <h3>1. Generate KDoc comments</h3>
 <p>Open <strong><code>Movie.kt</code></strong> in the <strong><code>:core:model</code></strong> module. Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit this prompt:</p>
 <div class="code-container"><pre><code class=" language-text">@Movie.kt Generate comprehensive KDoc comments for this data class and all its properties.
@@ -411,9 +1353,26 @@ data class Movie(
 <div class="code-container"><pre><code class=" language-text">feat(explore): convert movie provider item layout to Compose and add KDoc
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Wireframe to Compose" duration="10">
-      <p>Attach UI wireframe sketches directly into the <strong>Agent tool window</strong> to generate or refine Compose layouts.In ICanHazStream, tapping any trending movie already opens a working <strong>Where to Watch</strong> screen displaying Australian streaming options (Stream, Rent, Buy). In this step, you&#39;ll use Gemini to refine the layout structure directly from a visual wireframe mockup.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="6"
+                 data-label="Wireframe to Compose"
+                 data-duration="10"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 07 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                10 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">7. Wireframe to Compose</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Attach UI wireframe sketches directly into the <strong>Agent tool window</strong> to generate or refine Compose layouts.In ICanHazStream, tapping any trending movie already opens a working <strong>Where to Watch</strong> screen displaying Australian streaming options (Stream, Rent, Buy). In this step, you&#39;ll use Gemini to refine the layout structure directly from a visual wireframe mockup.</p>
 <p><img alt="Where to Watch Wireframe" src="images/wireframe-sample.svg"></p>
 <h3>1. Locate the wireframe asset</h3>
 <p>Use <strong><code>assets/wireframe-where-to-watch.png</code></strong> (or the diagram above) and open <strong><code>WhereToWatchScreen.kt</code></strong> in the <strong><code>:feature:detail</code></strong> module.</p>
@@ -421,11 +1380,11 @@ data class Movie(
 <p>Attach <code>assets/wireframe-where-to-watch.png</code> in the <strong>Agent tool window</strong> with this prompt:</p>
 <div class="code-container"><pre><code class=" language-text">Generate the Jetpack Compose screen for WhereToWatchScreen.kt matching this wireframe mockup.
 Include:
-1. Movie poster header with title, release year, runtime, and 4K UHD badge.
-2. Streaming subscription provider cards (Netflix, Disney+).
-3. Rent and buy options (Apple TV, Google Play).
-4. &quot;Add to Watchlist &amp; Alerts&quot; button at the bottom.
-Use Material 3 components and design tokens from :core:ui.
+1. Movie poster header inside a TokyoCard with title, overview, and rating.
+2. Value pick callout using BrandStatement.
+3. Stream / Rent / Buy selector using SlidingTabs.
+4. Provider option cards using TokyoCard, ProviderBadge, and BrandButton.
+Use @kartikarora v2.0.0 components and MaterialTheme.spacing from :core:ui.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Paste the generated composable into <code>WhereToWatchScreen.kt</code>.</p>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
@@ -439,12 +1398,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import me.kartikarora.icanhazstream.model.Movie
 import me.kartikarora.icanhazstream.model.StreamingProvider
 import me.kartikarora.icanhazstream.model.WatchOptionType
+import me.kartikarora.icanhazstream.ui.components.BrandButton
+import me.kartikarora.icanhazstream.ui.components.BrandButtonVariant
+import me.kartikarora.icanhazstream.ui.components.BrandStatement
 import me.kartikarora.icanhazstream.ui.components.ProviderBadge
 import me.kartikarora.icanhazstream.ui.components.RatingChip
+import me.kartikarora.icanhazstream.ui.components.SlidingTabs
+import me.kartikarora.icanhazstream.ui.components.TokyoCard
+import me.kartikarora.icanhazstream.ui.theme.spacing
 
 @Composable
 fun WhereToWatchScreen(
@@ -454,6 +1418,7 @@ fun WhereToWatchScreen(
 ) {
     if (movie == null) return
 
+    val spacing = MaterialTheme.spacing
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(&quot;Stream&quot;, &quot;Rent&quot;, &quot;Buy&quot;)
     val currentType = when (selectedTabIndex) {
@@ -466,51 +1431,56 @@ fun WhereToWatchScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(spacing.small),
+        verticalArrangement = Arrangement.spacedBy(spacing.small),
     ) {
         item {
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
-                        RatingChip(rating = movie.voteAverage)
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
-                }
-            }
-        }
-
-        item {
-            TabRow(selectedTabIndex = selectedTabIndex) {
-                tabs.forEachIndexed { index, title -&gt;
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        text = { Text(title) }
-                    )
-                }
-            }
-        }
-
-        items(filteredProviders) { provider -&gt;
-            Card(modifier = Modifier.fillMaxWidth()) {
+            TokyoCard(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ProviderBadge(text = provider.quality ?: &quot;HD&quot;)
-                    Button(onClick = { onProviderClick(provider) }) {
-                        Text(&quot;Watch on ${provider.name}&quot;)
-                    }
+                    Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
+                    RatingChip(rating = movie.voteAverage)
+                }
+                Spacer(modifier = Modifier.height(spacing.extraSmall))
+                Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+            }
+        }
+
+        item {
+            BrandStatement(
+                quote = &quot;Value Pick: Stream or rent options compared in AU\$&quot;,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+
+        item {
+            SlidingTabs(
+                tabs = tabs,
+                selectedTab = tabs[selectedTabIndex],
+                onTabSelected = { selectedTabIndex = tabs.indexOf(it) },
+                tabLabel = { it },
+            )
+        }
+
+        items(filteredProviders) { provider -&gt;
+            TokyoCard(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { onProviderClick(provider) },
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ProviderBadge(name = provider.name, badgeColor = MaterialTheme.colorScheme.primary)
+                    BrandButton(
+                        text = &quot;Watch&quot;,
+                        variant = BrandButtonVariant.Small,
+                        onClick = { onProviderClick(provider) },
+                    )
                 }
             }
         }
@@ -518,21 +1488,49 @@ fun WhereToWatchScreen(
 }
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Interactive Compose Previews" duration="8">
-      <p>Iterate on visual styling directly inside the <strong>Compose Preview</strong> panel using natural language.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="7"
+                 data-label="Interactive Compose Previews"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 08 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">8. Interactive Compose Previews</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Iterate on visual styling directly inside the <strong>Compose Preview</strong> panel using natural language.</p>
 <h3>1. Add preview functions</h3>
 <p>Open the <strong>Agent tool window</strong> (<code>View &gt; Tool Windows &gt; Agent</code>) and submit this prompt:</p>
-<div class="code-container"><pre><code class=" language-text">@WhereToWatchScreen.kt Add a @PreviewLightDark Composable preview function WhereToWatchScreenPreview() wrapped in ICanHazStreamTheme.
+<div class="code-container"><pre><code class=" language-text">@WhereToWatchScreen.kt Add a @PreviewLightDark Composable preview function WhereToWatchPreview() wrapped in ICanHazStreamTheme.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <aside class="warning"><p>This is an example of what the generated output might look like. Gemini may generate something different for you.</p></aside>
 <div class="code-container"><pre><code class=" language-kotlin">@PreviewLightDark
 @Composable
-private fun WhereToWatchScreenPreview() {
+fun WhereToWatchPreview() {
     ICanHazStreamTheme {
         WhereToWatchScreen(
-            movieId = &quot;inception-2010&quot;,
-            onNavigateBack = {}
+            movie = Movie(
+                id = &quot;preview_1&quot;,
+                title = &quot;Dune: Part Two&quot;,
+                overview = &quot;Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.&quot;,
+                releaseDate = &quot;2024-03-01&quot;,
+                voteAverage = 8.6,
+                providers = listOf(
+                    StreamingProvider(&quot;netflix&quot;, &quot;Netflix&quot;, null, WatchOptionType.STREAM, 16.99, &quot;4K&quot;),
+                    StreamingProvider(&quot;apple_tv&quot;, &quot;Apple TV&quot;, null, WatchOptionType.RENT, 6.99, &quot;4K&quot;),
+                    StreamingProvider(&quot;prime&quot;, &quot;Prime Video&quot;, null, WatchOptionType.BUY, 24.99, &quot;4K&quot;),
+                ),
+            ),
+            onProviderClick = {},
         )
     }
 }
@@ -543,13 +1541,30 @@ private fun WhereToWatchScreenPreview() {
 <li><p>In the Compose Preview toolbar, click the <strong>AI</strong> icon and select <strong>Change UI</strong> (under <em>For Selected Preview</em>).</p></li>
 <li><p>Prompt:</p></li>
 </ol>
-<div class="code-container"><pre><code class=" language-text">Set provider card corner radius to 16dp, add 4K HDR badges next to streaming platforms, and style the &#39;Add to Watchlist&#39; button with primary container styling.
+<div class="code-container"><pre><code class=" language-text">Render 4K/HD quality labels with StatusBadge(variant = StatusBadgeVariant.Secondary), keep provider rows in TokyoCard, and use BrandButton for Watch actions.
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p><img alt="Compose Preview Transform" src="images/transform-ui-preview.svg"></p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Connecting GitHub MCP" duration="8">
-      <p>Connect Gemini to the <strong>GitHub MCP Server</strong> to ground code generation in repository issues, PRDs, and pull requests.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="8"
+                 data-label="Connecting GitHub MCP"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 09 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">9. Connecting GitHub MCP</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Connect Gemini to the <strong>GitHub MCP Server</strong> to ground code generation in repository issues, PRDs, and pull requests.</p>
 <p><img alt="MCP Architecture" src="images/mcp-architecture.svg"></p>
 <h3>1. Configure the MCP server</h3>
 <p>Add the GitHub MCP server to <strong><code>.gemini/mcp.json</code></strong> (or via <strong>Settings &gt; Tools &gt; AI &gt; MCP Servers</strong>):</p>
@@ -576,9 +1591,26 @@ private fun WhereToWatchScreenPreview() {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Gemini queries <code>get_issue</code> and <code>get_file_contents</code> over MCP to retrieve the exact requirements before scaffolding.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Multi-module Agent Mode" duration="12">
-      <p>Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="9"
+                 data-label="Multi-module Agent Mode"
+                 data-duration="12"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 10 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                12 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">10. Multi-module Agent Mode</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Use <strong>Agent Mode</strong> to plan, write, and link features across multiple modules autonomously.</p>
 <p>While the starter app already links the bottom navigation bar to an initial <code>WatchlistScreen</code> with an empty state, this step uses Agent Mode to upgrade <code>:feature:watchlist</code> into a full-featured reactive screen with <code>WatchlistUiState</code>, price alert toggles, swipe actions, and enhanced navigation wiring.</p>
 <p><img alt="Agent Mode Loop" src="images/agent-mode-loop.svg"></p>
 <h3>1. Launch Agent Mode</h3>
@@ -594,9 +1626,26 @@ Follow the rules in AGENTS.md and use Ktor 3.6.0 and StateFlow.
 <p>Agent Mode creates <code>WatchlistViewModel.kt</code>, <code>WatchlistRepository.kt</code>, and <code>WatchlistScreen.kt</code> in the <strong><code>:feature:watchlist</code></strong> module, and registers the route in <strong><code>StreamNavGraph.kt</code></strong> in the <strong><code>:app</code></strong> module.</p>
 <p>Review the structured multi-file diff and click <strong>Apply All Changes</strong>.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Automated build repair" duration="8">
-      <p>Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="10"
+                 data-label="Automated build repair"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 11 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">11. Automated build repair</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Let Agent Mode run Gradle build tasks and fix missing dependencies automatically.</p>
 <h3>1. Request automated compilation</h3>
 <p>In the <strong>Agent tool window</strong>, submit:</p>
 <div class="code-container"><pre><code class=" language-text">Check and compile the project by running a Gradle build for :feature:watchlist. If any dependencies or imports are missing in build.gradle.kts or libs.versions.toml, diagnose and fix them.
@@ -610,9 +1659,26 @@ Follow the rules in AGENTS.md and use Ktor 3.6.0 and StateFlow.
 <li><p>Re-runs the build until compilation succeeds.</p></li>
 </ol>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Unit tests &amp; Turbine" duration="8">
-      <p>Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="11"
+                 data-label="Unit tests &amp; Turbine"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 12 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">12. Unit tests &amp; Turbine</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Generate ViewModel unit tests backed by in-memory fakes and Turbine Flow assertions.</p>
 <h3>1. Open the test skeleton</h3>
 <p>Open <strong><code>WatchlistViewModelTest.kt</code></strong> in the <strong><code>:feature:watchlist</code></strong> module.</p>
 <h3>2. Generate unit tests with the Agent tool window</h3>
@@ -660,9 +1726,26 @@ class WatchlistViewModelTest {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Run tests by clicking the <strong>Run test gutter icon</strong> (the green play arrow next to the test class or function) to confirm they pass.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Crash debugging in Logcat" duration="7">
-      <p>Diagnose and patch exceptions directly from Logcat using <strong>Ask Gemini</strong>.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="12"
+                 data-label="Crash debugging in Logcat"
+                 data-duration="7"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 13 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                7 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">13. Crash debugging in Logcat</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Diagnose and patch exceptions directly from Logcat using <strong>Ask Gemini</strong>.</p>
 <h3>1. Trigger the crash</h3>
 <p>Run the app on the emulator, open Explore, tap <strong>&quot;Untracked Indie Release #9&quot;</strong>, and set region filter to <strong>&quot;Australia (AU)&quot;</strong>.</p>
 <h3>2. Inspect in Logcat</h3>
@@ -685,9 +1768,26 @@ if (providers.isEmpty()) {
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 <p>Apply the change and re-run to verify the fix.</p>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Studio Journeys E2E tests" duration="10">
-      <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.Because ICanHazStream provides real, interactive UI flows right from the start, you can validate realistic user journeys—such as browsing trending movies, inspecting streaming providers on Where to Watch, and verifying pricing—end-to-end on a live device.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="13"
+                 data-label="Studio Journeys E2E tests"
+                 data-duration="10"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 14 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                10 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">14. Studio Journeys E2E tests</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Describe end-to-end user journeys in plain English and execute them on a live emulator using multimodal vision AI.Because ICanHazStream provides real, interactive UI flows right from the start, you can validate realistic user journeys—such as browsing trending movies, inspecting streaming providers on Where to Watch, and verifying pricing—end-to-end on a live device.</p>
 <p><img alt="Studio Journeys Flow" src="images/journeys-flow.svg"></p>
 <h3>1. Inspect the journey definition</h3>
 <p>Open <strong><code>app/src/journeysTest/find_streaming_provider.journey.xml</code></strong>:</p>
@@ -737,9 +1837,26 @@ if (providers.isEmpty()) {
 </ol>
 <aside class="special"><p><strong>Running against pre-installed apps:</strong> You can also run journeys against any pre-installed app by setting <code>JOURNEYS_CUSTOM_APP_ID=me.kartikarora.icanhazstream</code> as an environment variable in the run configuration.</p><p><strong>Known Issue (Configuration Cache):</strong> If journeys behave unexpectedly with multiple journey files or authentication, temporarily set <code>org.gradle.configuration-cache=false</code> in <code>gradle.properties</code>.</p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Headless Android CLI" duration="8">
-      <p>Use the <strong>Android CLI</strong> to inspect project structure, find symbols, render previews, inspect UI layouts, and search official documentation headlessly.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="14"
+                 data-label="Headless Android CLI"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 15 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">15. Headless Android CLI</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Use the <strong>Android CLI</strong> to inspect project structure, find symbols, render previews, inspect UI layouts, and search official documentation headlessly.</p>
 <p><img alt="Android CLI Bridge" src="images/android-cli-bridge.svg"></p>
 <h3>1. Project inspection and Studio status</h3>
 <p>Inspect project metadata and verify running Android Studio instances:</p>
@@ -785,9 +1902,26 @@ android skills find &quot;navigation&quot;
 android skills add navigation-3
 </code></pre><button type="button" class="copy-button" onclick="copyToClipboard(this)"><span class="material-symbols-outlined">content_copy</span><span>Copy</span></button></div>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="App Quality Insights" duration="5">
-      <p>Review production telemetry from Firebase Crashlytics and Google Play Vitals inside Android Studio with one-click Gemini diagnostics.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="15"
+                 data-label="App Quality Insights"
+                 data-duration="5"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 16 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                5 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">16. App Quality Insights</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Review production telemetry from Firebase Crashlytics and Google Play Vitals inside Android Studio with one-click Gemini diagnostics.</p>
 <p><img alt="App Quality Insights Overview" src="images/aqi-slide-overview.svg"></p>
 <ol>
 <li><p><strong>Open AQI:</strong> Navigate to <strong>View &gt; Tool Windows &gt; App Quality Insights</strong>.</p></li>
@@ -795,9 +1929,26 @@ android skills add navigation-3
 <li><p><strong>Apply fix:</strong> Apply the suggested patch directly to your Kotlin source file.</p></li>
 </ol>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Summary &amp; next steps" duration="2">
-      <p><img alt="ICanHazStream Complete" src="images/poster.svg"></p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="16"
+                 data-label="Summary &amp; next steps"
+                 data-duration="2"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 17 / 17</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                2 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">17. Summary &amp; next steps</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p><img alt="ICanHazStream Complete" src="images/poster.svg"></p>
 <h3>Summary of key workflows</h3>
 <ul>
 <li><p><strong>Guardrails:</strong> Ground code generation with <code>AGENTS.md</code>, <code>.aiexclude</code>, and design token skills.</p></li>
@@ -815,12 +1966,340 @@ android skills add navigation-3
 <li><p><strong>Questions &amp; Feedback:</strong> Reach out at <a href="mailto:hello@kartikarora.me" target="_blank">hello@kartikarora.me</a>.</p></li>
 </ul>
 
-    </klaat-kodelab-step>
-    <div slot="footer" class="kodelab-footer">Codelab generated using <a href="https://klaat.kartikarora.me" target="_blank" rel="noopener">Klaat</a> - A tool made by <a href="https://kartikarora.me" target="_blank" rel="noopener">Kartik Arora</a></div>
-  </klaat-kodelab>
+          </div>
+        </section>
+      </div>
 
-  <!-- Klaat custom elements (replaces google's codelab-elements.js) -->
-  <script src="https://distribute.kartikarora.me/js/klaat-elements.js"></script>
+      <nav class="codelab-controls" id="controls" aria-label="Step navigation">
+        <a id="previous-step" href="#" class="btn btn-outline" data-disappear="true">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </a>
+        <div>
+          <a id="next-step" href="#" class="btn btn-primary">
+            <span>Next</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+          <a id="done" href="#" class="btn btn-secondary" hidden>
+            <span class="material-symbols-outlined">check_circle</span>
+            <span>Done</span>
+          </a>
+        </div>
+      </nav>
+    </main>
+  </div>
 
+  <!-- Studio Footer (matching kartikarora.me/brand-demo) -->
+  <footer class="studio-footer">
+    <div class="studio-container" style="max-width: 1280px;">
+      <div class="studio-footer-inner">
+        <div class="kodelab-footer">Codelab generated using <a href="https://klaat.kartikarora.me" target="_blank" rel="noopener">Klaat</a> - A tool made by <a href="https://kartikarora.me" target="_blank" rel="noopener">Kartik Arora</a></div>
+        <span>&copy; 2026 Kartik Arora</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Self-Contained Codelab Runtime (zero custom elements, zero external CDN dependencies) -->
+  <script>
+    function copyToClipboard(button) {
+      const container = button.closest('.code-container') || button.parentElement;
+      const code = container.querySelector('code').innerText;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+          updateButtonText(button);
+        }).catch(() => {
+          fallbackCopy(code, button);
+        });
+      } else {
+        fallbackCopy(code, button);
+      }
+    }
+
+    function fallbackCopy(text, button) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        updateButtonText(button);
+      } catch (err) {
+        console.error('Fallback copy failed:', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function updateButtonText(button) {
+      const textSpan = button.querySelector('span:last-child');
+      if (!textSpan) return;
+      const originalText = textSpan.textContent;
+      textSpan.textContent = 'Copied!';
+      setTimeout(() => {
+        textSpan.textContent = originalText;
+      }, 2000);
+    }
+
+    (function () {
+      'use strict';
+
+      // Prevent kartikarora.2.0.0.js from injecting a duplicate copy button inside .code-container
+      document.querySelectorAll('.code-container pre').forEach((pre) => {
+        pre.setAttribute('data-copy-ready', 'true');
+      });
+
+      const app = document.getElementById('codelab-app') || document.body;
+      const storage = (() => {
+        try { return window.localStorage; } catch (_) { return null; }
+      })();
+
+      function createCodelabController(stepEls) {
+        const controller = {
+          _steps: Array.from(stepEls || []),
+          _currentStep: 0,
+
+          get steps() { return this._steps; },
+          get totalSteps() { return this._steps.length; },
+          getTotalSteps() { return this.totalSteps; },
+
+          get totalDuration() {
+            return this._steps.reduce((sum, step) => {
+              if (step.getAttribute('data-exclude-duration') === 'true') return sum;
+              const d = parseInt(step.getAttribute('data-duration'), 10);
+              return sum + (isNaN(d) ? 0 : d);
+            }, 0);
+          },
+          getTotalDuration() { return this.totalDuration; },
+
+          get currentStep() { return this._currentStep >= 0 ? this._currentStep : 0; },
+          getCurrentStep() { return this.currentStep; },
+
+          get progressPercent() {
+            if (this._steps.length === 0) return 0;
+            return (this.currentStep / this._steps.length) * 100;
+          },
+          getProgressPercent() { return this.progressPercent; },
+
+          get remainingTime() {
+            if (this._steps.length === 0) return 0;
+            let mins = 0;
+            const start = Math.max(0, this.currentStep);
+            for (let i = start; i < this._steps.length; i++) {
+              const step = this._steps[i];
+              if (step.getAttribute('data-exclude-duration') === 'true') continue;
+              const d = parseInt(step.getAttribute('data-duration'), 10);
+              mins += isNaN(d) ? 0 : d;
+            }
+            return mins;
+          },
+          getRemainingTime() { return this.remainingTime; },
+
+          selectStep(index, isInit) {
+            if (this._steps.length === 0) return;
+            index = Math.max(0, Math.min(index, this._steps.length - 1));
+            if (isNaN(index)) index = 0;
+
+            const prev = this._currentStep;
+            this._currentStep = index;
+
+            this._steps.forEach((step, i) => {
+              if (i === index) {
+                step.setAttribute('data-selected', 'true');
+              } else {
+                step.removeAttribute('data-selected');
+              }
+            });
+
+            const navItems = document.querySelectorAll('#steps-nav .codelab-step-item');
+            navItems.forEach((li, i) => {
+              const link = li.querySelector('a');
+              if (i <= index) li.setAttribute('data-completed', 'true'); else li.removeAttribute('data-completed');
+              if (i === index) {
+                li.setAttribute('data-selected', 'true');
+                if (link) link.setAttribute('aria-current', 'step');
+              } else {
+                li.removeAttribute('data-selected');
+                if (link) link.removeAttribute('aria-current');
+              }
+            });
+
+            // Progress label & bar
+            const progressLabel = document.getElementById('step-progress-label');
+            if (progressLabel) {
+              progressLabel.textContent = 'STEP ' + (index + 1) + ' / ' + this._steps.length;
+            }
+            const progressFill = document.getElementById('progress-fill');
+            if (progressFill) {
+              const pct = this._steps.length > 0 ? ((index + 1) / this._steps.length) * 100 : 0;
+              progressFill.style.width = pct + '%';
+            }
+
+            // Remaining time
+            const rem = this.remainingTime;
+            const timePill = document.getElementById('time-remaining');
+            const timeLabel = document.getElementById('time-remaining-label');
+            if (timePill) {
+              if (rem > 0) {
+                timePill.style.display = 'inline-flex';
+                if (timeLabel) timeLabel.textContent = rem + ' min remaining';
+              } else {
+                timePill.style.display = 'none';
+              }
+            }
+
+            // Stepper buttons
+            const prevBtn = document.getElementById('previous-step');
+            const nextBtn = document.getElementById('next-step');
+            const doneBtn = document.getElementById('done');
+            if (prevBtn) {
+              if (index === 0) prevBtn.setAttribute('data-disappear', 'true');
+              else prevBtn.removeAttribute('data-disappear');
+            }
+            if (index === this._steps.length - 1) {
+              if (nextBtn) nextBtn.setAttribute('hidden', '');
+              if (doneBtn) doneBtn.removeAttribute('hidden');
+            } else {
+              if (nextBtn) nextBtn.removeAttribute('hidden');
+              if (doneBtn) doneBtn.setAttribute('hidden', '');
+            }
+
+            // Close mobile drawer & scroll to top smoothly on step change
+            document.body.classList.remove('drawer-open');
+            const menuBtn = document.getElementById('menu');
+            if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+            if (!isInit && typeof window.scrollTo === 'function') {
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+
+            // Sync URL hash & localStorage progress
+            if (location.hash !== '#' + index) {
+              history.replaceState(null, '', '#' + index);
+            }
+            const id = app.getAttribute('data-codelab-id') || '';
+            if (storage && id) {
+              storage.setItem('progress_' + id, String(index));
+            }
+
+            // Optional analytics
+            const stepLabel = this._steps[index]?.getAttribute('data-label') || '';
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'page_view', { page_title: stepLabel, page_location: location.pathname + '#' + index });
+              if (!isInit && prev !== index) {
+                window.gtag('event', 'navigate', { event_category: 'codelab', event_label: stepLabel, value: index });
+              }
+            }
+          }
+        };
+        return controller;
+      }
+
+      const steps = document.querySelectorAll('#steps .codelab-step');
+      const controller = createCodelabController(steps);
+      window.klaatCodelab = controller;
+      window.createKlaatCodelabController = createCodelabController;
+
+      // Bind sidebar step clicks
+      document.querySelectorAll('#steps-nav .codelab-step-link').forEach((link, idx) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          controller.selectStep(idx);
+        });
+      });
+
+      // Bind navigation buttons
+      document.getElementById('previous-step')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        controller.selectStep(controller.currentStep - 1);
+      });
+
+      document.getElementById('next-step')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        controller.selectStep(controller.currentStep + 1);
+      });
+
+      document.getElementById('done')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'complete', { event_category: 'codelab', event_label: app.getAttribute('data-codelab-title') || '' });
+        }
+        const backHref = document.getElementById('arrow-back')?.getAttribute('href');
+        if (backHref) window.location.href = backHref;
+      });
+
+      // Back arrow smart history
+      document.getElementById('arrow-back')?.addEventListener('click', (e) => {
+        if (window.history.length > 1 && document.referrer) {
+          try {
+            const refUrl = new URL(document.referrer);
+            if (refUrl.origin === location.origin && refUrl.pathname !== location.pathname) {
+              e.preventDefault();
+              window.history.back();
+            }
+          } catch (_) {}
+        }
+      });
+
+      // Mobile drawer toggle
+      const menuBtn = document.getElementById('menu');
+      const backdrop = document.getElementById('drawer-backdrop');
+      const toggleDrawer = (open) => {
+        const next = typeof open === 'boolean' ? open : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', next);
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', String(next));
+      };
+      menuBtn?.addEventListener('click', () => toggleDrawer());
+      backdrop?.addEventListener('click', () => toggleDrawer(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('drawer-open')) {
+          toggleDrawer(false);
+        }
+      });
+
+      // Hash navigation
+      window.addEventListener('hashchange', () => {
+        const hash = parseInt(location.hash.substring(1), 10);
+        if (!isNaN(hash)) controller.selectStep(hash);
+      });
+
+      // Survey radio persistence
+      document.querySelectorAll('.klaat-survey[data-survey-id]').forEach((surveyEl) => {
+        const surveyId = surveyEl.getAttribute('data-survey-id') || '';
+        const loadSaved = () => {
+          if (!storage || !surveyId) return {};
+          try { return JSON.parse(storage.getItem(surveyId) || '{}'); } catch (_) { return {}; }
+        };
+        const saved = loadSaved();
+        surveyEl.querySelectorAll('input[type="radio"]').forEach((input) => {
+          const name = input.getAttribute('name') || '';
+          const labelText = (input.closest('label')?.textContent || '').trim();
+          if (saved[name] && labelText.includes(saved[name])) {
+            input.checked = true;
+          }
+          input.addEventListener('change', () => {
+            if (!storage || !surveyId) return;
+            const data = loadSaved();
+            data[name] = labelText;
+            storage.setItem(surveyId, JSON.stringify(data));
+          });
+        });
+      });
+
+      // Initial step from URL hash or localStorage
+      const id = app.getAttribute('data-codelab-id') || '';
+      const savedStep = storage && id ? storage.getItem('progress_' + id) : null;
+      const hashStep = location.hash ? parseInt(location.hash.substring(1), 10) : NaN;
+      let startStep = 0;
+      if (!isNaN(hashStep) && hashStep >= 0) {
+        startStep = hashStep;
+      } else if (savedStep && savedStep !== '0') {
+        startStep = parseInt(savedStep, 10) || 0;
+      }
+      controller.selectStep(startStep, true);
+    })();
+  </script>
 </body>
 </html>

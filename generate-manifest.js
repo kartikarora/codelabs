@@ -448,103 +448,252 @@ if (fs.existsSync(codelabsDir)) {
           const stepsCount = meta.duration ? `${meta.duration} mins` : 'Hands-On';
 
           const draftRightColumnHtml = `
-  <!-- Draft Preview Right Sidebar Column (Brand Design System) -->
-  <aside id="draft-sidebar-column" style="
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 280px;
-    height: 100vh;
-    box-sizing: border-box;
-    background: var(--bg-alt, #161b22);
-    border-left: 1px solid var(--border, #30363d);
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    font-family: var(--font-sans, 'Albert Sans', -apple-system, sans-serif);
-    color: var(--primary, #e6edf3);
-  ">
-    <!-- Header -->
-    <div style="padding: 20px 18px; border-bottom: 1px solid var(--border, #30363d);">
-      <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; border-radius: 4px; background: var(--glow, rgba(0, 153, 255, 0.15)); border: 1px solid var(--accent, #0099ff); color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
-        <span>Draft Preview</span>
-      </div>
-      <h3 style="margin: 0 0 6px 0; font-size: 15px; font-weight: 700; color: var(--primary, #e6edf3); line-height: 1.3;">${draftTitle}</h3>
-      <p style="margin: 0; font-size: 12px; color: var(--secondary, #8b949e); line-height: 1.4;">${draftSummary}</p>
-    </div>
-
-    <!-- Metadata Sections -->
-    <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px; flex: 1;">
-      <!-- Card: Review Status -->
-      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px;">
-        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Status</div>
-        <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--accent, #0099ff);">
-          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent, #0099ff);"></span>
-          <span>Draft (Unpublished)</span>
-        </div>
-        <div style="font-size: 11px; color: var(--secondary, #8b949e); margin-top: 4px;">Not listed in public directory</div>
-      </div>
-
-      <!-- Card: Workshop Specs -->
-      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px; font-size: 12px;">
-        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Workshop Specs</div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">App:</span>
-          <span style="color: var(--accent, #0099ff); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${appName}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">Kotlin:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${kotlinVer}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">Build:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${buildSystem}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">Studio:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${studioVer}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-          <span style="color: var(--secondary, #8b949e);">JDK:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${jdkVer}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-          <span style="color: var(--secondary, #8b949e);">Duration:</span>
-          <span style="color: var(--primary, #e6edf3); font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px;">${stepsCount}</span>
-        </div>
-      </div>
-
-      <!-- Card: AI Transparency & Review Notice -->
-      <div style="background: var(--card, #161b22); border: 1px solid var(--border, #30363d); border-radius: 8px; padding: 12px;">
-        <div style="font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; font-weight: 600; color: var(--secondary, #8b949e); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Draft Notice</div>
-        <p style="margin: 0; font-size: 11px; color: var(--secondary, #8b949e); line-height: 1.45;">
-          This draft was generated with the help of AI and may contain mistakes. It is actively being reviewed by the author for correctness and ease of completion.
-        </p>
-      </div>
-    </div>
-
-    <!-- Footer Action -->
-    <div style="padding: 16px 18px; border-top: 1px solid var(--border, #30363d);">
-      <a href="${draftFeedbackUrl}" style="display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 10px 14px; background: var(--accent, #0099ff); color: var(--bg, #0d1117); font-family: var(--font-sans, 'Albert Sans', sans-serif); font-size: 12px; font-weight: 700; text-decoration: none; border-radius: 6px; text-align: center;">
-        Send Feedback
-      </a>
-    </div>
-  </aside>
-
+  <!-- Draft Preview Right Sidebar Column (@kartikarora v2.0.0 Tokyo Neo-Brutalist) -->
   <style>
+    #draft-sidebar-column {
+      position: fixed;
+      inset-block: 0;
+      inset-inline-end: 0;
+      inline-size: 300px;
+      block-size: 100dvb;
+      box-sizing: border-box;
+      background: var(--color-paper-alt);
+      border-inline-start: 2px solid var(--color-rule-strong);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
+      font-family: var(--font-sans);
+      color: var(--color-ink);
+    }
+
+    .draft-panel-header {
+      padding: var(--space-md) var(--space-sm);
+      background: var(--color-card);
+      border-block-end: 2px solid var(--color-rule-strong);
+    }
+
+    .draft-panel-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      color: var(--color-ink);
+      margin: var(--space-xs) 0 var(--space-2xs);
+      text-wrap: balance;
+    }
+
+    .draft-panel-summary {
+      margin: 0;
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .draft-panel-body {
+      padding: var(--space-sm);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      flex: 1 1 auto;
+    }
+
+    .draft-panel-box {
+      background: var(--color-card);
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+      padding: var(--space-sm);
+    }
+
+    .draft-panel-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-ink-muted);
+      margin-block-end: var(--space-2xs);
+    }
+
+    .draft-status-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--color-signal);
+    }
+
+    .draft-status-dot {
+      display: inline-block;
+      inline-size: 8px;
+      block-size: 8px;
+      background: var(--color-signal);
+      border: 1px solid var(--color-rule-strong);
+      flex-shrink: 0;
+    }
+
+    .draft-panel-subtext {
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      margin-block-start: var(--space-2xs);
+    }
+
+    .draft-spec-list {
+      margin: 0;
+      padding: 0;
+    }
+
+    .draft-spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-xs);
+      padding-block: var(--space-2xs);
+      border-block-end: 1px solid var(--color-rule);
+    }
+
+    .draft-spec-row:last-child {
+      border-block-end: none;
+      padding-block-end: 0;
+    }
+
+    .draft-spec-key {
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+    }
+
+    .draft-spec-value {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--color-ink);
+    }
+
+    .draft-spec-value--signal {
+      color: var(--color-signal);
+    }
+
+    .draft-notice {
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--color-paper-sunken);
+      border-inline-start: 3px solid var(--color-signal-secondary);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .draft-notice-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-ink);
+      margin-block-end: var(--space-2xs);
+    }
+
+    .draft-notice-text {
+      margin: 0;
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .draft-panel-footer {
+      padding: var(--space-sm);
+      background: var(--color-card);
+      border-block-start: 2px solid var(--color-rule-strong);
+    }
+
+    .draft-feedback-btn {
+      inline-size: 100%;
+      box-sizing: border-box;
+    }
+
     @media (min-width: 1200px) {
       body {
-        margin-right: 280px !important;
+        margin-inline-end: 300px !important;
       }
     }
+
     @media (max-width: 1199px) {
       #draft-sidebar-column {
         display: none !important;
       }
     }
-  </style>`;
+
+    @media (prefers-reduced-motion: reduce) {
+      #draft-sidebar-column,
+      #draft-sidebar-column * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+
+  <aside id="draft-sidebar-column" aria-label="Draft preview details">
+    <div class="draft-panel-header">
+      <span class="badge-secondary">Draft Preview</span>
+      <h3 class="draft-panel-title">${draftTitle}</h3>
+      <p class="draft-panel-summary">${draftSummary}</p>
+    </div>
+
+    <div class="draft-panel-body">
+      <div class="draft-panel-box">
+        <div class="draft-panel-label">Status</div>
+        <div class="draft-status-row">
+          <span class="draft-status-dot" aria-hidden="true"></span>
+          <span>Draft (Unpublished)</span>
+        </div>
+        <div class="draft-panel-subtext">Not listed in public directory</div>
+      </div>
+
+      <div class="draft-panel-box">
+        <div class="draft-panel-label">Workshop Specs</div>
+        <dl class="draft-spec-list">
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">App:</dt>
+            <dd class="draft-spec-value draft-spec-value--signal">${appName}</dd>
+          </div>
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">Kotlin:</dt>
+            <dd class="draft-spec-value">${kotlinVer}</dd>
+          </div>
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">Build:</dt>
+            <dd class="draft-spec-value">${buildSystem}</dd>
+          </div>
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">Studio:</dt>
+            <dd class="draft-spec-value">${studioVer}</dd>
+          </div>
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">JDK:</dt>
+            <dd class="draft-spec-value">${jdkVer}</dd>
+          </div>
+          <div class="draft-spec-row">
+            <dt class="draft-spec-key">Duration:</dt>
+            <dd class="draft-spec-value">${stepsCount}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="draft-notice">
+        <div class="draft-notice-label">Draft Notice</div>
+        <p class="draft-notice-text">
+          This draft was generated with the help of AI and may contain mistakes. It is actively being reviewed by the author for correctness and ease of completion.
+        </p>
+      </div>
+    </div>
+
+    <div class="draft-panel-footer">
+      <a href="${draftFeedbackUrl}" class="btn btn-primary draft-feedback-btn">Send Feedback</a>
+    </div>
+  </aside>`;
 
           // 1. Create physical /preview directory with full assets to prevent 404 on refresh
           const previewDir = path.join(distDir, dir, 'preview');

@@ -1,20 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
   <meta charset="UTF-8">
   <title>I Build with AI and so can you! (Android Edition) 🚀</title>
 
-  <!-- Brand Identity CSS (provides all CSS tokens + light/dark mode) -->
-  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/kartikarora.1.8.0.css">
+  <!-- Brand Identity CSS (v2.0.0 — provides all tokens, typography, buttons, cards, syntax, light/dark mode) -->
+  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/kartikarora.2.0.0.css">
 
-  <!-- Brand Fonts -->
+  <!-- Brand Fonts: Chivo (Display & Body) + JetBrains Mono (Code & UI Chrome) + Material Symbols -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300..900;1,400&family=JetBrains+Mono:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 
-  <!-- Brand Interaction JS -->
-  <script src="https://distribute.kartikarora.me/js/kartikarora.1.8.0.js"></script>
+  <!-- Brand Interaction & Syntax Highlighting JS (v2.0.0) -->
+  <script src="https://distribute.kartikarora.me/js/kartikarora.2.0.0.js" defer></script>
 
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://kartikarora.me/img/icon32.png">
@@ -22,63 +22,874 @@
   <link rel="apple-touch-icon" sizes="180x180" href="https://kartikarora.me/img/icon180.png">
   <link rel="apple-touch-icon" sizes="192x192" href="https://kartikarora.me/img/icon192.png">
 
-  <!-- Klaat element styles (layout + component tokens, built on brand CSS vars) -->
-  <link rel="stylesheet" href="https://distribute.kartikarora.me/css/klaat-elements.css">
+
+  <!-- Codelab Shell Layout (100% built on kartikarora.2.0.0.css tokens & classes) -->
+  <style>
+    html, body {
+      overflow-x: clip;
+    }
+
+    body.studio-body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- Sticky Studio Header Bar ----------------------------------------- */
+    .codelab-nav-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-width: 0;
+    }
+
+    .codelab-nav-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-shrink: 0;
+    }
+
+    .codelab-icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      text-decoration: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 2px 2px 0 var(--color-rule-strong);
+      transition: transform 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-icon-btn:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+      text-decoration: none;
+    }
+
+    .codelab-icon-btn .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    #menu {
+      display: none;
+    }
+
+    .codelab-title-text {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--color-ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+    }
+
+    .codelab-time-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-paper-alt);
+      color: var(--color-ink);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .codelab-time-pill .material-symbols-outlined {
+      font-size: 15px;
+      color: var(--color-signal);
+    }
+
+    /* --- Codelab Two-Column Shell ----------------------------------------- */
+    .codelab-shell {
+      flex: 1 0 auto;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg) var(--space-2xl);
+      display: grid;
+      grid-template-columns: 296px minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    /* --- Left Step Navigation Sidebar ------------------------------------- */
+    .codelab-drawer {
+      position: sticky;
+      top: 88px;
+      max-height: calc(100vh - 112px);
+      display: flex;
+      flex-direction: column;
+      background: var(--color-paper-alt);
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+      overflow: hidden;
+    }
+
+    .codelab-drawer-header {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--color-rule);
+      background: var(--color-card);
+    }
+
+    .codelab-drawer-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--color-ink-muted);
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .codelab-progress-track {
+      width: 100%;
+      height: 6px;
+      background: var(--color-paper-sunken);
+      border: 1px solid var(--color-rule-strong);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .codelab-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--color-signal);
+      transition: width 0.2s var(--ease-standard);
+    }
+
+    .codelab-steps-scroll {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: var(--space-sm);
+    }
+
+    .codelab-steps-nav {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .codelab-step-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-card);
+      color: var(--color-ink-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.35;
+      transition: transform 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-step-link:hover {
+      border-color: var(--color-signal);
+      color: var(--color-ink);
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 0 var(--color-signal);
+      text-decoration: none;
+    }
+
+    .codelab-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      padding: 0 5px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-paper-alt);
+      color: var(--color-ink-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .codelab-step-item[data-completed="true"] .codelab-step-num {
+      background: var(--color-signal);
+      border-color: var(--color-rule-strong);
+      color: var(--color-signal-ink);
+    }
+
+    .codelab-step-item[data-selected="true"] .codelab-step-link {
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      font-weight: 700;
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+    }
+
+    .codelab-step-item[data-selected="true"] .codelab-step-num {
+      background: var(--color-signal-secondary);
+      border-color: var(--color-rule-strong);
+      color: var(--color-signal-secondary-ink);
+    }
+
+    .codelab-drawer-footer {
+      padding: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--color-rule);
+      background: var(--color-card);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+
+    .codelab-feedback-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-signal);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .codelab-feedback-link:hover {
+      color: var(--color-signal-hover);
+      text-decoration: underline;
+    }
+
+    .codelab-feedback-link .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    /* --- Main Step Content Stage ------------------------------------------ */
+    .codelab-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .codelab-step {
+      display: none;
+    }
+
+    .codelab-step[data-selected="true"] {
+      display: flex;
+      animation: codelabStepIn 0.2s var(--ease-standard);
+    }
+
+    /* Keep reading card rock-solid without jumping on hover */
+    .codelab-step.tokyo-card:hover {
+      transform: none;
+      border-color: var(--color-rule-strong);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+    }
+
+    @keyframes codelabStepIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .codelab-step-header {
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border-bottom: 2px solid var(--color-rule);
+    }
+
+    .codelab-step-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-sm);
+    }
+
+    .codelab-step-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      font-weight: 600;
+    }
+
+    .codelab-step-duration .material-symbols-outlined {
+      font-size: 15px;
+    }
+
+    .codelab-step-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-ink);
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    /* --- Editorial Prose inside Step Card --------------------------------- */
+    .codelab-step-body {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-ink);
+    }
+
+    .codelab-step-body > *:first-child {
+      margin-top: 0;
+    }
+
+    .codelab-step-body > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .codelab-step-body h2,
+    .codelab-step-body h3,
+    .codelab-step-body h4 {
+      color: var(--color-ink);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+      margin: var(--space-lg) 0 var(--space-xs);
+    }
+
+    .codelab-step-body h2 { font-size: 1.45rem; }
+    .codelab-step-body h3 { font-size: 1.18rem; }
+    .codelab-step-body h4 { font-size: 1.02rem; }
+
+    .codelab-step-body p {
+      margin: 0 0 var(--space-md);
+      text-wrap: pretty;
+    }
+
+    .codelab-step-body ul,
+    .codelab-step-body ol {
+      margin: 0 0 var(--space-md);
+      padding-left: 1.4rem;
+    }
+
+    .codelab-step-body li {
+      margin-bottom: 6px;
+    }
+
+    .codelab-step-body a:not(.btn) {
+      color: var(--color-signal);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .codelab-step-body a:not(.btn):hover {
+      color: var(--color-signal-hover);
+    }
+
+    .codelab-step-body img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: var(--space-md) 0;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      box-shadow: 4px 4px 0 var(--color-rule-strong);
+    }
+
+    .codelab-step-body figure {
+      margin: var(--space-md) 0;
+    }
+
+    .codelab-step-body figcaption {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-ink-muted);
+      margin-top: 8px;
+    }
+
+    .codelab-step-body code {
+      font-family: var(--font-mono);
+      font-size: 0.88em;
+      background: var(--color-paper-alt);
+      border: 1px solid var(--color-rule);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      color: var(--color-ink);
+    }
+
+    /* --- Code Blocks (Paired with kartikarora.2.0.0.js highlighter) ------- */
+    .codelab-step-body .code-container {
+      position: relative;
+      margin: var(--space-md) 0;
+      border: 2px solid var(--color-rule-strong);
+      border-left: 4px solid var(--color-signal);
+      border-radius: var(--radius-sm);
+      background: var(--color-paper-alt);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+      overflow: hidden;
+    }
+
+    .codelab-step-body .code-container .highlight {
+      margin: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .codelab-step-body .code-container pre {
+      margin: 0;
+      padding: 46px var(--space-md) var(--space-md);
+      overflow-x: auto;
+      background: transparent;
+      border: none;
+      line-height: 1.55;
+    }
+
+    .codelab-step-body .code-container pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: 0.86rem;
+    }
+
+    .codelab-step-body .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--color-rule-strong);
+      background: var(--color-card);
+      color: var(--color-ink);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 var(--color-rule-strong);
+      transition: transform 0.2s var(--ease-standard), box-shadow 0.2s var(--ease-standard), border-color 0.2s var(--ease-standard), color 0.2s var(--ease-standard);
+    }
+
+    .codelab-step-body .copy-button:hover {
+      border-color: var(--color-signal);
+      color: var(--color-signal);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--color-signal-secondary);
+    }
+
+    .codelab-step-body .copy-button .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .codelab-step-body pre.devsite-terminal {
+      display: block;
+      width: 100%;
+      margin: var(--space-md) 0;
+      padding: var(--space-sm) var(--space-md);
+      overflow-x: auto;
+      border: 2px solid var(--color-rule-strong);
+      border-left: 4px solid var(--color-signal);
+      background: var(--color-paper-sunken);
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+    }
+
+    .codelab-step-body pre.devsite-terminal code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      white-space: pre;
+    }
+
+    /* --- Callout Asides (Tokyo Neo-Brutalist Alerts) ---------------------- */
+    .codelab-step-body aside {
+      margin: var(--space-md) 0;
+      padding: var(--space-sm) var(--space-md);
+      border: 2px solid var(--color-rule-strong);
+      border-left-width: 6px;
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+      color: var(--color-ink);
+    }
+
+    .codelab-step-body aside > *:first-child { margin-top: 0; }
+    .codelab-step-body aside > *:last-child { margin-bottom: 0; }
+
+    .codelab-step-body aside.special {
+      border-left-color: var(--color-signal);
+      background: color-mix(in srgb, var(--color-signal) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.positive {
+      border-left-color: var(--color-success);
+      background: color-mix(in srgb, var(--color-success) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.warning {
+      border-left-color: var(--color-signal-secondary);
+      background: color-mix(in srgb, var(--color-signal-secondary) 14%, var(--color-card));
+    }
+
+    .codelab-step-body aside.critical {
+      border-left-color: var(--color-danger);
+      background: color-mix(in srgb, var(--color-danger) 10%, var(--color-card));
+    }
+
+    .codelab-step-body aside.default {
+      border-left-color: var(--color-ink-muted);
+      background: var(--color-paper-alt);
+    }
+
+    /* --- Buttons inside Step Content (use brand .btn directly) ------------ */
+    .codelab-step-body .klaat-button {
+      margin: var(--space-xs) var(--space-xs) var(--space-xs) 0;
+    }
+
+    .codelab-step-body .klaat-button .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* --- Tables ----------------------------------------------------------- */
+    .codelab-step-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-md) 0;
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--color-card);
+    }
+
+    .codelab-step-body th,
+    .codelab-step-body td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-rule);
+      text-align: left;
+    }
+
+    .codelab-step-body th {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--color-paper-alt);
+      color: var(--color-ink);
+      border-bottom: 2px solid var(--color-rule-strong);
+    }
+
+    .codelab-step-body tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* --- Interactive Survey ----------------------------------------------- */
+    .klaat-survey {
+      margin: var(--space-md) 0;
+      padding: var(--space-md);
+      background: var(--color-paper-alt);
+      border: 2px solid var(--color-rule-strong);
+      border-left: 6px solid var(--color-signal-secondary);
+      border-radius: var(--radius-sm);
+      box-shadow: 3px 3px 0 var(--color-rule-strong);
+    }
+
+    .klaat-survey h4 {
+      margin: 0 0 var(--space-sm) !important;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--color-ink);
+    }
+
+    .klaat-radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .klaat-radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-rule);
+      background: var(--color-card);
+      cursor: pointer;
+      font-size: 0.94rem;
+      color: var(--color-ink);
+      transition: border-color 0.2s var(--ease-standard);
+    }
+
+    .klaat-radio-label:hover {
+      border-color: var(--color-signal);
+    }
+
+    .klaat-radio-label input[type="radio"] {
+      accent-color: var(--color-signal);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    /* --- Embedded Media --------------------------------------------------- */
+    .codelab-step-body iframe.youtube-video,
+    .codelab-step-body iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 2px solid var(--color-rule-strong);
+      border-radius: var(--radius-sm);
+      margin: var(--space-md) 0;
+    }
+
+    /* --- Step Navigation Controls (uses brand .btn classes) --------------- */
+    .codelab-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+
+    .codelab-controls [hidden] {
+      display: none !important;
+    }
+
+    .codelab-controls #previous-step[data-disappear="true"] {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .codelab-controls .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* --- Mobile Drawer Backdrop ------------------------------------------- */
+    .codelab-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 10, 16, 0.55);
+      z-index: 1050;
+    }
+
+    body.drawer-open .codelab-backdrop {
+      display: block;
+    }
+
+    /* --- Focus Visible & Reduced Motion ----------------------------------- */
+    .codelab-icon-btn:focus-visible,
+    .codelab-step-link:focus-visible,
+    .copy-button:focus-visible,
+    .codelab-feedback-link:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+      transition: none;
+    }
+
+    @media (max-width: 900px) {
+      #menu {
+        display: inline-flex;
+      }
+
+      .codelab-shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-md) var(--space-sm) var(--space-xl);
+      }
+
+      .codelab-drawer {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        bottom: 0;
+        width: min(300px, 85vw);
+        max-height: calc(100vh - 64px);
+        z-index: 1100;
+        border-radius: 0;
+        border-left: none;
+        transform: translateX(-105%);
+        transition: transform 0.2s var(--ease-standard);
+      }
+
+      body.drawer-open .codelab-drawer {
+        transform: translateX(0);
+      }
+
+      .codelab-step.tokyo-card {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
 </head>
-
-<body>
-  <script>
-    function copyToClipboard(button) {
-      const container = button.parentElement;
-      const code = container.querySelector('code').innerText;
+<body class="studio-body"
+      id="codelab-app"
+      data-codelab-id="i-build-with-ai-android"
+      data-codelab-title="I Build with AI and so can you! (Android Edition) 🚀"
+      data-environment="Android"
+      data-feedback-link="mailto:hello@kartikarora.me"
       
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(code).then(() => {
-          updateButtonText(button);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          fallbackCopy(code, button);
-        });
-      } else {
-        fallbackCopy(code, button);
-      }
-    }
+      >
 
-    function fallbackCopy(text, button) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-9999px";
-      textArea.style.top = "0";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        updateButtonText(button);
-      } catch (err) {
-        console.error('Fallback copy failed: ', err);
-      }
-      document.body.removeChild(textArea);
-    }
+  <!-- Sticky Studio Top Bar (matching kartikarora.me/brand-demo) -->
+  <header class="studio-nav">
+    <div class="studio-container" style="max-width: 1280px;">
+      <div class="studio-nav-inner">
+        <div class="codelab-nav-left">
+          <a id="arrow-back" href="../" class="codelab-icon-btn" title="Back" aria-label="Back">
+            <span class="material-symbols-outlined">arrow_back</span>
+          </a>
+          <button type="button" id="menu" class="codelab-icon-btn" title="Toggle steps" aria-label="Toggle steps" aria-expanded="false">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h1 class="codelab-title-text">I Build with AI and so can you! (Android Edition) 🚀</h1>
+        </div>
+        <div class="codelab-nav-right">
+          <span id="time-remaining" class="codelab-time-pill">
+            <span class="material-symbols-outlined">schedule</span>
+            <span id="time-remaining-label">63 min remaining</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    function updateButtonText(button) {
-      const textSpan = button.querySelector('span:last-child');
-      const originalText = textSpan.textContent;
-      textSpan.textContent = 'Copied!';
-      setTimeout(() => {
-        textSpan.textContent = originalText;
-      }, 2000);
-    }
-  </script>
+  <div class="codelab-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
 
-  <klaat-kodelab 
-                  id="i-build-with-ai-android"
-                  title="I Build with AI and so can you! (Android Edition) 🚀"
-                  environment="Android"
-                  feedback-link="mailto:hello@kartikarora.me">
-    <klaat-kodelab-step label="Welcome!" duration="2">
-      <p><img alt="Poster" src="images/poster.png"></p>
+  <!-- Two-Column Studio Workspace -->
+  <div class="codelab-shell">
+    <!-- Left Step Drawer -->
+    <aside id="drawer" class="codelab-drawer" aria-label="Codelab steps">
+      <div class="codelab-drawer-header">
+        <div class="codelab-drawer-meta">
+          <span id="step-progress-label">STEP 1 / 10</span>
+          <span id="total-time">63 min total</span>
+        </div>
+        <div class="codelab-progress-track" aria-hidden="true">
+          <div class="codelab-progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="codelab-steps-scroll">
+        <ol class="codelab-steps-nav" id="steps-nav">
+          <li class="codelab-step-item" data-step-index="0" data-selected="true" data-completed="true">
+            <a href="#0" class="codelab-step-link" aria-current="step">
+              <span class="codelab-step-num">01</span>
+              <span>Welcome!</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="1">
+            <a href="#1" class="codelab-step-link">
+              <span class="codelab-step-num">02</span>
+              <span>Prerequisites</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="2">
+            <a href="#2" class="codelab-step-link">
+              <span class="codelab-step-num">03</span>
+              <span>Getting Set Up</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="3">
+            <a href="#3" class="codelab-step-link">
+              <span class="codelab-step-num">04</span>
+              <span>Create your PRD</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="4">
+            <a href="#4" class="codelab-step-link">
+              <span class="codelab-step-num">05</span>
+              <span>Configure your AI Agent</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="5">
+            <a href="#5" class="codelab-step-link">
+              <span class="codelab-step-num">06</span>
+              <span>Add a State Management Skill</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="6">
+            <a href="#6" class="codelab-step-link">
+              <span class="codelab-step-num">07</span>
+              <span>Time to Build!</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="7">
+            <a href="#7" class="codelab-step-link">
+              <span class="codelab-step-num">08</span>
+              <span>Connect to the World with Context7</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="8">
+            <a href="#8" class="codelab-step-link">
+              <span class="codelab-step-num">09</span>
+              <span>Bonus: Add a Unit Testing Skill</span>
+            </a>
+          </li>
+          <li class="codelab-step-item" data-step-index="9">
+            <a href="#9" class="codelab-step-link">
+              <span class="codelab-step-num">10</span>
+              <span>Congratulations! 🏆</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      <div class="codelab-drawer-footer">
+        <a id="feedback-link" class="codelab-feedback-link" href="mailto:hello@kartikarora.me" target="_blank" rel="noopener noreferrer">
+          <span class="material-symbols-outlined">bug_report</span>
+          <span>Report a mistake</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Step Content + Stepper Controls -->
+    <main id="main" class="codelab-main">
+      <div id="steps">
+        <section class="codelab-step tokyo-card"
+                 data-step-index="0"
+                 data-label="Welcome!"
+                 data-duration="2"
+                 
+                 data-selected="true">
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 01 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                2 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">1. Welcome!</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p><img alt="Poster" src="images/poster.png"></p>
 <p>Ready to transform how you build Android apps? Today, we&#39;re going on an exciting journey into the world of AI-assisted development. You&#39;ll learn how to collaborate with AI agents using the <strong>Antigravity CLI</strong> by creating clear, structured documents that make them incredibly effective. Think of it as learning to speak the language of your new AI partner!</p>
 <p>By the end of this adventure, you&#39;ll have a fully functional Android app and a toolkit of AI prompting skills that you can use on any project. Ready to dive in? 🚀</p>
 <h3>What You&#39;ll Build</h3>
@@ -99,9 +910,26 @@
 <li><p><strong>Android Studio</strong> installed (to run and test your app easily)</p></li>
 </ul>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Prerequisites" duration="5">
-      <p>To ensure a smooth experience during this workshop, please review and complete these prerequisites.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="1"
+                 data-label="Prerequisites"
+                 data-duration="5"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 02 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                5 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">2. Prerequisites</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>To ensure a smooth experience during this workshop, please review and complete these prerequisites.</p>
 <h3>1. Use a Personal Account</h3>
 <aside class="warning"><p>Please use a personal <strong>@gmail.com</strong>account. Corporate or organization-managed accounts often have administrative restrictions that block these tools. Using a personal account ensures a &quot;zero-hiccup&quot; experience with no credit card or API tokens required.</p></aside>
 <h3>2. Install Antigravity CLI</h3>
@@ -122,7 +950,7 @@ curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; 
 <p><img alt="Antigravity CLI" src="images/gemini_cli.png"></p>
 <h3>3. Install Android Studio</h3>
 <p>Download and install the latest version of <strong>Android Studio</strong> to build and run your application:</p>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio</a>
+<a class="btn klaat-button btn-primary klaat-button--primary klaat-button--colored" href="https://developer.android.com/studio" target="_blank"><span class="material-symbols-outlined">download</span>Download Android Studio</a>
 <h3>4. Choose Your Objective</h3>
 <p>During the workshop, the workflow remains the same regardless of what you build:</p>
 <ul>
@@ -130,9 +958,26 @@ curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; 
 <li><p><strong>Independent</strong>: Bring a specific idea, a small feature, or a prototype you want to build using these AI tools.</p></li>
 </ul>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Getting Set Up" duration="3">
-      <p>Now that you&#39;ve installed the Antigravity CLI, let&#39;s get your project workspace ready!</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="2"
+                 data-label="Getting Set Up"
+                 data-duration="3"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 03 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                3 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">3. Getting Set Up</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Now that you&#39;ve installed the Antigravity CLI, let&#39;s get your project workspace ready!</p>
 <ol>
 <li><p><strong>Create your project space:</strong>Open your terminal and run:</p></li>
 </ol>
@@ -144,9 +989,26 @@ cd my-note-taker
 </ol>
 <aside class="special"><p>🌟 <strong>Great job! Your workspace is ready. Let&#39;s start building.</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Create your PRD" duration="7">
-      <p>Let&#39;s start with the most important part: the <strong>Product Requirements Document (PRD)</strong>. This is the heart of your project—it&#39;s the source of truth that helps your AI assistant understand exactly what you&#39;re dreaming of building!</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="3"
+                 data-label="Create your PRD"
+                 data-duration="7"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 04 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                7 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">4. Create your PRD</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Let&#39;s start with the most important part: the <strong>Product Requirements Document (PRD)</strong>. This is the heart of your project—it&#39;s the source of truth that helps your AI assistant understand exactly what you&#39;re dreaming of building!</p>
 <h3>The Prompt (Ready to copy-paste!)</h3>
 <p>Copy this prompt and get ready to see Gemini&#39;s magic in action:</p>
 <div class="code-container"><pre><code class=" language-text">Act as a Senior Android Architect.
@@ -180,9 +1042,26 @@ Ask me clarifying questions, one at a time.
 <p><img alt="Antigravity CLI Permission" src="images/gemini_cli_permission.png"></p>
 <aside class="special"><p>✨ <strong>Fantastic! Your PRD is ready. Let&#39;s keep the momentum going!</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Configure your AI Agent" duration="6">
-      <p>Now, let&#39;s give your AI assistant a personality and some clear instructions. This <code>android-specialist.md</code> file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="4"
+                 data-label="Configure your AI Agent"
+                 data-duration="6"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 05 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                6 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">5. Configure your AI Agent</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Now, let&#39;s give your AI assistant a personality and some clear instructions. This <code>android-specialist.md</code> file will define how your AI partner thinks and works, ensuring they always follow your lead and technical standards.</p>
 <h3>The Prompt</h3>
 <div class="code-container"><pre><code class=" language-text">Create an agent configuration for an AI coding assistant and save it to `.gemini/agents/android-specialist.md`.
 Please ensure that the markdown file begins with the following frontmatter:
@@ -227,9 +1106,26 @@ Format as markdown with clear sections.
 </ol>
 <aside class="special"><p>🚀 <strong>Agent configured! You&#39;re building a solid foundation.</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Add a State Management Skill" duration="7">
-      <p>Skills are like &quot;mini-manuals&quot; that teach your AI exactly how to handle specific tasks. Let&#39;s create one for managing data, giving your assistant the expertise it needs to be super reliable!</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="5"
+                 data-label="Add a State Management Skill"
+                 data-duration="7"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 06 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                7 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">6. Add a State Management Skill</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Skills are like &quot;mini-manuals&quot; that teach your AI exactly how to handle specific tasks. Let&#39;s create one for managing data, giving your assistant the expertise it needs to be super reliable!</p>
 <h3>The Prompt</h3>
 <div class="code-container"><pre><code class=" language-text">Create a SKILL document: &quot;State Management with StateFlow&quot; and save it to `.gemini/skills/state-management.md`.
 Please ensure that the markdown file begins with the following frontmatter:
@@ -285,9 +1181,26 @@ class NoteViewModel : ViewModel() {
 </ol>
 <aside class="special"><p>🎉 <strong>Spot on! You just built a reusable skill. Ready to see it all come together?</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Time to Build!" duration="15">
-      <p>Now for the best part! We&#39;re going to use all those documents you just created to build your actual app. It&#39;s time to see your hard work pay off!</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="6"
+                 data-label="Time to Build!"
+                 data-duration="15"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 07 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                15 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">7. Time to Build!</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Now for the best part! We&#39;re going to use all those documents you just created to build your actual app. It&#39;s time to see your hard work pay off!</p>
 <h3>Generate the code</h3>
 <p>It&#39;s time to let the AI do the heavy lifting while you take the lead as the architect. This is where your vision truly becomes reality!</p>
 <p><strong>Prompt:</strong></p>
@@ -332,15 +1245,32 @@ Follow ALL PRD constraints. Use in-memory storage for now.
 </ul>
 <aside class="special"><p>📱 <strong>Amazing! You&#39;ve just built a functional Android app with AI—using the CLI for creation and Android Studio for execution!</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Connect to the World with Context7" duration="8">
-      <p>Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid &quot;AI hallucinations&quot; from outdated training data!</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="7"
+                 data-label="Connect to the World with Context7"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 08 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">8. Connect to the World with Context7</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Want to take things to the next level? You can give your AI assistant access to the latest documentation and code examples using Context7. This ensures your partner is always up-to-date and helps you avoid &quot;AI hallucinations&quot; from outdated training data!</p>
 <p><strong>Context7</strong> is an open-source Model Context Protocol (MCP) server developed by Upstash designed to provide AI coding assistants (like Cursor, Claude, and Windsurf) with up-to-date, version-specific documentation.</p>
 <h3>Get Your API Key</h3>
 <ol>
 <li><p>Go to the Context7 Dashboard:</p></li>
 </ol>
-<a class="klaat-button klaat-button--primary klaat-button--colored" href="https://context7.com/dashboard" target="_blank"><span class="material-symbols-outlined">launch</span>Open Context7 Dashboard</a>
+<a class="btn klaat-button btn-primary klaat-button--primary klaat-button--colored" href="https://context7.com/dashboard" target="_blank"><span class="material-symbols-outlined">launch</span>Open Context7 Dashboard</a>
 <ol start="2">
 <li><p><strong>Create an account</strong> (using your GitHub or Google account).</p></li>
 <li><p>Sign in and generate your <strong>Context7 API key</strong>.</p></li>
@@ -413,9 +1343,26 @@ touch ~/.gemini/settings.json
 </ul>
 <aside class="special"><p>🧠 <strong>Incredible! Your AI assistant now has access to the most current Android documentation in the world.</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Bonus: Add a Unit Testing Skill" duration="8">
-      <p>Ready for one last skill? Let&#39;s teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="8"
+                 data-label="Bonus: Add a Unit Testing Skill"
+                 data-duration="8"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 09 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                8 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">9. Bonus: Add a Unit Testing Skill</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>Ready for one last skill? Let&#39;s teach your AI how to write tests for your code, ensuring everything is rock-solid and works perfectly every single time.</p>
 <p><strong>Prompt:</strong></p>
 <div class="code-container"><pre><code class=" language-text">Create a SKILL document: &quot;Unit Testing for Android&quot; and save it to `.gemini/skills/unit-testing.md`.
 Please ensure that the markdown file begins with the following frontmatter:
@@ -472,9 +1419,26 @@ class NoteViewModelTest {
 </ul>
 <aside class="special"><p>🧪 <strong>Great work! You&#39;ve just added a professional layer of testing to your project.</strong></p></aside>
 
-    </klaat-kodelab-step>
-    <klaat-kodelab-step label="Congratulations! 🏆" duration="2">
-      <p>You did it! 🏆 You&#39;ve gone from zero to a fully functional, AI-powered Android app using the <strong>Antigravity CLI</strong>. More importantly, you&#39;ve mastered the art of &quot;guiding&quot; AI with structured documentation.</p>
+          </div>
+        </section>
+        <section class="codelab-step tokyo-card"
+                 data-step-index="9"
+                 data-label="Congratulations! 🏆"
+                 data-duration="2"
+                 
+                 >
+          <header class="codelab-step-header">
+            <div class="codelab-step-meta">
+              <span class="badge badge-secondary">STEP 10 / 10</span>
+              <span class="codelab-step-duration">
+                <span class="material-symbols-outlined">schedule</span>
+                2 min
+              </span>
+            </div>
+            <h2 class="codelab-step-title">10. Congratulations! 🏆</h2>
+          </header>
+          <div class="codelab-step-body">
+            <p>You did it! 🏆 You&#39;ve gone from zero to a fully functional, AI-powered Android app using the <strong>Antigravity CLI</strong>. More importantly, you&#39;ve mastered the art of &quot;guiding&quot; AI with structured documentation.</p>
 <h3>Look at everything you&#39;ve achieved:</h3>
 <ul>
 <li><p>✨ <strong>Structured AI Docs</strong>: You created a PRD, AGENT, and SKILL files for Android.</p></li>
@@ -518,12 +1482,340 @@ class NoteViewModelTest {
 <li><p><strong>Context7:</strong> <a href="https://github.com/upstash/context7" target="_blank">github.com/upstash/context7</a></p></li>
 </ul>
 
-    </klaat-kodelab-step>
-    <div slot="footer" class="kodelab-footer">Codelab generated using <a href="https://klaat.kartikarora.me" target="_blank" rel="noopener">Klaat</a> - A tool made by <a href="https://kartikarora.me" target="_blank" rel="noopener">Kartik Arora</a></div>
-  </klaat-kodelab>
+          </div>
+        </section>
+      </div>
 
-  <!-- Klaat custom elements (replaces google's codelab-elements.js) -->
-  <script src="https://distribute.kartikarora.me/js/klaat-elements.js"></script>
+      <nav class="codelab-controls" id="controls" aria-label="Step navigation">
+        <a id="previous-step" href="#" class="btn btn-outline" data-disappear="true">
+          <span class="material-symbols-outlined">arrow_back</span>
+          <span>Back</span>
+        </a>
+        <div>
+          <a id="next-step" href="#" class="btn btn-primary">
+            <span>Next</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </a>
+          <a id="done" href="#" class="btn btn-secondary" hidden>
+            <span class="material-symbols-outlined">check_circle</span>
+            <span>Done</span>
+          </a>
+        </div>
+      </nav>
+    </main>
+  </div>
 
+  <!-- Studio Footer (matching kartikarora.me/brand-demo) -->
+  <footer class="studio-footer">
+    <div class="studio-container" style="max-width: 1280px;">
+      <div class="studio-footer-inner">
+        <div class="kodelab-footer">Codelab generated using <a href="https://klaat.kartikarora.me" target="_blank" rel="noopener">Klaat</a> - A tool made by <a href="https://kartikarora.me" target="_blank" rel="noopener">Kartik Arora</a></div>
+        <span>&copy; 2026 Kartik Arora</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Self-Contained Codelab Runtime (zero custom elements, zero external CDN dependencies) -->
+  <script>
+    function copyToClipboard(button) {
+      const container = button.closest('.code-container') || button.parentElement;
+      const code = container.querySelector('code').innerText;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+          updateButtonText(button);
+        }).catch(() => {
+          fallbackCopy(code, button);
+        });
+      } else {
+        fallbackCopy(code, button);
+      }
+    }
+
+    function fallbackCopy(text, button) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        updateButtonText(button);
+      } catch (err) {
+        console.error('Fallback copy failed:', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function updateButtonText(button) {
+      const textSpan = button.querySelector('span:last-child');
+      if (!textSpan) return;
+      const originalText = textSpan.textContent;
+      textSpan.textContent = 'Copied!';
+      setTimeout(() => {
+        textSpan.textContent = originalText;
+      }, 2000);
+    }
+
+    (function () {
+      'use strict';
+
+      // Prevent kartikarora.2.0.0.js from injecting a duplicate copy button inside .code-container
+      document.querySelectorAll('.code-container pre').forEach((pre) => {
+        pre.setAttribute('data-copy-ready', 'true');
+      });
+
+      const app = document.getElementById('codelab-app') || document.body;
+      const storage = (() => {
+        try { return window.localStorage; } catch (_) { return null; }
+      })();
+
+      function createCodelabController(stepEls) {
+        const controller = {
+          _steps: Array.from(stepEls || []),
+          _currentStep: 0,
+
+          get steps() { return this._steps; },
+          get totalSteps() { return this._steps.length; },
+          getTotalSteps() { return this.totalSteps; },
+
+          get totalDuration() {
+            return this._steps.reduce((sum, step) => {
+              if (step.getAttribute('data-exclude-duration') === 'true') return sum;
+              const d = parseInt(step.getAttribute('data-duration'), 10);
+              return sum + (isNaN(d) ? 0 : d);
+            }, 0);
+          },
+          getTotalDuration() { return this.totalDuration; },
+
+          get currentStep() { return this._currentStep >= 0 ? this._currentStep : 0; },
+          getCurrentStep() { return this.currentStep; },
+
+          get progressPercent() {
+            if (this._steps.length === 0) return 0;
+            return (this.currentStep / this._steps.length) * 100;
+          },
+          getProgressPercent() { return this.progressPercent; },
+
+          get remainingTime() {
+            if (this._steps.length === 0) return 0;
+            let mins = 0;
+            const start = Math.max(0, this.currentStep);
+            for (let i = start; i < this._steps.length; i++) {
+              const step = this._steps[i];
+              if (step.getAttribute('data-exclude-duration') === 'true') continue;
+              const d = parseInt(step.getAttribute('data-duration'), 10);
+              mins += isNaN(d) ? 0 : d;
+            }
+            return mins;
+          },
+          getRemainingTime() { return this.remainingTime; },
+
+          selectStep(index, isInit) {
+            if (this._steps.length === 0) return;
+            index = Math.max(0, Math.min(index, this._steps.length - 1));
+            if (isNaN(index)) index = 0;
+
+            const prev = this._currentStep;
+            this._currentStep = index;
+
+            this._steps.forEach((step, i) => {
+              if (i === index) {
+                step.setAttribute('data-selected', 'true');
+              } else {
+                step.removeAttribute('data-selected');
+              }
+            });
+
+            const navItems = document.querySelectorAll('#steps-nav .codelab-step-item');
+            navItems.forEach((li, i) => {
+              const link = li.querySelector('a');
+              if (i <= index) li.setAttribute('data-completed', 'true'); else li.removeAttribute('data-completed');
+              if (i === index) {
+                li.setAttribute('data-selected', 'true');
+                if (link) link.setAttribute('aria-current', 'step');
+              } else {
+                li.removeAttribute('data-selected');
+                if (link) link.removeAttribute('aria-current');
+              }
+            });
+
+            // Progress label & bar
+            const progressLabel = document.getElementById('step-progress-label');
+            if (progressLabel) {
+              progressLabel.textContent = 'STEP ' + (index + 1) + ' / ' + this._steps.length;
+            }
+            const progressFill = document.getElementById('progress-fill');
+            if (progressFill) {
+              const pct = this._steps.length > 0 ? ((index + 1) / this._steps.length) * 100 : 0;
+              progressFill.style.width = pct + '%';
+            }
+
+            // Remaining time
+            const rem = this.remainingTime;
+            const timePill = document.getElementById('time-remaining');
+            const timeLabel = document.getElementById('time-remaining-label');
+            if (timePill) {
+              if (rem > 0) {
+                timePill.style.display = 'inline-flex';
+                if (timeLabel) timeLabel.textContent = rem + ' min remaining';
+              } else {
+                timePill.style.display = 'none';
+              }
+            }
+
+            // Stepper buttons
+            const prevBtn = document.getElementById('previous-step');
+            const nextBtn = document.getElementById('next-step');
+            const doneBtn = document.getElementById('done');
+            if (prevBtn) {
+              if (index === 0) prevBtn.setAttribute('data-disappear', 'true');
+              else prevBtn.removeAttribute('data-disappear');
+            }
+            if (index === this._steps.length - 1) {
+              if (nextBtn) nextBtn.setAttribute('hidden', '');
+              if (doneBtn) doneBtn.removeAttribute('hidden');
+            } else {
+              if (nextBtn) nextBtn.removeAttribute('hidden');
+              if (doneBtn) doneBtn.setAttribute('hidden', '');
+            }
+
+            // Close mobile drawer & scroll to top smoothly on step change
+            document.body.classList.remove('drawer-open');
+            const menuBtn = document.getElementById('menu');
+            if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+            if (!isInit && typeof window.scrollTo === 'function') {
+              window.scrollTo({ top: 0, behavior: 'auto' });
+            }
+
+            // Sync URL hash & localStorage progress
+            if (location.hash !== '#' + index) {
+              history.replaceState(null, '', '#' + index);
+            }
+            const id = app.getAttribute('data-codelab-id') || '';
+            if (storage && id) {
+              storage.setItem('progress_' + id, String(index));
+            }
+
+            // Optional analytics
+            const stepLabel = this._steps[index]?.getAttribute('data-label') || '';
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'page_view', { page_title: stepLabel, page_location: location.pathname + '#' + index });
+              if (!isInit && prev !== index) {
+                window.gtag('event', 'navigate', { event_category: 'codelab', event_label: stepLabel, value: index });
+              }
+            }
+          }
+        };
+        return controller;
+      }
+
+      const steps = document.querySelectorAll('#steps .codelab-step');
+      const controller = createCodelabController(steps);
+      window.klaatCodelab = controller;
+      window.createKlaatCodelabController = createCodelabController;
+
+      // Bind sidebar step clicks
+      document.querySelectorAll('#steps-nav .codelab-step-link').forEach((link, idx) => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          controller.selectStep(idx);
+        });
+      });
+
+      // Bind navigation buttons
+      document.getElementById('previous-step')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        controller.selectStep(controller.currentStep - 1);
+      });
+
+      document.getElementById('next-step')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        controller.selectStep(controller.currentStep + 1);
+      });
+
+      document.getElementById('done')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'complete', { event_category: 'codelab', event_label: app.getAttribute('data-codelab-title') || '' });
+        }
+        const backHref = document.getElementById('arrow-back')?.getAttribute('href');
+        if (backHref) window.location.href = backHref;
+      });
+
+      // Back arrow smart history
+      document.getElementById('arrow-back')?.addEventListener('click', (e) => {
+        if (window.history.length > 1 && document.referrer) {
+          try {
+            const refUrl = new URL(document.referrer);
+            if (refUrl.origin === location.origin && refUrl.pathname !== location.pathname) {
+              e.preventDefault();
+              window.history.back();
+            }
+          } catch (_) {}
+        }
+      });
+
+      // Mobile drawer toggle
+      const menuBtn = document.getElementById('menu');
+      const backdrop = document.getElementById('drawer-backdrop');
+      const toggleDrawer = (open) => {
+        const next = typeof open === 'boolean' ? open : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', next);
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', String(next));
+      };
+      menuBtn?.addEventListener('click', () => toggleDrawer());
+      backdrop?.addEventListener('click', () => toggleDrawer(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('drawer-open')) {
+          toggleDrawer(false);
+        }
+      });
+
+      // Hash navigation
+      window.addEventListener('hashchange', () => {
+        const hash = parseInt(location.hash.substring(1), 10);
+        if (!isNaN(hash)) controller.selectStep(hash);
+      });
+
+      // Survey radio persistence
+      document.querySelectorAll('.klaat-survey[data-survey-id]').forEach((surveyEl) => {
+        const surveyId = surveyEl.getAttribute('data-survey-id') || '';
+        const loadSaved = () => {
+          if (!storage || !surveyId) return {};
+          try { return JSON.parse(storage.getItem(surveyId) || '{}'); } catch (_) { return {}; }
+        };
+        const saved = loadSaved();
+        surveyEl.querySelectorAll('input[type="radio"]').forEach((input) => {
+          const name = input.getAttribute('name') || '';
+          const labelText = (input.closest('label')?.textContent || '').trim();
+          if (saved[name] && labelText.includes(saved[name])) {
+            input.checked = true;
+          }
+          input.addEventListener('change', () => {
+            if (!storage || !surveyId) return;
+            const data = loadSaved();
+            data[name] = labelText;
+            storage.setItem(surveyId, JSON.stringify(data));
+          });
+        });
+      });
+
+      // Initial step from URL hash or localStorage
+      const id = app.getAttribute('data-codelab-id') || '';
+      const savedStep = storage && id ? storage.getItem('progress_' + id) : null;
+      const hashStep = location.hash ? parseInt(location.hash.substring(1), 10) : NaN;
+      let startStep = 0;
+      if (!isNaN(hashStep) && hashStep >= 0) {
+        startStep = hashStep;
+      } else if (savedStep && savedStep !== '0') {
+        startStep = parseInt(savedStep, 10) || 0;
+      }
+      controller.selectStep(startStep, true);
+    })();
+  </script>
 </body>
 </html>

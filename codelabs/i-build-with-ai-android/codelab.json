@@ -3,29 +3,17 @@
   "format": "html",
   "prefix": "../../",
   "mainga": "",
-  "updated": "2026-09-14T03:37:56.638Z",
+  "updated": "2026-11-19T04:54:01.415Z",
   "id": "i-build-with-ai-android",
   "duration": 63,
-  "title": "I Build with AI and so can you! (Android Edition) \ud83d\ude80",
+  "totalSteps": 10,
+  "title": "I Build with AI and so can you! (Android Edition) 🚀",
   "summary": "Learn to build better Android apps by collaborating with AI using the Antigravity CLI. Discover how to use PRDs and the Model Context Protocol (MCP) to guide AI to build exactly what you need.",
   "source": "source/i-build-with-ai-android/codelab.md",
   "theme": "",
-  "status": [
-    "Published"
-  ],
-  "category": [
-    "AI",
-    "Android",
-    "Development"
-  ],
-  "tags": [
-    "ai",
-    "gemini",
-    "agents",
-    "android",
-    "kotlin",
-    "compose"
-  ],
+  "status": ["Published"],
+  "category": ["AI", "Android", "Development"],
+  "tags": ["ai", "gemini", "agents", "android", "kotlin", "compose"],
   "feedback": "mailto:hello@kartikarora.me",
   "image": "https://distribute.kartikarora.me/assets/i-build-with-ai-android/images/poster.png",
   "url": "i-build-with-ai-android"

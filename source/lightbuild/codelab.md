@@ -14,7 +14,7 @@ tags: android, lightbuild, gradle, declarative-builds, ai-agents, gemini, kotlin
 ## Setup and Project Context
 Duration: 10
 
-![Lightbuild Hero Banner](images/poster.svg)
+![Lightbuild Hero Banner](https://distribute.kartikarora.me/assets/lightbuild/images/poster.png)
 
 Android projects have relied on imperative build scripts written in Groovy or Kotlin DSL for years. Because Gradle executes these scripts during its configuration phase, IDE sync times grow as you add modules. Modifying imperative scripts also presents syntax and scoping challenges for AI coding assistants.
 
@@ -213,6 +213,10 @@ android:
       - //core/data
       - //core/ui
     maven:
+      - androidx.compose.ui:ui:1.6.0
+      - androidx.compose.ui:ui-tooling-preview:1.6.0
+      - androidx.compose.material3:material3:1.2.0
+      - androidx.compose.material:material-icons-extended:1.6.0
       - androidx.core:core-ktx:1.10.1
       - androidx.lifecycle:lifecycle-runtime-ktx:2.6.1
       - androidx.activity:activity-compose:1.8.0
@@ -414,7 +418,7 @@ Verify the configuration using the standalone `lightbuild` CLI:
 lightbuild query ... --output sourcesets
 
 # Run host unit tests
-lightbuild test core/data:hostTest
+lightbuild test feature/watchlist:hostTest
 
 # Compile the debug application
 lightbuild build app:app-debug.apk

@@ -60,7 +60,7 @@ android --version
 ```
 
 ### 2. Install the @kartikarora Compose theme skill
-Install the brand skill so Gemini reuses existing `:core:ui` components (`MovieCard`, `ProviderBadge`) instead of generating generic composables:
+The **@kartikarora v2.0.0** Tokyo Neo-Brutalist Compose design system skill is pre-installed in `.agents/skills/kartikarora-compose-theme/` so Gemini reuses existing `:core:ui` components (`TokyoCard`, `MovieCard`, `BrandButton`, `SlidingTabs`, `BrandStatement`, `ProviderBadge`) instead of generating generic composables. Run `npx skills install` to refresh it to the latest release:
 
 ```bash
 npx skills install https://distribute.kartikarora.me/ai/kartikarora-compose-theme.skill
@@ -129,7 +129,7 @@ Key modules include:
 * `:feature:explore`: Trending movies and provider discovery.
 * `:feature:detail`: Movie details and "Where to Watch" availability.
 * `:feature:watchlist`: Saved watchlist and price drop alerts.
-* `:core:ui`: Ready-made design tokens and components (`MovieCard`, `ProviderBadge`).
+* `:core:ui`: Ready-made **@kartikarora v2.0.0** design tokens, bundled **Chivo** & **JetBrains Mono** fonts, and components (`ICanHazStreamTheme`, `TokyoCard`, `MovieCard`, `BrandButton`, `SlidingTabs`, `BrandStatement`, `StatusBadge`, `ProviderBadge`, `RatingChip`, `StreamTopBar`).
 * `:core:data`: Repositories and Ktor Client 3.6.0 networking.
 * `:core:model`: `@Serializable` domain models (`Movie`, `StreamingProvider`).
 * `:core:testing`: In-memory test fakes (`FakeMovieRepository`).
@@ -151,14 +151,18 @@ This document defines the rules and conventions for AI coding assistants working
 
 ## Brand Design System
 
-The `:core:ui` module contains the **@kartikarora Compose Design System** with:
-- `ICanHazStreamTheme` — Material 3 theme with Space Grotesk typography
-- `MovieCard` — Brand-styled movie card component
-- `ProviderBadge` — Streaming platform badge (Netflix, Disney+, Prime Video, Stan, Binge)
-- `RatingChip` — Movie rating display chip
-- `StreamTopBar` — Top app bar with brand typography
+The `:core:ui` module implements the **@kartikarora v2.0.0 Tokyo Neo-Brutalist Compose Design System** (dynamic color disabled):
+- `ICanHazStreamTheme` / `KartikAroraTheme` — Material 3 theme using Akihabara Cyan (`#0084C7` light / `#00F0FF` dark), Caution Yellow (`#E6B800` light / `#FFE600` dark), and Concrete / Obsidian surfaces
+- Bundled **Chivo** (`FontWeight.Black` headings with `-0.03em` tracking) and **JetBrains Mono** typography in `core/ui/src/main/res/font/`
+- `KartikAroraShapes`, `KartikAroraCustomShapes`, and 8dp `MaterialTheme.spacing` scale
+- `TokyoCard` / `MovieCard` — Neo-brutalist card containers with 2.dp border, solid offset shadow, and hover/focus/press physics
+- `BrandButton` — High-contrast tactile buttons (`Primary`, `Secondary`, `Outline`, `Ghost`, `Small`)
+- `SlidingTabs` — Segmented tab bar with active cyan pill and Caution Yellow offset shadow
+- `BrandStatement` — Editorial callout with 3.dp signal left border
+- `StatusBadge`, `SpecCard`, `TelemetryMetric`, `FeatureCard`, `CLICommandPill`, `ArtifactRow`, `StanceView`, `KeynoteRow`, `FastTransitionSpec`
+- `ProviderBadge`, `RatingChip`, `StreamTopBar`
 
-**Always use these components instead of creating raw Composables.**
+**Always use these components and `MaterialTheme.spacing` tokens instead of creating raw Composables or hardcoded values.**
 
 ## Installed AI Skill
 
@@ -213,7 +217,7 @@ val trendingMovies: LiveData<List<Movie>> = _trendingMovies
 Highlight the `_trendingMovies` declarations in the editor, right-click, and select **Gemini > Generate Code with Gemini** (or **Refactor with Gemini**). Enter your refactoring prompt:
 
 ```text
-Refactor the _trendingMovies LiveData stream to StateFlow with an initial empty list, and expose an immutable asStateFlow().
+Refactor the _trendingMovies, _isLoading, and _selectedCategory LiveData streams to StateFlow with initial values and expose immutable asStateFlow() properties, then update TrendingMoviesScreen.kt to collect them with collectAsStateWithLifecycle().
 ```
 
 Review the side-by-side diff preview and click **Apply Changes** (or click the **Apply** button in the diff bar).
@@ -227,6 +231,8 @@ Review the side-by-side diff preview and click **Apply Changes** (or click the *
 private val _trendingMovies = MutableStateFlow<List<Movie>>(emptyList())
 val trendingMovies: StateFlow<List<Movie>> = _trendingMovies.asStateFlow()
 ```
+
+In **`TrendingMoviesScreen.kt`**, replace the `LiveData` `DisposableEffect` observers with `collectAsStateWithLifecycle()` so `:feature:explore` continues compiling cleanly.
 
 ## Java to Kotlin migration
 Duration: 7
@@ -258,7 +264,7 @@ Open the **Agent tool window** (`View > Tool Windows > Agent`) and submit:
 @WatchCostUtils.java Convert this Java utility class to an idiomatic Kotlin file with a top-level calculation function in package me.kartikarora.icanhazstream.data.
 ```
 
-Save the output to **`WatchCostUtils.kt`** in the **`:core:data`** module and delete the old `.java` file.
+Save the output to **`WatchCostUtils.kt`** in the **`:core:data`** module, update the import in **`WhereToWatchScreen.kt`** from `me.kartikarora.icanhazstream.data.legacy.WatchCostUtils` to `me.kartikarora.icanhazstream.data.WatchCostUtils`, and delete the old `.java` file.
 
 > This is an example of what the generated output might look like. Gemini may generate something different for you. {.warning}
 
@@ -308,7 +314,7 @@ fun MovieProviderCard(
 Open the **Agent tool window** (**View > Tool Windows > Agent** or from the right sidebar) and enter:
 
 ```text
-@item_movie_provider.xml Convert this XML layout and its ViewHolder into a declarative Jetpack Compose composable for MovieProviderCard.kt. Use the @kartikarora design tokens, MovieCard, and ProviderBadge components from :core:ui.
+@item_movie_provider.xml Convert this XML layout and its ViewHolder into a declarative Jetpack Compose composable for MovieProviderCard.kt. Use the @kartikarora v2.0.0 design tokens, MaterialTheme.spacing, MovieCard (backed by TokyoCard), and ProviderBadge components from :core:ui.
 ```
 
 > This is an example of what the generated output might look like. Gemini may generate something different for you. {.warning}
@@ -322,10 +328,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import me.kartikarora.icanhazstream.model.StreamingProvider
 import me.kartikarora.icanhazstream.ui.components.MovieCard
 import me.kartikarora.icanhazstream.ui.components.ProviderBadge
+import me.kartikarora.icanhazstream.ui.theme.spacing
 
 @Composable
 fun MovieProviderCard(
@@ -333,16 +339,15 @@ fun MovieProviderCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val spacing = MaterialTheme.spacing
     MovieCard(
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = spacing.small, vertical = spacing.extraSmall)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -352,7 +357,7 @@ fun MovieProviderCard(
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(spacing.extraSmall))
                 Text(
                     text = "Quality: ${provider.quality} • Plan: ${provider.planType}",
                     style = MaterialTheme.typography.bodySmall,
@@ -448,11 +453,11 @@ Attach `assets/wireframe-where-to-watch.png` in the **Agent tool window** with t
 ```text
 Generate the Jetpack Compose screen for WhereToWatchScreen.kt matching this wireframe mockup.
 Include:
-1. Movie poster header with title, release year, runtime, and 4K UHD badge.
-2. Streaming subscription provider cards (Netflix, Disney+).
-3. Rent and buy options (Apple TV, Google Play).
-4. "Add to Watchlist & Alerts" button at the bottom.
-Use Material 3 components and design tokens from :core:ui.
+1. Movie poster header inside a TokyoCard with title, overview, and rating.
+2. Value pick callout using BrandStatement.
+3. Stream / Rent / Buy selector using SlidingTabs.
+4. Provider option cards using TokyoCard, ProviderBadge, and BrandButton.
+Use @kartikarora v2.0.0 components and MaterialTheme.spacing from :core:ui.
 ```
 
 Paste the generated composable into `WhereToWatchScreen.kt`.
@@ -470,12 +475,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import me.kartikarora.icanhazstream.model.Movie
 import me.kartikarora.icanhazstream.model.StreamingProvider
 import me.kartikarora.icanhazstream.model.WatchOptionType
+import me.kartikarora.icanhazstream.ui.components.BrandButton
+import me.kartikarora.icanhazstream.ui.components.BrandButtonVariant
+import me.kartikarora.icanhazstream.ui.components.BrandStatement
 import me.kartikarora.icanhazstream.ui.components.ProviderBadge
 import me.kartikarora.icanhazstream.ui.components.RatingChip
+import me.kartikarora.icanhazstream.ui.components.SlidingTabs
+import me.kartikarora.icanhazstream.ui.components.TokyoCard
+import me.kartikarora.icanhazstream.ui.theme.spacing
 
 @Composable
 fun WhereToWatchScreen(
@@ -485,6 +495,7 @@ fun WhereToWatchScreen(
 ) {
     if (movie == null) return
 
+    val spacing = MaterialTheme.spacing
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Stream", "Rent", "Buy")
     val currentType = when (selectedTabIndex) {
@@ -497,51 +508,56 @@ fun WhereToWatchScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(spacing.small),
+        verticalArrangement = Arrangement.spacedBy(spacing.small),
     ) {
         item {
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
-                        RatingChip(rating = movie.voteAverage)
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
-                }
-            }
-        }
-
-        item {
-            TabRow(selectedTabIndex = selectedTabIndex) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        text = { Text(title) }
-                    )
-                }
-            }
-        }
-
-        items(filteredProviders) { provider ->
-            Card(modifier = Modifier.fillMaxWidth()) {
+            TokyoCard(modifier = Modifier.fillMaxWidth()) {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ProviderBadge(text = provider.quality ?: "HD")
-                    Button(onClick = { onProviderClick(provider) }) {
-                        Text("Watch on ${provider.name}")
-                    }
+                    Text(text = movie.title, style = MaterialTheme.typography.headlineMedium)
+                    RatingChip(rating = movie.voteAverage)
+                }
+                Spacer(modifier = Modifier.height(spacing.extraSmall))
+                Text(text = movie.overview, style = MaterialTheme.typography.bodyLarge)
+            }
+        }
+
+        item {
+            BrandStatement(
+                quote = "Value Pick: Stream or rent options compared in AU\$",
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+
+        item {
+            SlidingTabs(
+                tabs = tabs,
+                selectedTab = tabs[selectedTabIndex],
+                onTabSelected = { selectedTabIndex = tabs.indexOf(it) },
+                tabLabel = { it },
+            )
+        }
+
+        items(filteredProviders) { provider ->
+            TokyoCard(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { onProviderClick(provider) },
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ProviderBadge(name = provider.name, badgeColor = MaterialTheme.colorScheme.primary)
+                    BrandButton(
+                        text = "Watch",
+                        variant = BrandButtonVariant.Small,
+                        onClick = { onProviderClick(provider) },
+                    )
                 }
             }
         }
@@ -558,7 +574,7 @@ Iterate on visual styling directly inside the **Compose Preview** panel using na
 Open the **Agent tool window** (`View > Tool Windows > Agent`) and submit this prompt:
 
 ```text
-@WhereToWatchScreen.kt Add a @PreviewLightDark Composable preview function WhereToWatchScreenPreview() wrapped in ICanHazStreamTheme.
+@WhereToWatchScreen.kt Add a @PreviewLightDark Composable preview function WhereToWatchPreview() wrapped in ICanHazStreamTheme.
 ```
 
 > This is an example of what the generated output might look like. Gemini may generate something different for you. {.warning}
@@ -566,11 +582,22 @@ Open the **Agent tool window** (`View > Tool Windows > Agent`) and submit this p
 ```kotlin
 @PreviewLightDark
 @Composable
-private fun WhereToWatchScreenPreview() {
+fun WhereToWatchPreview() {
     ICanHazStreamTheme {
         WhereToWatchScreen(
-            movieId = "inception-2010",
-            onNavigateBack = {}
+            movie = Movie(
+                id = "preview_1",
+                title = "Dune: Part Two",
+                overview = "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+                releaseDate = "2024-03-01",
+                voteAverage = 8.6,
+                providers = listOf(
+                    StreamingProvider("netflix", "Netflix", null, WatchOptionType.STREAM, 16.99, "4K"),
+                    StreamingProvider("apple_tv", "Apple TV", null, WatchOptionType.RENT, 6.99, "4K"),
+                    StreamingProvider("prime", "Prime Video", null, WatchOptionType.BUY, 24.99, "4K"),
+                ),
+            ),
+            onProviderClick = {},
         )
     }
 }
@@ -582,7 +609,7 @@ private fun WhereToWatchScreenPreview() {
 3. Prompt:
 
 ```text
-Set provider card corner radius to 16dp, add 4K HDR badges next to streaming platforms, and style the 'Add to Watchlist' button with primary container styling.
+Render 4K/HD quality labels with StatusBadge(variant = StatusBadgeVariant.Secondary), keep provider rows in TokyoCard, and use BrandButton for Watch actions.
 ```
 
 ![Compose Preview Transform](images/transform-ui-preview.svg)
