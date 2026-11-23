@@ -3,7 +3,7 @@ id: lightbuild
 summary: Learn how Google's experimental Lightbuild replaces imperative build.gradle.kts scripts with schema-validated YAML and pre-resolved lockfiles (resolved.deps) in a multi-module Compose app.
 categories: Android, AI, Architecture, Tooling
 environments: Android
-status: Draft
+status: Published
 authors: Kartik Arora
 feedback_link: mailto:hello@kartikarora.me
 tags: android, lightbuild, gradle, declarative-builds, ai-agents, gemini, kotlin, compose

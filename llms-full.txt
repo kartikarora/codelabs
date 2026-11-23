@@ -122,6 +122,26 @@ This document provides a comprehensive, full-text reference of all workshops and
 
 ---
 
+## 6. Declarative Android Builds with Lightbuild
+- **URL**: https://codelabs.kartikarora.me/lightbuild/
+- **Markdown Source**: https://codelabs.kartikarora.me/lightbuild/index.md
+- **Categories**: Android, AI, Architecture, Tooling
+- **Estimated Duration**: 85 minutes
+- **Author**: Kartik Arora
+- **Summary**: Learn how Google's experimental Lightbuild replaces imperative build.gradle.kts scripts with schema-validated YAML and pre-resolved lockfiles (resolved.deps) in a multi-module Compose app.
+- **Steps** (9):
+  1. Setup and Project Context
+  2. Lightbuild Architecture
+  3. Defining the Root Manifest
+  4. Configuring the App Shell & Core Library
+  5. Configuring Library Modules
+  6. Dependency Resolution & Lockfiles
+  7. Agent Modification Workflow
+  8. Build Verification & CLI Commands
+  9. Primary Sources & References
+
+---
+
 ## About the Author
 Kartik Arora is a Software Engineer and Google Developer Expert (GDE) for Android. He creates hands-on technical workshops, codelabs, and developer resources.
 - Website: https://kartikarora.me
